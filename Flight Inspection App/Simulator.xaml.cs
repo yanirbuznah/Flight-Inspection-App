@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 namespace Flight_Inspection_App
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Simulator.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class Simulator : Page
     {
-        HomePage home;
-        public MainWindow()
+        public Simulator()
         {
             InitializeComponent();
-            home = new HomePage();
-            Navigate(home);
         }
     }
 }

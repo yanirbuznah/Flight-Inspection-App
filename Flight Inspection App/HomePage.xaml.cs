@@ -22,7 +22,6 @@ namespace Flight_Inspection_App
     public partial class HomePage : Page
     {
         Simulator s;
-        TcpClient clientSocket = new System.Net.Sockets.TcpClient();
 
         public HomePage()
         {

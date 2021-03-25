@@ -82,7 +82,24 @@ namespace Flight_Inspection_App.Controls
 			
 			mediaPlayerIsPlaying = false;
 		}
+		private void SpeedDown_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
 
+		}
+
+		private void SpeedDown_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+
+		}
+		private void SpeedUp_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+
+		}
+
+		private void SpeedUp_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+
+		}
 		private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
 		{
 			userIsDraggingSlider = true;

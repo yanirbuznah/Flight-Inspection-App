@@ -36,10 +36,6 @@
             </Button>
 
 
-            <!--
-            ProgressBar x:Name="pbVolume" Width="50" Height="12" Maximum="1" Value="{Binding Volume, ElementName=mePlayer}" ValueChanged="pbVolume_ValueChanged" Margin="10,0,0,0"/>
-            -->
-
         </ToolBar>
 
     </Grid>

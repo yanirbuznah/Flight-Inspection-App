@@ -34,5 +34,30 @@ namespace Flight_Inspection_App
             // Display the contents of the favorites folder in the browser.
             Process.Start(@"C:\Program Files\FlightGear 2020.3.6\bin\fgfs - compositor.exe");
         }
+
+        private void Graph_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Joystick_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ControlBar_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ControlBar_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ControlBar_Loaded_2(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

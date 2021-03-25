@@ -8,14 +8,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Simulator">
-    <Grid >
+
+    <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Images/backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Controls:FilesComponent Margin="41,75,609,75"/>
+        <Controls:FilesComponent Margin="10,82,668,146"/>
+        <Controls:FeaturesPanel Margin="118,82,560,146"/>
         <Controls:ControlBar/>
-
-
+        <Controls:FeaturesGraphs Margin="245,10,282,43"/>
+        <Controls:FlightInstruments Margin="523,189,-24,43"/>
     </Grid>
 
 

@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Flight_Inspection_App.Controls.FlightInstruments"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Flight_Inspection_App.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Margin="0,0,0,0">
+        <RichTextBox Margin="10,39,44,10">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="לוח שעונים" FontSize="50" FlowDirection="RightToLeft" BaselineAlignment="Center"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+    </Grid>
+</UserControl>

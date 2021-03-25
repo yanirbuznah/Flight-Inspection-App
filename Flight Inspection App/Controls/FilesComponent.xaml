@@ -8,7 +8,10 @@
              d:DesignHeight="300" d:DesignWidth="150">
     <DockPanel Margin="10">
         <WrapPanel HorizontalAlignment="Center" DockPanel.Dock="Top" Margin="0,0,0,10">
-            <Button Name="btnOpenFile" Click="btnOpenFiles_Click">Open files</Button>
+
+            <Button Background="Transparent" Name="btnOpenFile" Click="btnOpenFiles_Click" >
+                <Image Source="/Controls/ControlImages/folder-icon.png" Height="27" Width="38" />
+            </Button>
         </WrapPanel>
         <ListBox Name="lbFiles" />
     </DockPanel>

@@ -8,10 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controls\ControlImages\math-add-icon.png" />
+    <None Remove="Controls\ControlImages\math-minus-icon.png" />
+    <None Remove="Controls\ControlImages\Pause-icon.png" />
+    <None Remove="Controls\ControlImages\Play-icon.png" />
+    <None Remove="Controls\ControlImages\Stop-icon.png" />
+    <None Remove="Controls\folder-icon.png" />
     <None Remove="Images\backgroundImage.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Controls\ControlImages\folder-icon.png" />
+    <Resource Include="Controls\ControlImages\math-add-icon.png" />
+    <Resource Include="Controls\ControlImages\math-minus-icon.png" />
+    <Resource Include="Controls\ControlImages\Pause-icon.png" />
+    <Resource Include="Controls\ControlImages\Play-icon.png" />
+    <Resource Include="Controls\ControlImages\Stop-icon.png" />
     <Resource Include="Images\backgroundImage.jpg" />
   </ItemGroup>
 </Project>

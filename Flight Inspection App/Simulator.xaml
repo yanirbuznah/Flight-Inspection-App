@@ -13,7 +13,7 @@
             <ImageBrush ImageSource="/Images/backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Controls:FilesComponent Margin="41,75,609,75"/>
-        <Button Content="Button" HorizontalAlignment="Center" Margin="0,349,0,0" VerticalAlignment="Top" Height="43" Width="144" Click="Button_Click"/>
+        <Controls:controlBar/>
 
 
     </Grid>

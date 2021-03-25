@@ -13,7 +13,7 @@
             <ImageBrush ImageSource="/Images/backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Controls:FilesComponent Margin="41,75,609,75"/>
-        <Controls:controlBar/>
+        <Controls:ControlBar/>
 
 
     </Grid>

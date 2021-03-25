@@ -21,11 +21,11 @@ namespace Flight_Inspection_App.Controls
     /// <summary>
     /// Interaction logic for controlBar.xaml
     /// </summary>
-    public partial class controlBar : UserControl
+    public partial class ControlBar : UserControl
     {
 		private bool mediaPlayerIsPlaying = false;
 		private bool userIsDraggingSlider = false;
-		public controlBar()
+		public ControlBar()
         {
 			InitializeComponent();
 
@@ -34,7 +34,26 @@ namespace Flight_Inspection_App.Controls
 			timer.Tick += timer_Tick;
 			timer.Start();
 		}
+		public static void Play()
+        {
 
+        }
+		public static void Pause()
+		{
+
+		}
+		public static void Stop()
+		{
+
+		}
+		public static void SpeedUp()
+		{
+
+		}
+		public static void SpeedDown()
+		{
+
+		}
 
 
 
@@ -82,25 +101,25 @@ namespace Flight_Inspection_App.Controls
 			
 			mediaPlayerIsPlaying = false;
 		}
-		private void SpeedDown_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
+        private void SpeedDown_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
 
-		}
+        }
 
-		private void SpeedDown_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
+        private void SpeedDown_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
 
-		}
-		private void SpeedUp_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
+        }
+        private void SpeedUp_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
 
-		}
+        }
 
-		private void SpeedUp_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
+        private void SpeedUp_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
 
-		}
-		private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
+        }
+        private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
 		{
 			userIsDraggingSlider = true;
 		}

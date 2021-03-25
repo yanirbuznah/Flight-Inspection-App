@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,11 @@ namespace Flight_Inspection_App
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Start Internet Explorer. Defaults to the home page.
+          //  Process.Start("FlightGear - Compositor");
 
+            // Display the contents of the favorites folder in the browser.
+            Process.Start(@"C:\Program Files\FlightGear 2020.3.6\bin\fgfs - compositor.exe");
         }
     }
 }

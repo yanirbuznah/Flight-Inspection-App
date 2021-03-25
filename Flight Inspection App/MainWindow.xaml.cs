@@ -21,9 +21,12 @@ namespace Flight_Inspection_App
     public partial class MainWindow : NavigationWindow
     {
         HomePage home;
+        IViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
+            vm = new FGVM(new FGM(new Client()));
+            DataContext = vm;
             home = new HomePage();
             Navigate(home);
         }

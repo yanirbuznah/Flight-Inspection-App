@@ -7,13 +7,29 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection_App
 {
-    class FGVM : IViewModel
+    public class FGVM : IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         FGM _fgm;
         public FGVM(FGM fgm)
         {
             _fgm = fgm;
+        }
+
+        public void Connect()
+        {
+            _fgm.Connect("127.0.0.1",5400);
+            this.Start();
+        }
+
+        public void Disconnect()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Start()
+        {
+            _fgm.Start();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection_App
 {
-    interface INotifyPropertyChanged{
+   public interface INotifyPropertyChanged{
         event PropertyChangedEventHandler PropertyChanged;
     }
 }

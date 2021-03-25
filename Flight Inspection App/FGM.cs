@@ -7,26 +7,30 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection_App
 {
-    class FGM : IModel
+    public class FGM : IModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
+        string path = @"C:\Users\yanir\Desktop\flightgearProject\reg_flight.csv";
         public FGM (Client client){
             _telnetClient = client;
         }
-        public void connect(string ip, int port)
+        public void Connect(string ip, int port)
         {
-            throw new NotImplementedException();
+            _telnetClient.Connect(ip, port);
         }
 
-        public void disconnect()
+        public void Disconnect()
         {
-            throw new NotImplementedException();
+            _telnetClient.Disconnect();
         }
 
-        public void start()
+
+        public void Start()
         {
-            throw new NotImplementedException();
+            _telnetClient.Write(path);
         }
+
+
     }
 }

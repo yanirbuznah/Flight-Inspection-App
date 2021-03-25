@@ -27,7 +27,7 @@ namespace Flight_Inspection_App
             InitializeComponent();
             vm = new FGVM(new FGM(new Client()));
             DataContext = vm;
-            home = new HomePage();
+            home = new HomePage(vm);
             Navigate(home);
         }
 

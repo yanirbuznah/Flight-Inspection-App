@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 namespace Flight_Inspection_App 
 {
     
-    interface IViewModel : INotifyPropertyChanged
+    public interface IViewModel : INotifyPropertyChanged
     {
+        public void Connect();
+        public void Disconnect();
+        public void Start ();
 
     }
 }

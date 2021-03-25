@@ -8,8 +8,8 @@ namespace Flight_Inspection_App
 {
     interface IModel: INotifyPropertyChanged
     {
-        void connect(string ip, int port);
-        void disconnect();
-        void start();
+        void Connect(string ip, int port);
+        void Disconnect();
+        void Start();
     }
 }

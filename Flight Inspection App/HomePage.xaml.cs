@@ -23,28 +23,24 @@ namespace Flight_Inspection_App
     public partial class HomePage : Page
     {
         Simulator s;
-    
+        IViewModel _vm;
 
-        public HomePage()
+        public HomePage(IViewModel vm)
         {
             InitializeComponent();
+            _vm = vm;
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-           
             s = new Simulator();
             this.NavigationService.Navigate(s);
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
-            Client client = new Client();
-            client.Connect(IP.Text, Int32.Parse(PORT.Text));
-            client.Write(@"C:\Users\yanir\Desktop\flightgearProject\reg_flight.csv");
-
-
-
+            _vm.Connect();
+           
         }
     }
 }

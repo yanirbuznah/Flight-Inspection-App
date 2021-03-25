@@ -25,10 +25,11 @@ namespace Flight_Inspection_App
             {
                 _client.Connect(IPAddress.Parse(ip), port);
                 _ns = _client.GetStream();
+                isConnected = true;
             }
             catch
             {
-
+                Console.WriteLine("Connect Error");
             }
 
         }
@@ -36,21 +37,29 @@ namespace Flight_Inspection_App
         {
             _ns.Close();
             _client.Close();
+            isConnected = false;
         }
         public void Write(string path)
         {
-            var file = new System.IO.StreamReader(path);
-            string line;
-            while ((line = file.ReadLine()) != null)
+            if (isConnected)
             {
-                line += "\r\n";
-                Console.WriteLine(line);
-                _ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
-                _ns.Flush();
-                Thread.Sleep(100);
+                var file = new System.IO.StreamReader(path);
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+                    line += "\r\n";
+                    Console.WriteLine(line);
+                    _ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
+                    _ns.Flush();
+                    Thread.Sleep(10);
+                }
+                file.Close();
             }
-            file.Close();
+        }
 
+        public bool isConnected
+        {
+            get; set;
         }
 
 

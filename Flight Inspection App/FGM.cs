@@ -9,6 +9,7 @@ namespace Flight_Inspection_App
 {
     public class FGM : IModel
     {
+        
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
         string path = @"C:\Users\yanir\Desktop\flightgearProject\reg_flight.csv";

@@ -9,6 +9,7 @@ namespace Flight_Inspection_App
 {
     public class FGVM : IViewModel
     {
+        
         public event PropertyChangedEventHandler PropertyChanged;
         FGM _fgm;
         public FGVM(FGM fgm)
@@ -19,12 +20,11 @@ namespace Flight_Inspection_App
         public void Connect()
         {
             _fgm.Connect("127.0.0.1",5400);
-            this.Start();
         }
 
         public void Disconnect()
         {
-            throw new NotImplementedException();
+            _fgm.Disconnect();
         }
 
         public void Start()

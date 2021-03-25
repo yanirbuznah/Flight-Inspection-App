@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,7 @@ namespace Flight_Inspection_App
     public partial class HomePage : Page
     {
         Simulator s;
+    
 
         public HomePage()
         {
@@ -30,6 +32,7 @@ namespace Flight_Inspection_App
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
+           
             s = new Simulator();
             this.NavigationService.Navigate(s);
         }
@@ -37,8 +40,11 @@ namespace Flight_Inspection_App
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
             Client client = new Client();
-            client.Connect("127.0.0.1", 5400);
+            client.Connect(IP.Text, Int32.Parse(PORT.Text));
             client.Write(@"C:\Users\yanir\Desktop\flightgearProject\reg_flight.csv");
+
+
+
         }
     }
 }

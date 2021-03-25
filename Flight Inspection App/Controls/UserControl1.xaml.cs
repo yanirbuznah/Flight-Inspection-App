@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Flight_Inspection_App
+namespace Flight_Inspection_App.Controls
 {
     /// <summary>
-    /// Interaction logic for Simulator.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class Simulator : Page
+    public partial class UserControl1 : UserControl
     {
-        public Simulator()
+        public UserControl1()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

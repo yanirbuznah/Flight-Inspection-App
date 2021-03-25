@@ -10,20 +10,27 @@ using System.Threading.Tasks;
 namespace Flight_Inspection_App
 {
 
-    class Client
+    public class Client
     {
         private TcpClient _client;
         private NetworkStream _ns;
         public Client()
         {
             _client = new TcpClient(AddressFamily.InterNetwork);
-
         }
 
         public void Connect(string ip, int port)
         {
-            _client.Connect(IPAddress.Parse(ip), port);
-            _ns = _client.GetStream();
+            try
+            {
+                _client.Connect(IPAddress.Parse(ip), port);
+                _ns = _client.GetStream();
+            }
+            catch
+            {
+
+            }
+
         }
         public void Disconnect()
         {

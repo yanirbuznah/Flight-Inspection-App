@@ -27,5 +27,10 @@ namespace Flight_Inspection_App
             home = new HomePage();
             Navigate(home);
         }
+
+        public HomePage GetHomePage()
+        {
+            return home;
+        }
     }
 }

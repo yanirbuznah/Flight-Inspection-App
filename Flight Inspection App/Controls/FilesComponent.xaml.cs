@@ -45,5 +45,10 @@ namespace Flight_Inspection_App.Controls
                     lbFiles.Items.Add(Path.GetFileName(filename));
             }
         }
+
+        private void lbFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           
+        }
     }
 }

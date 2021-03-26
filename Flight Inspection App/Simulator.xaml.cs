@@ -21,9 +21,12 @@ namespace Flight_Inspection_App
     /// </summary>
     public partial class Simulator : Page
     {
-        public Simulator()
+        IViewModel _vm;
+        public Simulator(IViewModel vm)
         {
             InitializeComponent();
+            _vm = vm;
+            DataContext = vm;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -56,6 +59,21 @@ namespace Flight_Inspection_App
         }
 
         private void ControlBar_Loaded_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ControlBar_Loaded_3(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FilesComponent_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Load the file
+        }
+
+        private void ControlBar_Loaded_4(object sender, RoutedEventArgs e)
         {
 
         }

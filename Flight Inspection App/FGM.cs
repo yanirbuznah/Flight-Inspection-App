@@ -9,10 +9,9 @@ namespace Flight_Inspection_App
 {
     public class FGM : IModel
     {
-        
+        private string path;
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
-        string path = @"C:\Users\yanir\Desktop\flightgearProject\reg_flight.csv";
         public FGM (Client client){
             _telnetClient = client;
         }
@@ -25,7 +24,23 @@ namespace Flight_Inspection_App
         {
             _telnetClient.Disconnect();
         }
+         public string Path
+        {
+            get
+            {return path; }
 
+            set
+            {
+                path = value;
+                INotifyPropertyChanged("Path");
+            }
+        }
+
+        public void INotifyPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+        }
 
         public void Start()
         {

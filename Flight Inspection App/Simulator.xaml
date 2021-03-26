@@ -15,7 +15,7 @@
         </Grid.Background>
         <Controls:FilesComponent Margin="10,82,668,146"/>
         <Controls:FeaturesPanel Margin="118,82,560,146"/>
-        <Controls:ControlBar/>
+        <Controls:ControlBar Loaded="ControlBar_Loaded_4"/>
         <Controls:FeaturesGraphs Margin="245,10,282,43"/>
         <Controls:FlightInstruments Margin="523,189,-24,43"/>
     </Grid>

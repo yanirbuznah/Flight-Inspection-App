@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,13 +26,58 @@ namespace Flight_Inspection_App
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-        public string VM_Path
+
+
+  
+        public string VM_Ip
         {
-            get { return _fgm.Path; }//need to do the same for every component in Simulator.
-        } // only need getter here !
+            get { return _fgm.Ip; }
+            set
+            {
+                if (_fgm.Ip != value)
+                {
+                    _fgm.Ip = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        public int VM_Port
+        {
+            get { return _fgm.Port; }
+            set
+            {
+                if (_fgm.Port != value)
+                {
+                    _fgm.Port = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
+        public KeyValuePair<string, string>  VM_File
+        {
+            get { return _fgm.File; }
+            set
+            {
+                if (_fgm.File.Key != value.Key)
+                {
+                    _fgm.File = value;
+                    OnPropertyChanged();
+                }
+            }
+                //need to do the same for every component in Simulator.
+        } 
         public void Connect()
         {
-            _fgm.Connect("127.0.0.1",5400);
+            _fgm.Connect();
         }
 
         public void Disconnect()

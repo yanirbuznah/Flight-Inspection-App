@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -29,7 +30,7 @@ namespace Flight_Inspection_App
             }
             catch
             {
-                Console.WriteLine("Connect Error");
+               Debug.WriteLine("Connect Error");
             }
 
         }

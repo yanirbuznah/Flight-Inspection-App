@@ -12,23 +12,32 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Flight_Inspection_App
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class MainWindow : NavigationWindow, INotifyPropertyChanged
     {
         HomePage home;
         IViewModel vm;
-        public MainWindow()
+        public MainWindow() 
         {
             InitializeComponent();
             vm = new FGVM(new FGM(new Client()));
             DataContext = vm;
             home = new HomePage(vm);
             Navigate(home);
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public HomePage GetHomePage()

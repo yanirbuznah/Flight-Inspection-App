@@ -6,4 +6,5 @@
         xmlns:local="clr-namespace:Flight_Inspection_App"
         mc:Ignorable="d"
         Title="Flight Simulator" Height="600" Width="800" ShowsNavigationUI="False">
+
 </NavigationWindow>

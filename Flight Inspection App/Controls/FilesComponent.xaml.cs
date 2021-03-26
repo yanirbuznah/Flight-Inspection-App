@@ -37,12 +37,12 @@ namespace Flight_Inspection_App.Controls
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.Filter = "Csv files (*.csv)|*.csv|All files (*.*)|*.*";
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)
             {
-                foreach (string filename in openFileDialog.FileNames)
-                    lbFiles.Items.Add(Path.GetFileName(filename));
+                foreach (string filePath in openFileDialog.FileNames)
+                    lbFiles.Items.Add(new KeyValuePair<string,string>(filePath,Path.GetFileName(filePath)));
             }
         }
 

@@ -16,14 +16,16 @@
         <Button Content="Start Now" HorizontalAlignment="Left" Margin="507,330,0,0" VerticalAlignment="Top" Height="58" Width="260" Click="Start_Click"/>
         <Button Content="Connect" HorizontalAlignment="Left" Margin="72,405,0,0" VerticalAlignment="Top" Height="35" Width="118" Click="Connect_Click"/>
 
-        <TextBox x:Name="IP" Margin="40,274,558,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" SelectionBrush="{x:Null}"  Text="127.0.0.1" />
-        <TextBox x:Name="PORT" Margin="40,353,558,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" SelectionBrush="{x:Null}" Text="5400" />
+        <TextBox x:Name="IP" Margin="40,274,558,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI"   Text="{Binding Path=VM_Ip ,Mode=TwoWay}" />
+        <TextBox x:Name="PORT" Margin="40,353,558,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" Text="{Binding Path=VM_Port ,Mode=TwoWay}" />
+       
         <StackPanel>
             <Label Margin="111,220,649,237" Content="IP" Height="50" FontSize="25" FontWeight="Bold" Foreground="White"/>
         </StackPanel>
         <StackPanel>
             <Label Margin="111,300,624,141" Content="Port" Height="50" FontSize="25" FontWeight="Bold" Foreground="White"/>
         </StackPanel>
+      
 
 
     </Grid>

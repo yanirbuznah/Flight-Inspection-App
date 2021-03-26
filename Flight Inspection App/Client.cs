@@ -42,6 +42,7 @@ namespace Flight_Inspection_App
         }
         public void Write(string path)
         {
+
             if (isConnected)
             {
                 var file = new System.IO.StreamReader(path);
@@ -52,11 +53,12 @@ namespace Flight_Inspection_App
                     Console.WriteLine(line);
                     _ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                     _ns.Flush();
-                    Thread.Sleep(10);
+                    Thread.Sleep(100);
                 }
                 file.Close();
             }
         }
+
 
         public bool isConnected
         {

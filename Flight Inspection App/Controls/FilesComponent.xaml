@@ -12,12 +12,13 @@
                 <Image Source="/Controls/ControlImages/folder-icon.png" Height="27" Width="38" />
             </Button>
         </WrapPanel>
-        <ListBox  Name="lbFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding VM_File}">
-            <ListBoxItem>
+        <ListBox  Name="lbFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_File}">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Value}" />
                 </DataTemplate>
-            </ListBoxItem>    
+            </ListBox.ItemTemplate>
+
         </ListBox>
 
     </DockPanel>

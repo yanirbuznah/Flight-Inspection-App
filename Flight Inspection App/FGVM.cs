@@ -17,11 +17,11 @@ namespace Flight_Inspection_App
             _fgm = fgm;
             _fgm.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
-                INotifyPropertyChanged("VM_" + e.PropertyName);
+                NotifyPropertyChanged("VM_" + e.PropertyName);
             };
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        public void INotifyPropertyChanged(string propName)
+        public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));

@@ -13,7 +13,7 @@ namespace Flight_Inspection_App
     {
         private KeyValuePair<string,string> _file = new (@"C:\Program Files\FlightGear 2020.3.6\bin\reg_flight.csv", "reg_flight.csv");
         private int _port = 5400;
-        double sleepTime = 100;
+        int sleepTime = 100;
         private string _ip = "127.0.0.1";
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -67,7 +67,7 @@ namespace Flight_Inspection_App
                         Console.WriteLine(line);
                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                         _telnetClient.getNs().Flush();
-                        Thread.Sleep(10);
+                        Thread.Sleep(sleepTime);
                     }
                     file.Close();
                 }
@@ -75,7 +75,7 @@ namespace Flight_Inspection_App
             }).Start();
         }
 
-        public double SleepTime
+        public int SleepTime
         {
             get { return sleepTime; }
             set

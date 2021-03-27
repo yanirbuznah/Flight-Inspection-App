@@ -41,6 +41,18 @@ namespace Flight_Inspection_App
                 }
             }
         }
+        public int VM_SleepTime
+        {
+            get { return _fgm.SleepTime; }
+            set
+            {
+                if (_fgm.SleepTime != value)
+                {
+                    _fgm.SleepTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
 
         public int VM_Port

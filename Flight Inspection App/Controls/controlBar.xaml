@@ -32,7 +32,7 @@
                 <Image Source="/Controls/ControlImages/math-minus-icon.png" Height="20" Width="25" Margin="5,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
             </Button>
-            <TextBlock x:Name="speed" Height="18" Text="1.0" Width="22"></TextBlock>
+            <TextBlock x:Name="speed" Height="18"  Text="{Binding VM_SleepTime,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="22"></TextBlock>
             <Button Click="increase_speed" Height="26" Width="29">
                 <Image Source="/Controls/ControlImages/math-add-icon.png" Height="20" Width="20" Margin="1,0,0,0"/>
             </Button>

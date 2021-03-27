@@ -153,9 +153,9 @@ namespace Flight_Inspection_App.Controls
 		private void increase_speed(object sender, RoutedEventArgs e)
 		{
 			double current_speed = Convert.ToDouble(speed.Text);
-			if (current_speed < 2)
+			if (current_speed > 0)
 			{
-				current_speed += 0.25;
+				current_speed -= 10;
 				speed.Text = current_speed.ToString();
 			}
 		}
@@ -163,9 +163,9 @@ namespace Flight_Inspection_App.Controls
 		private void decrease_speed(object sender, RoutedEventArgs e)
 		{
 			double current_speed = Convert.ToDouble(speed.Text);
-			if (current_speed > 0)
+			if (current_speed < 100)
 			{
-				current_speed -= 0.25;
+				current_speed += 10;
 				speed.Text = current_speed.ToString();
 			}
 		}

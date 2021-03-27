@@ -18,15 +18,17 @@ using System.Windows.Threading;
 
 namespace Flight_Inspection_App.Controls
 {
-    /// <summary>
-    /// Interaction logic for controlBar.xaml
-    /// </summary>
-    public partial class ControlBar : UserControl
-    {
+	/// <summary>
+	/// Interaction logic for controlBar.xaml
+	/// </summary>
+	public partial class ControlBar : UserControl
+	{
 		private bool mediaPlayerIsPlaying = false;
 		private bool userIsDraggingSlider = false;
+		private IViewModel _vm;
 		public ControlBar()
-        {
+		{
+
 			InitializeComponent();
 
 			DispatcherTimer timer = new DispatcherTimer();
@@ -34,10 +36,14 @@ namespace Flight_Inspection_App.Controls
 			timer.Tick += timer_Tick;
 			timer.Start();
 		}
+		public ControlBar(IViewModel vm) : this()
+		{
+			_vm = vm;
+		}
 		public static void Play()
-        {
+		{
 
-        }
+		}
 		public static void Pause()
 		{
 
@@ -73,7 +79,7 @@ namespace Flight_Inspection_App.Controls
 		}
 		private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			
+
 		}
 
 		private void Play_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -83,12 +89,12 @@ namespace Flight_Inspection_App.Controls
 
 		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			
+
 		}
 
 		private void Pause_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-		
+
 		}
 
 		private void Stop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -98,28 +104,28 @@ namespace Flight_Inspection_App.Controls
 
 		private void Stop_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			
+
 			mediaPlayerIsPlaying = false;
 		}
-        private void SpeedDown_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+		private void SpeedDown_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
 
-        }
+		}
 
-        private void SpeedDown_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+		private void SpeedDown_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 
-        }
-        private void SpeedUp_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+		}
+		private void SpeedUp_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
 
-        }
+		}
 
-        private void SpeedUp_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
+		private void SpeedUp_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 
-        }
-        private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
+		}
+		private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
 		{
 			userIsDraggingSlider = true;
 		}
@@ -127,7 +133,7 @@ namespace Flight_Inspection_App.Controls
 		private void sliProgress_DragCompleted(object sender, DragCompletedEventArgs e)
 		{
 			userIsDraggingSlider = false;
-			
+
 		}
 
 		private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -137,13 +143,32 @@ namespace Flight_Inspection_App.Controls
 
 		private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
 		{
-			
+
 		}
 
-        private void pbVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
+		private void pbVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
 
-        }
-    }
+		}
+		private void increase_speed(object sender, RoutedEventArgs e)
+		{
+			double current_speed = Convert.ToDouble(speed.Text);
+			if (current_speed < 2)
+			{
+				current_speed += 0.25;
+				speed.Text = current_speed.ToString();
+			}
+		}
+
+		private void decrease_speed(object sender, RoutedEventArgs e)
+		{
+			double current_speed = Convert.ToDouble(speed.Text);
+			if (current_speed > 0)
+			{
+				current_speed -= 0.25;
+				speed.Text = current_speed.ToString();
+			}
+		}
+	}
 
 }

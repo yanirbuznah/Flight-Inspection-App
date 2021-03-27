@@ -27,12 +27,14 @@
             </Button>
             <Slider x:Name="sliProgress" Thumb.DragStarted="sliProgress_DragStarted"  Thumb.DragCompleted="sliProgress_DragCompleted" ValueChanged="sliProgress_ValueChanged" Width="500" Height="20"  Margin="5,0,0,0" />
             <TextBlock x:Name="lblProgressStatus" Height="18" Margin="5,0,0,0"><Run Text="00:00:00" /></TextBlock>
-            <Button Command="MediaCommands.FastForward">
-                <Image Source="/Controls/ControlImages/math-minus-icon.png" Height="20" Width="20" Margin="30,0,5,0"/>
+            <Button Click="decrease_speed" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="34" Height="26">
+
+                <Image Source="/Controls/ControlImages/math-minus-icon.png" Height="20" Width="25" Margin="5,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+
             </Button>
-            <TextBlock x:Name="speed" Height="18"><Run Text="1.0"/></TextBlock>
-            <Button Command="MediaCommands.FastForward">
-                <Image Source="/Controls/ControlImages/math-add-icon.png" Height="20" Width="20" Margin="5,0,0,0"/>
+            <TextBlock x:Name="speed" Height="18" Text="1.0" Width="22"></TextBlock>
+            <Button Click="increase_speed" Height="26" Width="29">
+                <Image Source="/Controls/ControlImages/math-add-icon.png" Height="20" Width="20" Margin="1,0,0,0"/>
             </Button>
 
 

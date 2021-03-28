@@ -33,7 +33,6 @@ namespace Flight_Inspection_App.Controls
 
 			DispatcherTimer timer = new DispatcherTimer();
 			timer.Interval = TimeSpan.FromSeconds(1);
-			timer.Tick += timer_Tick;
 			timer.Start();
 		}
 		public ControlBar(IViewModel vm) : this()
@@ -57,13 +56,6 @@ namespace Flight_Inspection_App.Controls
 
 		}
 		public static void SpeedDown()
-		{
-
-		}
-
-
-
-		private void timer_Tick(object sender, EventArgs e)
 		{
 
 		}
@@ -163,12 +155,17 @@ namespace Flight_Inspection_App.Controls
 		private void decrease_speed(object sender, RoutedEventArgs e)
 		{
 			double current_speed = Convert.ToDouble(speed.Text);
-			if (current_speed < 100)
+			if (current_speed < 200)
 			{
 				current_speed += 10;
 				speed.Text = current_speed.ToString();
 			}
 		}
-	}
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 
 }

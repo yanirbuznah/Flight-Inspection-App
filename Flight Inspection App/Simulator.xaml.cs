@@ -76,7 +76,7 @@ namespace Flight_Inspection_App
 
         private void FilesComponent_Loaded(object sender, RoutedEventArgs e)
         {
-            //Load the file
+            
         }
 
         private void ControlBar_Loaded_4(object sender, RoutedEventArgs e)

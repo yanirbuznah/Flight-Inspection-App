@@ -11,10 +11,12 @@ namespace Flight_Inspection_App
 {
     public class FGM : IModel
     {
-        private KeyValuePair<string,string> _file = new (@"C:\Program Files\FlightGear 2020.3.6\bin\reg_flight.csv", "reg_flight.csv");
+        private KeyValuePair<string, string> _file;
         private int _port = 5400;
         int sleepTime = 100;
         private string _ip = "127.0.0.1";
+        Thread flight;
+        private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
         public FGM (Client client){
@@ -55,14 +57,15 @@ namespace Flight_Inspection_App
 
         public void Start()
         {
-            new Thread(() => {
-
+            flight = new Thread(() =>
+            {
                 if (_telnetClient.isConnected)
                 {
                     var file = new System.IO.StreamReader(_file.Key);
                     string line;
                     while ((line = file.ReadLine()) != null)
                     {
+                        wh.WaitOne(Timeout.Infinite);
                         line += "\r\n";
                         Console.WriteLine(line);
                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
@@ -72,7 +75,10 @@ namespace Flight_Inspection_App
                     file.Close();
                 }
 
-            }).Start();
+            });
+
+            flight.Start();
+
         }
 
         public int SleepTime
@@ -112,6 +118,23 @@ namespace Flight_Inspection_App
                 }
             }
         }
+        public bool getStatus()
+        {
+            return _telnetClient.getStatus();
+        }
+        public void setStatus(bool val)
+        {
+            _telnetClient.setStatus(val);
+        }
+        public void pauseThread()
+        {
+            wh.Reset();
+        }
+        public void continueThread()
+        {
+            wh.Set();
+        }
+        
 
     }
 }

@@ -35,7 +35,7 @@ namespace Flight_Inspection_App
         {
             s = new Simulator(_vm);
             this.NavigationService.Navigate(s);
-            _vm.Start();
+            //_vm.Start();
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)

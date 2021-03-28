@@ -23,10 +23,12 @@ namespace Flight_Inspection_App.Controls
     /// </summary>
     public partial class FilesComponent : UserControl
     {
+      
         public FilesComponent()
         {
             InitializeComponent();
         }
+      
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -48,7 +50,7 @@ namespace Flight_Inspection_App.Controls
 
         private void lbFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
+
         }
     }
 }

@@ -6,12 +6,16 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Flight_Inspection_App.Commands;
 
 namespace Flight_Inspection_App
 {
     public class FGVM : IViewModel
     {
         FGM _fgm;
+        public PauseCommand StopTheFlight { get;private set; }
+        public PlayCommand PlayTheFlight { get; private set; }
         public FGVM(FGM fgm)
         {
             _fgm = fgm;
@@ -19,6 +23,8 @@ namespace Flight_Inspection_App
             {
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
+            StopTheFlight = new PauseCommand(PauseThread);
+            PlayTheFlight = new PlayCommand(ContinueRunning);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -74,7 +80,7 @@ namespace Flight_Inspection_App
 
 
 
-        public KeyValuePair<string, string>  VM_File
+        public KeyValuePair<string, string> VM_File
         {
             get { return _fgm.File; }
             set
@@ -83,10 +89,11 @@ namespace Flight_Inspection_App
                 {
                     _fgm.File = value;
                     OnPropertyChanged();
+                    _fgm.Start();
                 }
             }
-                //need to do the same for every component in Simulator.
-        } 
+            //need to do the same for every component in Simulator.
+        }
         public void Connect()
         {
             _fgm.Connect();
@@ -100,6 +107,16 @@ namespace Flight_Inspection_App
         public void Start()
         {
             _fgm.Start();
+            _fgm.setStatus(true);
         }
+        public void PauseThread()
+        {
+            _fgm.pauseThread();
+        }
+        public void ContinueRunning()
+        {
+            _fgm.continueThread();
+        }
+        
     }
 }

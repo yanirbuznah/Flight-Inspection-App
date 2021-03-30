@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="26.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Controls\ControlImages\folder-icon.png" />
     <Resource Include="Controls\ControlImages\math-add-icon.png" />
     <Resource Include="Controls\ControlImages\math-minus-icon.png" />

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -85,20 +87,22 @@ namespace Flight_Inspection_App
                 isStopped = false;
                 if (_telnetClient.isConnected)
                 {
-                    var file = new System.IO.StreamReader(_file.Key);
-                    string line;
-                    while (!isStopped && (line = file.ReadLine()) != null)
+                    using (var file = new System.IO.StreamReader(_file.Key))
                     {
+                        string line;
+                        while (!isStopped && (line = file.ReadLine()) != null)
+                        {
 
-                        wh.WaitOne(Timeout.Infinite);
-                        UpdateFeaturesValues(line);
-                        line += "\r\n";
-                        Console.WriteLine(line);
-                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                        _telnetClient.getNs().Flush();
-                        Thread.Sleep((int)sleepTime);
+                            wh.WaitOne(Timeout.Infinite);
+                            UpdateFeaturesValues(line);
+                            line += "\r\n";
+                            Console.WriteLine(line);
+                            _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                            _telnetClient.getNs().Flush();
+                            Thread.Sleep((int)sleepTime);
+                        }
                     }
-                    file.Close();
+
                 }
             }).Start();
         }

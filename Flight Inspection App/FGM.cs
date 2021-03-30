@@ -14,8 +14,10 @@ namespace Flight_Inspection_App
         private KeyValuePair<string, string> _file;
         private int _port = 5400;
         int sleepTime = 100;
+        private System.IO.StreamReader streamreader;
         private string _ip = "127.0.0.1";
         Thread flight;
+        bool isStopped = false;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -57,13 +59,15 @@ namespace Flight_Inspection_App
 
         public void Start()
         {
-            flight = new Thread(() =>
+
+            new Thread(() =>
             {
+                isStopped = false;
                 if (_telnetClient.isConnected)
                 {
                     var file = new System.IO.StreamReader(_file.Key);
                     string line;
-                    while ((line = file.ReadLine()) != null)
+                    while (!isStopped && (line = file.ReadLine()) != null)
                     {
                         wh.WaitOne(Timeout.Infinite);
                         line += "\r\n";
@@ -74,11 +78,7 @@ namespace Flight_Inspection_App
                     }
                     file.Close();
                 }
-
-            });
-
-            flight.Start();
-
+            }).Start();
         }
 
         public int SleepTime
@@ -105,7 +105,6 @@ namespace Flight_Inspection_App
                 }
             }
         }
-
         public int Port
         {
             get { return _port; }
@@ -132,9 +131,20 @@ namespace Flight_Inspection_App
         }
         public void continueThread()
         {
-            wh.Set();
+            if (isStopped)
+            {
+                Start();
+            }
+            else
+            {
+                wh.Set();
+            }
+         
         }
-        
-
+        public void stopSimulatorThread()
+        {
+            wh.Set();//Maybe improve that the client sees 10 pixels before the stop.
+            isStopped = true;
+        }
     }
 }

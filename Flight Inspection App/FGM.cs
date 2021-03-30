@@ -93,6 +93,7 @@ namespace Flight_Inspection_App
                     file.Close();
                 }
             }).Start();
+        }
 
 
         public float Speed

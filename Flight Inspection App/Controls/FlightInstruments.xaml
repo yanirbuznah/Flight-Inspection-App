@@ -10,7 +10,14 @@
         <RichTextBox Margin="10,39,44,10">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="לוח שעונים" FontSize="50" FlowDirection="RightToLeft" BaselineAlignment="Center"/>
+                    <Label x:Name="AltitudeText" Content="Altitude: " HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FF22ADA5"/>
+                    <Label x:Name="Altitude_Value" Content="{Binding VM_Altitude, Mode=OneWay}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center">
+                    </Label>
+                </Paragraph>
+                <Paragraph>
+                    <Label x:Name="speed_label" Content="Speed: " Margin="0,-15,0,0" Foreground="#FF16A9A2"></Label>
+                    <Label x:Name="Speed_Value" Content="{Binding VM_Speed, Mode=OneWay}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center">
+                    </Label>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

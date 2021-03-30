@@ -55,14 +55,14 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public float VM_Speed
+        public float VM_VideoSpeed
         {
-            get { return _fgm.Speed; }
+            get { return _fgm.VideoSpeed; }
             set
             {
-                if (_fgm.Speed != value)
+                if (_fgm.VideoSpeed != value)
                 {
-                    _fgm.Speed = value;
+                    _fgm.VideoSpeed = value;
                     OnPropertyChanged();
                 }
             }
@@ -81,6 +81,16 @@ namespace Flight_Inspection_App
                 }
             }
         }
+
+        public string VM_Altitude
+        {
+            get { return _fgm.Altitude; }
+        }
+        public string VM_Speed
+        {
+            get { return _fgm.Speed; }
+        }
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -90,12 +100,12 @@ namespace Flight_Inspection_App
 
         public KeyValuePair<string, string> VM_File
         {
-            get { return _fgm.File; }
+            get { return _fgm.ThisFile; }
             set
             {
-                if (_fgm.File.Key != value.Key)
+                if (_fgm.ThisFile.Key != value.Key)
                 {
-                    _fgm.File = value;
+                    _fgm.ThisFile = value;
                     OnPropertyChanged();
                     _fgm.Start();
                 }

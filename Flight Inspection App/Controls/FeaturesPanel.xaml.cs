@@ -20,9 +20,13 @@ namespace Flight_Inspection_App.Controls
     /// </summary>
     public partial class FeaturesPanel : UserControl
     {
+        
         public FeaturesPanel()
         {
             InitializeComponent();
+            
         }
+
+        
     }
 }

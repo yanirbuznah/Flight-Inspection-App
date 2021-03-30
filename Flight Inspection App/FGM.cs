@@ -4,15 +4,19 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Flight_Inspection_App
 {
     public class FGM : IModel
     {
-        private KeyValuePair<string,string> _file = new (@"C:\Users\yanir\Desktop\flightgearProject\reg_flight.csv", "reg_flight.csv");
+        private KeyValuePair<string, string> _file;
         private int _port = 5400;
+        int sleepTime = 100;
         private string _ip = "127.0.0.1";
+        Thread flight;
+        private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
         public FGM (Client client){
@@ -53,9 +57,42 @@ namespace Flight_Inspection_App
 
         public void Start()
         {
-            _telnetClient.Write(_file.Key);
+            flight = new Thread(() =>
+            {
+                if (_telnetClient.isConnected)
+                {
+                    var file = new System.IO.StreamReader(_file.Key);
+                    string line;
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        wh.WaitOne(Timeout.Infinite);
+                        line += "\r\n";
+                        Console.WriteLine(line);
+                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                        _telnetClient.getNs().Flush();
+                        Thread.Sleep(sleepTime);
+                    }
+                    file.Close();
+                }
+
+            });
+
+            flight.Start();
+
         }
 
+        public int SleepTime
+        {
+            get { return sleepTime; }
+            set
+            {
+                if (sleepTime != value)
+                {
+                    sleepTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public string Ip
         {
             get { return _ip; }
@@ -81,6 +118,23 @@ namespace Flight_Inspection_App
                 }
             }
         }
+        public bool getStatus()
+        {
+            return _telnetClient.getStatus();
+        }
+        public void setStatus(bool val)
+        {
+            _telnetClient.setStatus(val);
+        }
+        public void pauseThread()
+        {
+            wh.Reset();
+        }
+        public void continueThread()
+        {
+            wh.Set();
+        }
+        
 
     }
 }

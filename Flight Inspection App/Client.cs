@@ -15,6 +15,7 @@ namespace Flight_Inspection_App
     {
         private TcpClient _client;
         private NetworkStream _ns;
+        bool isRunning = false;
         public Client()
         {
             _client = new TcpClient(AddressFamily.InterNetwork);
@@ -27,39 +28,35 @@ namespace Flight_Inspection_App
                 _client.Connect(IPAddress.Parse(ip), port);
                 _ns = _client.GetStream();
                 isConnected = true;
+                
             }
             catch
             {
-               Debug.WriteLine("Connect Error");
+                Debug.WriteLine("Connect Error");
             }
 
         }
+        public NetworkStream getNs()
+        {
+            return _ns;
+        }
+       
         public void Disconnect()
         {
             _ns.Close();
             _client.Close();
             isConnected = false;
         }
-        public void Write(string path)
+        
+
+        public void setStatus (bool val)
         {
-
-            if (isConnected)
-            {
-                var file = new System.IO.StreamReader(path);
-                string line;
-                while ((line = file.ReadLine()) != null)
-                {
-                    line += "\r\n";
-                    Console.WriteLine(line);
-                    _ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
-                    _ns.Flush();
-                    Thread.Sleep(100);
-                }
-                file.Close();
-            }
+            isRunning = val;
         }
-
-
+        public bool getStatus()
+        {
+            return isRunning;
+        }
         public bool isConnected
         {
             get; set;

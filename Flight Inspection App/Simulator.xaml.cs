@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Flight_Inspection_App.Controls;
 
 namespace Flight_Inspection_App
 {
@@ -22,17 +23,19 @@ namespace Flight_Inspection_App
     public partial class Simulator : Page
     {
         IViewModel _vm;
+        ControlBar cb;
         public Simulator(IViewModel vm)
         {
             InitializeComponent();
             _vm = vm;
+            cb = new ControlBar(vm);
             DataContext = vm;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Start Internet Explorer. Defaults to the home page.
-          //  Process.Start("FlightGear - Compositor");
+            //  Process.Start("FlightGear - Compositor");
 
             // Display the contents of the favorites folder in the browser.
             Process.Start(@"C:\Program Files\FlightGear 2020.3.6\bin\fgfs - compositor.exe");
@@ -42,7 +45,10 @@ namespace Flight_Inspection_App
         {
 
         }
-
+        public IViewModel getVm()
+        {
+            return _vm;
+        }
         private void Joystick_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -70,7 +76,7 @@ namespace Flight_Inspection_App
 
         private void FilesComponent_Loaded(object sender, RoutedEventArgs e)
         {
-            //Load the file
+            
         }
 
         private void ControlBar_Loaded_4(object sender, RoutedEventArgs e)

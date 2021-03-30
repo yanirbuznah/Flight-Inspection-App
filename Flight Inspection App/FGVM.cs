@@ -14,10 +14,12 @@ namespace Flight_Inspection_App
     public class FGVM : IViewModel
     {
         FGM _fgm;
-        public PauseCommand StopTheFlight { get;private set; }
+        public PauseCommand PauseTheFlight { get;private set; }
         public PlayCommand PlayTheFlight { get; private set; }
         public PlusCommand IncreaseTheSpeed { get; private set; }
         public MinusCommand DecreaseTheSpeed { get; private set; }
+        public StopCommand StopTheFlight { get; private set; }
+
         public FGVM(FGM fgm)
         {
             _fgm = fgm;
@@ -25,10 +27,12 @@ namespace Flight_Inspection_App
             {
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
-            StopTheFlight = new PauseCommand(PauseThread);
+            PauseTheFlight = new PauseCommand(PauseThread);
             PlayTheFlight = new PlayCommand(ContinueRunning);
             IncreaseTheSpeed = new PlusCommand(increaseSpeed);
             DecreaseTheSpeed = new MinusCommand(decreaseSpeed);
+            StopTheFlight = new StopCommand(StopFlight);
+
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -81,7 +85,7 @@ namespace Flight_Inspection_App
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        public List<string> VM_FeaturesNames { get { return _fgm.FeaturesNames; } }
 
 
         public KeyValuePair<string, string> VM_File
@@ -120,6 +124,10 @@ namespace Flight_Inspection_App
         public void ContinueRunning()
         {
             _fgm.continueThread();
+        }
+        public void StopFlight()
+        {
+            _fgm.stopSimulatorThread(); 
         }
         
         public void increaseSpeed()

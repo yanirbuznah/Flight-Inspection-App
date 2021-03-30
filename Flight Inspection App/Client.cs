@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flight_Inspection_App
 {
@@ -28,11 +29,11 @@ namespace Flight_Inspection_App
                 _client.Connect(IPAddress.Parse(ip), port);
                 _ns = _client.GetStream();
                 isConnected = true;
-                
             }
             catch
             {
                 Debug.WriteLine("Connect Error");
+                MessageBox.Show("Connection error!");
             }
 
         }

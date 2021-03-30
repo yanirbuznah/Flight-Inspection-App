@@ -1,28 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Flight_Inspection_App
 {
     public class FGM : IModel
     {
         private KeyValuePair<string, string> _file;
+        List<string> _featuresNames;
         private int _port = 5400;
+
         private float speed = 1;
         private float sleepTime = 100;
+
+        private System.IO.StreamReader streamreader;
+
         private string _ip = "127.0.0.1";
-        Thread flight;
+        bool isStopped = false;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
-        public FGM (Client client){
+        public FGM(Client client) {
             _telnetClient = client;
+            var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
+            XElement purchaseOrder = XElement.Load(xmlPlaybackFilepath);
+            IEnumerable<string> partNos = purchaseOrder.Descendants("name").Select(x => (string)x);
+            _featuresNames = partNos.Distinct().ToList();
+
         }
+
+
         public void Connect()
         {
             _telnetClient.Connect(_ip, _port);
@@ -32,10 +47,10 @@ namespace Flight_Inspection_App
         {
             _telnetClient.Disconnect();
         }
-         public KeyValuePair<string,string> File
+        public KeyValuePair<string, string> File
         {
             get
-            {return _file; }
+            { return _file; }
 
             set
             {
@@ -58,13 +73,15 @@ namespace Flight_Inspection_App
 
         public void Start()
         {
-            flight = new Thread(() =>
+
+            new Thread(() =>
             {
+                isStopped = false;
                 if (_telnetClient.isConnected)
                 {
                     var file = new System.IO.StreamReader(_file.Key);
                     string line;
-                    while ((line = file.ReadLine()) != null)
+                    while (!isStopped && (line = file.ReadLine()) != null)
                     {
                         wh.WaitOne(Timeout.Infinite);
                         line += "\r\n";
@@ -75,12 +92,8 @@ namespace Flight_Inspection_App
                     }
                     file.Close();
                 }
+            }).Start();
 
-            });
-
-            flight.Start();
-
-        }
 
         public float Speed
         {
@@ -107,7 +120,6 @@ namespace Flight_Inspection_App
                 }
             }
         }
-
         public int Port
         {
             get { return _port; }
@@ -120,6 +132,8 @@ namespace Flight_Inspection_App
                 }
             }
         }
+        public List<string> FeaturesNames { get { return _featuresNames; } }
+
         public bool getStatus()
         {
             return _telnetClient.getStatus();
@@ -134,13 +148,27 @@ namespace Flight_Inspection_App
         }
         public void continueThread()
         {
-            wh.Set();
+            if (isStopped)
+            {
+                Start();
+            }
+            else
+            {
+                wh.Set();
+            }
+         
         }
-        
+        public void stopSimulatorThread()
+        {
+            wh.Set();//Maybe improve that the client sees 10 pixels before the stop.
+            isStopped = true;
+        }
+
         public void increaseSpeed()
         {
             Speed = Speed + (float)0.1;
         }
+
 
         public void decreaseSpeed()
         {

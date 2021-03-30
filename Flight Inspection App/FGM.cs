@@ -15,13 +15,11 @@ namespace Flight_Inspection_App
     public class FGM : IModel
     {
         private KeyValuePair<string, string> _file;
-        List<string> _featuresNames;
+        List<Feature> _features;
         private int _port = 5400;
-
         private float speed = 1;
         private float sleepTime = 100;
 
-        private System.IO.StreamReader streamreader;
 
         private string _ip = "127.0.0.1";
         bool isStopped = false;
@@ -31,10 +29,10 @@ namespace Flight_Inspection_App
         public FGM(Client client) {
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
-            XElement purchaseOrder = XElement.Load(xmlPlaybackFilepath);
-            IEnumerable<string> partNos = purchaseOrder.Descendants("name").Select(x => (string)x);
-            _featuresNames = partNos.Distinct().ToList();
-
+            XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
+            IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(x => (string)x);
+            List<string> featursNames = chunkNames.Distinct().ToList();
+            _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
         }
 
 
@@ -70,6 +68,14 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void UpdateFeaturesValues(string line)
+        {
+            List<String> listStrLineElements = line.Split(',').ToList();
+            for (int i = 0; i < _features.Capacity; i++)
+            {
+                _features[i].Value = listStrLineElements[i];
+            }
+        }
 
         public void Start()
         {
@@ -83,7 +89,9 @@ namespace Flight_Inspection_App
                     string line;
                     while (!isStopped && (line = file.ReadLine()) != null)
                     {
+
                         wh.WaitOne(Timeout.Infinite);
+                        UpdateFeaturesValues(line);
                         line += "\r\n";
                         Console.WriteLine(line);
                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
@@ -133,7 +141,7 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public List<string> FeaturesNames { get { return _featuresNames; } }
+        public List<Feature> Features { get { return _features; } }
 
         public bool getStatus()
         {

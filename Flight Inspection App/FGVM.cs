@@ -16,6 +16,8 @@ namespace Flight_Inspection_App
         FGM _fgm;
         public PauseCommand StopTheFlight { get;private set; }
         public PlayCommand PlayTheFlight { get; private set; }
+        public PlusCommand IncreaseTheSpeed { get; private set; }
+        public MinusCommand DecreaseTheSpeed { get; private set; }
         public FGVM(FGM fgm)
         {
             _fgm = fgm;
@@ -25,6 +27,8 @@ namespace Flight_Inspection_App
             };
             StopTheFlight = new PauseCommand(PauseThread);
             PlayTheFlight = new PlayCommand(ContinueRunning);
+            IncreaseTheSpeed = new PlusCommand(increaseSpeed);
+            DecreaseTheSpeed = new MinusCommand(decreaseSpeed);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -47,14 +51,14 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public int VM_SleepTime
+        public float VM_Speed
         {
-            get { return _fgm.SleepTime; }
+            get { return _fgm.Speed; }
             set
             {
-                if (_fgm.SleepTime != value)
+                if (_fgm.Speed != value)
                 {
-                    _fgm.SleepTime = value;
+                    _fgm.Speed = value;
                     OnPropertyChanged();
                 }
             }
@@ -118,5 +122,14 @@ namespace Flight_Inspection_App
             _fgm.continueThread();
         }
         
+        public void increaseSpeed()
+        {
+            _fgm.increaseSpeed();
+        }
+
+        public void decreaseSpeed()
+        {
+            _fgm.decreaseSpeed();
+        }
     }
 }

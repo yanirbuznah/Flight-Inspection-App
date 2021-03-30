@@ -89,10 +89,8 @@ namespace Flight_Inspection_App
                     file.Close();
                 }
             }).Start();
-        }
 
 
-             }).Start();
         }  
         public int SleepTime
         {

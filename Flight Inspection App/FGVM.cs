@@ -80,7 +80,7 @@ namespace Flight_Inspection_App
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        public List<string> VM_FeaturesNames { get { return _fgm.FeaturesNames; } }
 
 
         public KeyValuePair<string, string> VM_File

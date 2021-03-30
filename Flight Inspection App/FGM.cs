@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,13 +17,11 @@ namespace Flight_Inspection_App
     public class FGM : IModel
     {
         private KeyValuePair<string, string> _file;
-        List<string> _featuresNames;
+        List<Feature> _features;
         private int _port = 5400;
-
         private float speed = 1;
         private float sleepTime = 100;
 
-        private System.IO.StreamReader streamreader;
 
         private string _ip = "127.0.0.1";
         bool isStopped = false;
@@ -31,10 +31,10 @@ namespace Flight_Inspection_App
         public FGM(Client client) {
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
-            XElement purchaseOrder = XElement.Load(xmlPlaybackFilepath);
-            IEnumerable<string> partNos = purchaseOrder.Descendants("name").Select(x => (string)x);
-            _featuresNames = partNos.Distinct().ToList();
-
+            XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
+            IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(x => (string)x);
+            List<string> featursNames = chunkNames.Distinct().ToList();
+            _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
         }
 
 
@@ -70,6 +70,14 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void UpdateFeaturesValues(string line)
+        {
+            List<String> listStrLineElements = line.Split(',').ToList();
+            for (int i = 0; i < _features.Capacity; i++)
+            {
+                _features[i].Value = listStrLineElements[i];
+            }
+        }
 
         public void Start()
         {
@@ -79,18 +87,22 @@ namespace Flight_Inspection_App
                 isStopped = false;
                 if (_telnetClient.isConnected)
                 {
-                    var file = new System.IO.StreamReader(_file.Key);
-                    string line;
-                    while (!isStopped && (line = file.ReadLine()) != null)
+                    using (var file = new System.IO.StreamReader(_file.Key))
                     {
-                        wh.WaitOne(Timeout.Infinite);
-                        line += "\r\n";
-                        Console.WriteLine(line);
-                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                        _telnetClient.getNs().Flush();
-                        Thread.Sleep((int)sleepTime);
+                        string line;
+                        while (!isStopped && (line = file.ReadLine()) != null)
+                        {
+
+                            wh.WaitOne(Timeout.Infinite);
+                            UpdateFeaturesValues(line);
+                            line += "\r\n";
+                            Console.WriteLine(line);
+                            _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                            _telnetClient.getNs().Flush();
+                            Thread.Sleep((int)sleepTime);
+                        }
                     }
-                    file.Close();
+
                 }
             }).Start();
         }
@@ -133,7 +145,7 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public List<string> FeaturesNames { get { return _featuresNames; } }
+        public List<Feature> Features { get { return _features; } }
 
         public bool getStatus()
         {

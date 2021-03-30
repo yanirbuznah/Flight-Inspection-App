@@ -27,6 +27,9 @@
         <Viewbox>
             <Controls:FlightInstruments Margin="530,185,-31,47" Width="301" Height="218"/>
         </Viewbox>
+        <Viewbox Margin="561,8,38,237">
+            <Controls:Joystick/>
+        </Viewbox>
     </Grid>
 
 

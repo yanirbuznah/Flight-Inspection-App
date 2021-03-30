@@ -20,9 +20,6 @@ namespace Flight_Inspection_App
 
         private float speed = 1;
         private float sleepTime = 100;
-
-        private System.IO.StreamReader streamreader;
-
         private string _ip = "127.0.0.1";
         bool isStopped = false;
         private ManualResetEvent wh = new ManualResetEvent(true);

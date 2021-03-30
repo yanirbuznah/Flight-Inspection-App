@@ -17,8 +17,12 @@ namespace Flight_Inspection_App
         private KeyValuePair<string, string> _file;
         List<string> _featuresNames;
         private int _port = 5400;
-        int sleepTime = 100;
+
+        private float speed = 1;
+        private float sleepTime = 100;
+
         private System.IO.StreamReader streamreader;
+
         private string _ip = "127.0.0.1";
         bool isStopped = false;
         private ManualResetEvent wh = new ManualResetEvent(true);
@@ -84,7 +88,7 @@ namespace Flight_Inspection_App
                         Console.WriteLine(line);
                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                         _telnetClient.getNs().Flush();
-                        Thread.Sleep(sleepTime);
+                        Thread.Sleep((int)sleepTime);
                     }
                     file.Close();
                 }
@@ -92,16 +96,15 @@ namespace Flight_Inspection_App
         }
 
 
-             }).Start();
-        }  
-        public int SleepTime
+        public float Speed
         {
-            get { return sleepTime; }
+            get { return speed; }
             set
             {
-                if (sleepTime != value)
+                if (speed != value)
                 {
-                    sleepTime = value;
+                    speed = value;
+                    sleepTime = 100 / speed;
                     OnPropertyChanged();
                 }
             }
@@ -162,5 +165,16 @@ namespace Flight_Inspection_App
             isStopped = true;
         }
 
+        public void increaseSpeed()
+        {
+            Speed = Speed + (float)0.1;
+        }
+
+
+        public void decreaseSpeed()
+        {
+            if((speed - (float)0.1) > 0)
+                Speed = Speed - (float)0.1;
+        }
     }
 }

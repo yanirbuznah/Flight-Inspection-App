@@ -86,11 +86,26 @@ namespace Flight_Inspection_App
         {
             get { return _fgm.Altitude; }
         }
-        public string VM_Speed
+        public string VM_AirSpeed
         {
-            get { return _fgm.Speed; }
+            get { return _fgm.AirSpeed; }
         }
-
+        public string VM_FlightDirection
+        {
+            get { return _fgm.FlightDirection; }
+        }
+        public string VM_HeadingDegrees
+        {
+            get { return _fgm.HeadingDegrees; }
+        }
+        public string VM_RollDegrees
+        {
+            get { return _fgm.RollDegrees; }
+        }
+        public string VM_PitchDegrees
+        {
+            get { return _fgm.PitchDegrees; }
+        }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -149,5 +164,18 @@ namespace Flight_Inspection_App
         {
             _fgm.decreaseSpeed();
         }
+
+        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }

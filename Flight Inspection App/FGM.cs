@@ -32,7 +32,7 @@ namespace Flight_Inspection_App
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
             IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(x => (string)x);
-            List<string> featursNames = chunkNames.Distinct().ToList();
+            List<string> featursNames = chunkNames.ToList();
             _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
         }
 
@@ -84,7 +84,7 @@ namespace Flight_Inspection_App
             for (int i = 0; i < arrCsv.Length; i++)
             {
                 List<String> listStrLineElements = arrCsv[i].Split(',').ToList();
-                for (int j=0; j <_features.Capacity ; ++j)
+                for (int j=0; j <42 ; ++j)
                 {
                     _features[j].AddValue(listStrLineElements[j]);
                 }
@@ -96,6 +96,7 @@ namespace Flight_Inspection_App
         {
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_file.Key);
+           
             UpdateFeaturesValues(arrCsv);
             new Thread(() =>
             {
@@ -107,8 +108,12 @@ namespace Flight_Inspection_App
                         for(; parametersLineIndex<arrCsv.Length && !isStopped; ++parametersLineIndex)
                         {
                             Altitude = _features[16].Values[parametersLineIndex]; 
-                             Speed = _features[21].Values[parametersLineIndex]; 
-                            line = arrCsv[parametersLineIndex];
+                            RollDegrees = _features[17].Values[parametersLineIndex];
+                            PitchDegrees = _features[18].Values[parametersLineIndex];
+                            HeadingDegrees = _features[19].Values[parametersLineIndex];
+                            AirSpeed = _features[21].Values[parametersLineIndex];
+                            FlightDirection = _features[37].Values[parametersLineIndex];
+                        line = arrCsv[parametersLineIndex];
                             wh.WaitOne(Timeout.Infinite);
                             //UpdateFeaturesValues(line);
                             line += "\r\n";
@@ -145,13 +150,53 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        string speed = "0";
-        public string Speed
+        string _airSpeed = "0";
+        public string AirSpeed
         {
-            get { return speed; }
+            get { return _airSpeed; }
             private set
             {
-                speed= value;
+                _airSpeed= value;
+                OnPropertyChanged();
+            }
+        }
+        string _flightDirection = "0";
+        public string FlightDirection
+        {
+            get { return _flightDirection; }
+            private set
+            {
+                _flightDirection = value;
+                OnPropertyChanged();
+            }
+        }
+        string _headingDegrees = "0";
+        public string HeadingDegrees
+        {
+            get { return _headingDegrees; }
+            private set
+            {
+                _headingDegrees = value;
+                OnPropertyChanged();
+            }
+        }
+        string _rollDegrees = "0";
+        public string RollDegrees
+        {
+            get { return _rollDegrees; }
+            private set
+            {
+                _rollDegrees = value;
+                OnPropertyChanged();
+            }
+        }
+        string _pitchDegrees = "0";
+        public string PitchDegrees
+        {
+            get { return _pitchDegrees; }
+            private set
+            {
+                _pitchDegrees = value;
                 OnPropertyChanged();
             }
         }
@@ -213,14 +258,14 @@ namespace Flight_Inspection_App
 
         public void increaseSpeed()
         {
-            VideoSpeed = VideoSpeed + (float)0.1;
+            VideoSpeed += (float)0.1;
         }
 
 
         public void decreaseSpeed()
         {
             if((videoSpeed - (float)0.1) > 0)
-                videoSpeed = videoSpeed - (float)0.1;
+                videoSpeed -= (float)0.1;
         }
     }
 }

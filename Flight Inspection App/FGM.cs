@@ -17,8 +17,14 @@ namespace Flight_Inspection_App
         private KeyValuePair<string, string> _file;
         List<string> _featuresNames;
         private int _port = 5400;
-        int sleepTime = 100;
+
+        private float speed = 1;
+        private float sleepTime = 100;
+
+        private System.IO.StreamReader streamreader;
+
         private string _ip = "127.0.0.1";
+        bool isStopped = false;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -67,34 +73,38 @@ namespace Flight_Inspection_App
 
         public void Start()
         {
-            new Thread(() =>
-             {
-                 if (_telnetClient.isConnected)
-                 {
-                     var file = new System.IO.StreamReader(_file.Key);
-                     string line;
-                     while ((line = file.ReadLine()) != null)
-                     {
-                         wh.WaitOne(Timeout.Infinite);
-                         line += "\r\n";
-                         Console.WriteLine(line);
-                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                         _telnetClient.getNs().Flush();
-                         Thread.Sleep(sleepTime);
-                     }
-                     file.Close();
-                 }
 
-             }).Start();
-        }  
-        public int SleepTime
+            new Thread(() =>
+            {
+                isStopped = false;
+                if (_telnetClient.isConnected)
+                {
+                    var file = new System.IO.StreamReader(_file.Key);
+                    string line;
+                    while (!isStopped && (line = file.ReadLine()) != null)
+                    {
+                        wh.WaitOne(Timeout.Infinite);
+                        line += "\r\n";
+                        Console.WriteLine(line);
+                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                        _telnetClient.getNs().Flush();
+                        Thread.Sleep((int)sleepTime);
+                    }
+                    file.Close();
+                }
+            }).Start();
+        }
+
+
+        public float Speed
         {
-            get { return sleepTime; }
+            get { return speed; }
             set
             {
-                if (sleepTime != value)
+                if (speed != value)
                 {
-                    sleepTime = value;
+                    speed = value;
+                    sleepTime = 100 / speed;
                     OnPropertyChanged();
                 }
             }
@@ -111,7 +121,6 @@ namespace Flight_Inspection_App
                 }
             }
         }
-
         public int Port
         {
             get { return _port; }
@@ -140,9 +149,32 @@ namespace Flight_Inspection_App
         }
         public void continueThread()
         {
-            wh.Set();
+            if (isStopped)
+            {
+                Start();
+            }
+            else
+            {
+                wh.Set();
+            }
+         
         }
-       
+        public void stopSimulatorThread()
+        {
+            wh.Set();//Maybe improve that the client sees 10 pixels before the stop.
+            isStopped = true;
+        }
 
+        public void increaseSpeed()
+        {
+            Speed = Speed + (float)0.1;
+        }
+
+
+        public void decreaseSpeed()
+        {
+            if((speed - (float)0.1) > 0)
+                Speed = Speed - (float)0.1;
+        }
     }
 }

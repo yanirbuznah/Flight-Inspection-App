@@ -144,22 +144,12 @@ namespace Flight_Inspection_App.Controls
 		}
 		private void increase_speed(object sender, RoutedEventArgs e)
 		{
-			double current_speed = Convert.ToDouble(speed.Text);
-			if (current_speed > 0)
-			{
-				current_speed -= 10;
-				speed.Text = current_speed.ToString();
-			}
+
 		}
 
 		private void decrease_speed(object sender, RoutedEventArgs e)
 		{
-			double current_speed = Convert.ToDouble(speed.Text);
-			if (current_speed < 200)
-			{
-				current_speed += 10;
-				speed.Text = current_speed.ToString();
-			}
+
 		}
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flight_Inspection_App
 {
@@ -32,6 +33,7 @@ namespace Flight_Inspection_App
             catch
             {
                 Debug.WriteLine("Connect Error");
+                MessageBox.Show("Connection error!");
             }
 
         }

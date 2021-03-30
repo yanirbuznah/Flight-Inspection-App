@@ -18,7 +18,9 @@ namespace Flight_Inspection_App
         List<string> _featuresNames;
         private int _port = 5400;
         int sleepTime = 100;
+        private System.IO.StreamReader streamreader;
         private string _ip = "127.0.0.1";
+        bool isStopped = false;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -67,23 +69,28 @@ namespace Flight_Inspection_App
 
         public void Start()
         {
+
             new Thread(() =>
-             {
-                 if (_telnetClient.isConnected)
-                 {
-                     var file = new System.IO.StreamReader(_file.Key);
-                     string line;
-                     while ((line = file.ReadLine()) != null)
-                     {
-                         wh.WaitOne(Timeout.Infinite);
-                         line += "\r\n";
-                         Console.WriteLine(line);
-                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                         _telnetClient.getNs().Flush();
-                         Thread.Sleep(sleepTime);
-                     }
-                     file.Close();
-                 }
+            {
+                isStopped = false;
+                if (_telnetClient.isConnected)
+                {
+                    var file = new System.IO.StreamReader(_file.Key);
+                    string line;
+                    while (!isStopped && (line = file.ReadLine()) != null)
+                    {
+                        wh.WaitOne(Timeout.Infinite);
+                        line += "\r\n";
+                        Console.WriteLine(line);
+                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                        _telnetClient.getNs().Flush();
+                        Thread.Sleep(sleepTime);
+                    }
+                    file.Close();
+                }
+            }).Start();
+        }
+
 
              }).Start();
         }  
@@ -111,7 +118,6 @@ namespace Flight_Inspection_App
                 }
             }
         }
-
         public int Port
         {
             get { return _port; }
@@ -140,9 +146,21 @@ namespace Flight_Inspection_App
         }
         public void continueThread()
         {
-            wh.Set();
+            if (isStopped)
+            {
+                Start();
+            }
+            else
+            {
+                wh.Set();
+            }
+         
         }
-       
+        public void stopSimulatorThread()
+        {
+            wh.Set();//Maybe improve that the client sees 10 pixels before the stop.
+            isStopped = true;
+        }
 
     }
 }

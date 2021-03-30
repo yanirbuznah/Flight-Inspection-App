@@ -28,7 +28,6 @@ namespace Flight_Inspection_App
                 _client.Connect(IPAddress.Parse(ip), port);
                 _ns = _client.GetStream();
                 isConnected = true;
-                
             }
             catch
             {

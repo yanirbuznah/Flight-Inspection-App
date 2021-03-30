@@ -18,6 +18,9 @@
         <Controls:ControlBar Loaded="ControlBar_Loaded_4"/>
         <Controls:FeaturesGraphs Margin="245,10,282,43"/>
         <Controls:FlightInstruments Margin="523,189,-24,43"/>
+        <Viewbox Width="309" VerticalAlignment="Top" Canvas.Left="525" Canvas.Top="206" Height="308" Margin="504,-42,-13,0">
+            <Controls:Joystick x:Name="Joystick"  Margin="0,50,50,0" VerticalAlignment="Center" Width="574" Height="573"/>
+        </Viewbox>
     </Grid>
 
 

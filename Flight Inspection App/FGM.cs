@@ -24,8 +24,8 @@ namespace Flight_Inspection_App
         private string _ip = "127.0.0.1";
         bool isStopped = false;
         int currentLineIndex;
-        int flightTimeMin;
-        int flightTimeSec;
+        string flightTimeMin;
+        string flightTimeSec;
         int numOfRows=0;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
@@ -100,6 +100,7 @@ namespace Flight_Inspection_App
         {
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_file.Key);
+            numOfRows = arrCsv.Length;
             UpdateFeaturesValues(arrCsv);
             new Thread(() =>
             {
@@ -117,8 +118,8 @@ namespace Flight_Inspection_App
                         AirSpeed = _features[21].Values[currentLineIndex];
                         FlightDirection = _features[37].Values[currentLineIndex];
                         line = arrCsv[currentLineIndex];
-                        FlightTimeMin = ((arrCsv.Length - currentLineIndex) / 10)/60;
-                        FlightTimeSec = ((arrCsv.Length - currentLineIndex)/10) % 60;
+                        FlightTimeMin = (((arrCsv.Length - currentLineIndex) / 10)/60).ToString();
+                        FlightTimeSec = (((arrCsv.Length - currentLineIndex)/10) % 60).ToString();
                         wh.WaitOne(Timeout.Infinite);
                         //UpdateFeaturesValues(line);
                         line += "\r\n";
@@ -162,7 +163,19 @@ namespace Flight_Inspection_App
         {
             return numOfRows;
         }
-        public int FlightTimeMin
+        public int CurrentLinexIndex
+        {
+            get { return currentLineIndex; }
+            set
+            {
+                if (currentLineIndex != value)
+                {
+                    currentLineIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string FlightTimeMin
         {
             get { return flightTimeMin; }
             set
@@ -174,7 +187,7 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public int FlightTimeSec
+        public string FlightTimeSec
         {
             get { return flightTimeSec; }
             set

@@ -15,6 +15,7 @@
     <None Remove="Controls\ControlImages\Stop-icon.png" />
     <None Remove="Controls\folder-icon.png" />
     <None Remove="Images\backgroundImage.jpg" />
+    <None Remove="Images\Heli_bell.obj" />
     <None Remove="playback_small.xml" />
   </ItemGroup>
 
@@ -32,6 +33,7 @@
     <Resource Include="Controls\ControlImages\Play-icon.png" />
     <Resource Include="Controls\ControlImages\Stop-icon.png" />
     <Resource Include="Images\backgroundImage.jpg" />
+    <Resource Include="Images\Heli_bell.obj" />
     <Resource Include="playback_small.xml" />
   </ItemGroup>
 </Project>

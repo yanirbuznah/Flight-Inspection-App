@@ -113,7 +113,7 @@ namespace Flight_Inspection_App
                             HeadingDegrees = _features[19].Values[parametersLineIndex];
                             AirSpeed = _features[21].Values[parametersLineIndex];
                             FlightDirection = _features[37].Values[parametersLineIndex];
-                        line = arrCsv[parametersLineIndex];
+                            line = arrCsv[parametersLineIndex];
                             wh.WaitOne(Timeout.Infinite);
                             //UpdateFeaturesValues(line);
                             line += "\r\n";

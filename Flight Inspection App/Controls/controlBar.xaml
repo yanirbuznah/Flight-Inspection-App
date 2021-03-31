@@ -25,8 +25,10 @@
             <Button Command="{Binding StopTheFlight}" Click="Button_Click">
                 <Image Source="/Controls/ControlImages/Stop-icon.png" Height="20" Width="20"  Margin="5,0,0,0"/>
             </Button>
-            <Slider x:Name="sliProgress" Thumb.DragStarted="sliProgress_DragStarted"  Thumb.DragCompleted="sliProgress_DragCompleted" ValueChanged="sliProgress_ValueChanged" Width="500" Height="20"  Margin="5,0,0,0" />
-            <TextBlock x:Name="lblProgressStatus" Height="18" Margin="5,0,0,0"><Run Text="00:00:00" /></TextBlock>
+            <Slider x:Name="sliProgress" Width="500" Height="20"  Margin="5,0,0,0" />
+            <TextBlock x:Name="MinTimeLeft" Height="18" Margin="5,0,0,0" Text="{Binding VM_FlightTimeMin,Mode=OneWay}"></TextBlock>
+            <TextBlock x:Name="DoubleDot" Height="18" Margin="5,0,0,0" Text=":"></TextBlock>
+            <TextBlock x:Name="SecTimeLeft" Height="18" Margin="5,0,0,0" Text="{Binding VM_FlightTimeSec,Mode=OneWay}"></TextBlock>
             <Button Command="{Binding DecreaseTheSpeed}" Click="Button_Click" Height="26" Width="29" Margin="1,0,0,0">
 
                 <Image Source="/Controls/ControlImages/math-minus-icon.png" Height="20" Width="25" Margin="5,0,1,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>

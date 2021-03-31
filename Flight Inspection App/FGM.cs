@@ -23,7 +23,10 @@ namespace Flight_Inspection_App
         private float sleepTime = 100;
         private string _ip = "127.0.0.1";
         bool isStopped = false;
-        int parametersLineIndex;
+        int currentLineIndex;
+        int flightTimeMin;
+        int flightTimeSec;
+        int numOfRows=0;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -97,7 +100,6 @@ namespace Flight_Inspection_App
         {
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_file.Key);
-
             UpdateFeaturesValues(arrCsv);
             new Thread(() =>
             {
@@ -105,16 +107,18 @@ namespace Flight_Inspection_App
                 if (_telnetClient.isConnected)
                 {
                     string line;
-                    parametersLineIndex = 0;
-                    for (; parametersLineIndex < arrCsv.Length && !isStopped; ++parametersLineIndex)
+                    currentLineIndex = 0;
+                    for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
                     {
-                        Altitude = _features[16].Values[parametersLineIndex];
-                        RollDegrees = _features[17].Values[parametersLineIndex];
-                        PitchDegrees = _features[18].Values[parametersLineIndex];
-                        HeadingDegrees = _features[19].Values[parametersLineIndex];
-                        AirSpeed = _features[21].Values[parametersLineIndex];
-                        FlightDirection = _features[37].Values[parametersLineIndex];
-                        line = arrCsv[parametersLineIndex];
+                        Altitude = _features[16].Values[currentLineIndex];
+                        RollDegrees = _features[17].Values[currentLineIndex];
+                        PitchDegrees = _features[18].Values[currentLineIndex];
+                        HeadingDegrees = _features[19].Values[currentLineIndex];
+                        AirSpeed = _features[21].Values[currentLineIndex];
+                        FlightDirection = _features[37].Values[currentLineIndex];
+                        line = arrCsv[currentLineIndex];
+                        FlightTimeMin = ((arrCsv.Length - currentLineIndex) / 10)/60;
+                        FlightTimeSec = ((arrCsv.Length - currentLineIndex)/10) % 60;
                         wh.WaitOne(Timeout.Infinite);
                         //UpdateFeaturesValues(line);
                         line += "\r\n";
@@ -138,6 +142,46 @@ namespace Flight_Inspection_App
                 {
                     videoSpeed = value;
                     sleepTime = 100 / videoSpeed;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int CurrentLineIndex
+        {
+            get { return currentLineIndex; }
+            set
+            {
+                if(currentLineIndex != value)
+                {
+                    currentLineIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int GetNumOfRows()
+        {
+            return numOfRows;
+        }
+        public int FlightTimeMin
+        {
+            get { return flightTimeMin; }
+            set
+            {
+                if (flightTimeMin != value)
+                {
+                    flightTimeMin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int FlightTimeSec
+        {
+            get { return flightTimeSec; }
+            set
+            {
+                if (flightTimeSec != value)
+                {
+                    flightTimeSec = value;
                     OnPropertyChanged();
                 }
             }

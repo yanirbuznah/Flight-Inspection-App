@@ -94,6 +94,30 @@ namespace Flight_Inspection_App
         {
             get { return _fgm.FlightDirection; }
         }
+        public int VM_FlightTimeMin
+        {
+            get { return _fgm.FlightTimeMin; }
+            set
+            {
+                if(_fgm.FlightTimeMin != value)
+                {
+                    _fgm.FlightTimeMin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int VM_FlightTimeSec
+        {
+            get { return _fgm.FlightTimeSec; }
+            set
+            {
+                if(_fgm.FlightTimeSec != value)
+                {
+                    _fgm.FlightTimeSec = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public string VM_HeadingDegrees
         {
             get { return _fgm.HeadingDegrees; }
@@ -159,6 +183,7 @@ namespace Flight_Inspection_App
         {
             _fgm.increaseSpeed();
         }
+        
 
         public void decreaseSpeed()
         {

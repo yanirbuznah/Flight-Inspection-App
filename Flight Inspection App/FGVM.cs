@@ -97,7 +97,7 @@ namespace Flight_Inspection_App
 
         public string VM_FlightTime
         {
-            get { return (_fgm.GetNumOfRows() / 10).ToString(); }
+            get { return _fgm.FlightTime; }
         }
   
         public string VM_FlightTimeMin

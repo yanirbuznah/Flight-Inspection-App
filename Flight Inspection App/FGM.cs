@@ -26,6 +26,7 @@ namespace Flight_Inspection_App
         int currentLineIndex;
         string flightTimeMin;
         string flightTimeSec;
+        string flightTime;
         int numOfRows=0;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
@@ -101,6 +102,7 @@ namespace Flight_Inspection_App
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_file.Key);
             numOfRows = arrCsv.Length;
+            FlightTime = numOfRows.ToString();
             UpdateFeaturesValues(arrCsv);
             new Thread(() =>
             {
@@ -143,6 +145,18 @@ namespace Flight_Inspection_App
                 {
                     videoSpeed = value;
                     sleepTime = 100 / videoSpeed;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string FlightTime
+        {
+            get { return flightTime; }
+            set
+            {
+                if(flightTime != value)
+                {
+                    flightTime = value;
                     OnPropertyChanged();
                 }
             }

@@ -26,7 +26,7 @@
                 <Image Source="/Controls/ControlImages/Stop-icon.png" Height="20" Width="20"  Margin="5,0,0,0"/>
             </Button>
 
-            <Slider x:Name="sliProgress" Maximum="2500" Minimum="0" Width="500" Height="20" IsSnapToTickEnabled="True" TickFrequency="1" Margin="5,0,0,0"
+            <Slider x:Name="sliProgress" Maximum="{Binding VM_FlightTime}" Minimum="0" Width="500" Height="20" IsSnapToTickEnabled="True" TickFrequency="1" Margin="5,0,0,0"
                     Value="{Binding VM_CurrentFlightTime,Mode=TwoWay}" ValueChanged="sliProgress_ValueChanged_1" Visibility="Visible" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="True" />
 
             <TextBlock x:Name="MinTimeLeft" Height="18" Margin="5,0,0,0" Text="{Binding VM_FlightTimeMin,Mode=OneWay}"></TextBlock>

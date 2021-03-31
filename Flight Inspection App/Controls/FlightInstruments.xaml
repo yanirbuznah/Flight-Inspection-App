@@ -3,14 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Flight_Inspection_App.Controls"
+             xmlns:local="clr-namespace:Flight_Inspection_App.Controls" xmlns:flight_inspection_app="clr-namespace:Flight_Inspection_App" d:DataContext="{d:DesignInstance Type=flight_inspection_app:FGVM}"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="300">
     <Grid Margin="0,0,0,0">
         <RichTextBox Margin="10,39,44,10">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="לוח שעונים" FontSize="50" FlowDirection="RightToLeft" BaselineAlignment="Center"/>
+                    <Label x:Name="Altitude" Content="Altitude: " HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FF22ADA5"/>
+                    <Label x:Name="AltitudeValue" Content="{Binding VM_Altitude}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                </Paragraph>
+                <Paragraph>
+                    <Label x:Name="AirSpeed" Content="Air Speed: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
+                    <Label x:Name="AirSpeedValue" Content="{Binding VM_AirSpeed}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                </Paragraph>
+                <Paragraph>
+                    <Label x:Name="FlightDirection" Content="Flight Direction: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
+                    <Label x:Name="FlightDirectionValue" Content="{Binding VM_FlightDirection}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                </Paragraph>
+                <Paragraph>
+                    <Label x:Name="HeadingDegrees" Content="Heading Degrees: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
+                    <Label x:Name="HeadingDegreesValue" Content="{Binding VM_HeadingDegrees}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                </Paragraph>
+                <Paragraph>
+                    <Label x:Name="RollDegrees" Content="Roll Degrees: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
+                    <Label x:Name="RollDegreesValue" Content="{Binding VM_RollDegrees}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                </Paragraph>
+                <Paragraph>
+                    <Label x:Name="PitchDegrees" Content="Pitch Degrees: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
+                    <Label x:Name="PitchDegreesValue" Content="{Binding VM_PitchDegrees}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

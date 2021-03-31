@@ -19,12 +19,11 @@ namespace Flight_Inspection_App
         private KeyValuePair<string, string> _file;
         List<Feature> _features;
         private int _port = 5400;
-        private float speed = 1;
+        private float videoSpeed = 1;
         private float sleepTime = 100;
-
-
         private string _ip = "127.0.0.1";
         bool isStopped = false;
+        int parametersLineIndex;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -33,7 +32,7 @@ namespace Flight_Inspection_App
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
             IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(x => (string)x);
-            List<string> featursNames = chunkNames.Distinct().ToList();
+            List<string> featursNames = chunkNames.ToList();
             _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
         }
 
@@ -47,7 +46,7 @@ namespace Flight_Inspection_App
         {
             _telnetClient.Disconnect();
         }
-        public KeyValuePair<string, string> File
+        public KeyValuePair<string, string> ThisFile
         {
             get
             { return _file; }
@@ -70,55 +69,135 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void UpdateFeaturesValues(string line)
+/*        private void UpdateFeaturesValues(string line)
         {
             List<String> listStrLineElements = line.Split(',').ToList();
             for (int i = 0; i < _features.Capacity; i++)
             {
                 _features[i].Value = listStrLineElements[i];
             }
+        }*/
+        private void UpdateFeaturesValues(string[] arrCsv)
+        {
+
+
+            for (int i = 0; i < arrCsv.Length; i++)
+            {
+                List<String> listStrLineElements = arrCsv[i].Split(',').ToList();
+                for (int j=0; j <42 ; ++j)
+                {
+                    _features[j].AddValue(listStrLineElements[j]);
+                }
+
+            }
         }
 
         public void Start()
         {
-
+            string[] arrCsv;
+            arrCsv = File.ReadAllLines(_file.Key);
+           
+            UpdateFeaturesValues(arrCsv);
             new Thread(() =>
             {
                 isStopped = false;
                 if (_telnetClient.isConnected)
                 {
-                    using (var file = new System.IO.StreamReader(_file.Key))
-                    {
                         string line;
-                        while (!isStopped && (line = file.ReadLine()) != null)
+                        parametersLineIndex = 0;
+                        for(; parametersLineIndex<arrCsv.Length && !isStopped; ++parametersLineIndex)
                         {
-
+                            Altitude = _features[16].Values[parametersLineIndex]; 
+                            RollDegrees = _features[17].Values[parametersLineIndex];
+                            PitchDegrees = _features[18].Values[parametersLineIndex];
+                            HeadingDegrees = _features[19].Values[parametersLineIndex];
+                            AirSpeed = _features[21].Values[parametersLineIndex];
+                            FlightDirection = _features[37].Values[parametersLineIndex];
+                        line = arrCsv[parametersLineIndex];
                             wh.WaitOne(Timeout.Infinite);
-                            UpdateFeaturesValues(line);
+                            //UpdateFeaturesValues(line);
                             line += "\r\n";
                             Console.WriteLine(line);
                             _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                             _telnetClient.getNs().Flush();
                             Thread.Sleep((int)sleepTime);
                         }
-                    }
 
                 }
             }).Start();
         }
 
 
-        public float Speed
+        public float VideoSpeed
         {
-            get { return speed; }
+            get { return videoSpeed; }
             set
             {
-                if (speed != value)
+                if (videoSpeed != value)
                 {
-                    speed = value;
-                    sleepTime = 100 / speed;
+                    videoSpeed = value;
+                    sleepTime = 100 / videoSpeed;
                     OnPropertyChanged();
                 }
+            }
+        }
+        string altitude="0";
+        public string Altitude
+        {
+            get { return altitude; }
+            private set {
+                altitude = value;
+                OnPropertyChanged();
+            }
+        }
+        string _airSpeed = "0";
+        public string AirSpeed
+        {
+            get { return _airSpeed; }
+            private set
+            {
+                _airSpeed= value;
+                OnPropertyChanged();
+            }
+        }
+        string _flightDirection = "0";
+        public string FlightDirection
+        {
+            get { return _flightDirection; }
+            private set
+            {
+                _flightDirection = value;
+                OnPropertyChanged();
+            }
+        }
+        string _headingDegrees = "0";
+        public string HeadingDegrees
+        {
+            get { return _headingDegrees; }
+            private set
+            {
+                _headingDegrees = value;
+                OnPropertyChanged();
+            }
+        }
+        string _rollDegrees = "0";
+        public string RollDegrees
+        {
+            get { return _rollDegrees; }
+            private set
+            {
+                _rollDegrees = value;
+                OnPropertyChanged();
+            }
+        }
+        string _pitchDegrees = "0";
+        public string PitchDegrees
+        {
+            get { return _pitchDegrees; }
+            private set
+            {
+                _pitchDegrees = value;
+                OnPropertyChanged();
             }
         }
         public string Ip
@@ -179,14 +258,14 @@ namespace Flight_Inspection_App
 
         public void increaseSpeed()
         {
-            Speed = Speed + (float)0.1;
+            VideoSpeed += (float)0.1;
         }
 
 
         public void decreaseSpeed()
         {
-            if((speed - (float)0.1) > 0)
-                Speed = Speed - (float)0.1;
+            if((videoSpeed - (float)0.1) > 0)
+                videoSpeed -= (float)0.1;
         }
     }
 }

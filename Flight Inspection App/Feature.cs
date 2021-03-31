@@ -10,6 +10,15 @@ namespace Flight_Inspection_App
     public class Feature
     {
         public string Name { get; set; }
-        public string Value { get; set; }
+        private List<string> _Values = new List<string>();
+
+        public List<string> Values {
+            get { return _Values; }
+        }
+        public void AddValue(string value)
+        {
+            _Values.Add(value);
+        }
     }
+
 }

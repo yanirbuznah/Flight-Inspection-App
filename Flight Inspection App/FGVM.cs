@@ -55,26 +55,14 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public string VM_AirSpeed
+        public float VM_VideoSpeed
         {
-            get { return _fgm.AirSpeed; }
-            set
-            { }
-        }
-        public string VM_Altitude
-        {
-            get { return _fgm.Altitude; }
-            set
-            { }
-        }
-        public float VM_Speed
-        {
-            get { return _fgm.Speed; }
+            get { return _fgm.VideoSpeed; }
             set
             {
-                if (_fgm.Speed != value)
+                if (_fgm.VideoSpeed != value)
                 {
-                    _fgm.Speed = value;
+                    _fgm.VideoSpeed = value;
                     OnPropertyChanged();
                 }
             }
@@ -93,6 +81,31 @@ namespace Flight_Inspection_App
                 }
             }
         }
+
+        public string VM_Altitude
+        {
+            get { return _fgm.Altitude; }
+        }
+        public string VM_AirSpeed
+        {
+            get { return _fgm.AirSpeed; }
+        }
+        public string VM_FlightDirection
+        {
+            get { return _fgm.FlightDirection; }
+        }
+        public string VM_HeadingDegrees
+        {
+            get { return _fgm.HeadingDegrees; }
+        }
+        public string VM_RollDegrees
+        {
+            get { return _fgm.RollDegrees; }
+        }
+        public string VM_PitchDegrees
+        {
+            get { return _fgm.PitchDegrees; }
+        }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -102,12 +115,12 @@ namespace Flight_Inspection_App
 
         public KeyValuePair<string, string> VM_File
         {
-            get { return _fgm.File; }
+            get { return _fgm.ThisFile; }
             set
             {
-                if (_fgm.File.Key != value.Key)
+                if (_fgm.ThisFile.Key != value.Key)
                 {
-                    _fgm.File = value;
+                    _fgm.ThisFile = value;
                     OnPropertyChanged();
                     _fgm.Start();
                 }
@@ -151,5 +164,18 @@ namespace Flight_Inspection_App
         {
             _fgm.decreaseSpeed();
         }
+
+        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }

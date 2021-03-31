@@ -30,6 +30,9 @@
         <Viewbox Margin="561,8,38,237">
             <Controls:Joystick/>
         </Viewbox>
+        <!--<Viewbox  Margin="0,256,599,-11">
+            <Controls:UserControl1 />
+        </Viewbox>-->
     </Grid>
 
 

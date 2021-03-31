@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -18,11 +19,11 @@ namespace Flight_Inspection_App
     {
         private KeyValuePair<string, string> _file;
         List<Feature> _features;
+        Feature altitude;
+        Feature airSpeed = new Feature { Name = "airspeed-kt", Value = "0" };
         private int _port = 5400;
         private float speed = 1;
         private float sleepTime = 100;
-
-
         private string _ip = "127.0.0.1";
         bool isStopped = false;
         private ManualResetEvent wh = new ManualResetEvent(true);
@@ -76,27 +77,40 @@ namespace Flight_Inspection_App
             for (int i = 0; i < _features.Capacity; i++)
             {
                 _features[i].Value = listStrLineElements[i];
+                if(_features[i].Name=="altitude-ft")
+                {
+                    altitude = _features[i];
+                    Altitude = altitude.Value;
+                }
+               else if (_features[i].Name == "airspeed-kt")
+                {
+                    airSpeed = _features[i];
+                    Dispatcher.CurrentDispatcher.BeginInvoke(
+                           DispatcherPriority.Background, new Action(() => this.AirSpeed = airSpeed.Value));
+                    Console.WriteLine(line);
+                }
             }
         }
-
+        
+        
         public void Start()
         {
 
             new Thread(() =>
             {
-                isStopped = false;
-                if (_telnetClient.isConnected)
+            isStopped = false;
+            if (_telnetClient.isConnected)
+            {
+                using (var file = new System.IO.StreamReader(_file.Key))
                 {
-                    using (var file = new System.IO.StreamReader(_file.Key))
+                    string line;
+                    while (!isStopped && (line = file.ReadLine()) != null)
                     {
-                        string line;
-                        while (!isStopped && (line = file.ReadLine()) != null)
-                        {
 
-                            wh.WaitOne(Timeout.Infinite);
-                            UpdateFeaturesValues(line);
-                            line += "\r\n";
-                            Console.WriteLine(line);
+                        wh.WaitOne(Timeout.Infinite);
+                        UpdateFeaturesValues(line);
+                        AirSpeed = airSpeed.Value;
+                        line += "\r\n";
                             _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                             _telnetClient.getNs().Flush();
                             Thread.Sleep((int)sleepTime);
@@ -120,6 +134,43 @@ namespace Flight_Inspection_App
                     OnPropertyChanged();
                 }
             }
+        }
+        public string Altitude
+        {
+            get
+            {
+                if (altitude != null)
+                {
+                    return altitude.Value;
+                }
+                else return "0";
+            }
+            set
+            {
+                if (altitude.Value != value)
+                {
+                    altitude.Value = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
+        public string AirSpeed
+        {
+            get { if (airSpeed != null)
+                {
+                    return airSpeed.Value;
+                }
+                else return "0"; }
+            set
+            {
+                if (airSpeed.Value != value)
+                {
+                    airSpeed.Value = value;
+                    OnPropertyChanged();
+                }
+            }
+
         }
         public string Ip
         {

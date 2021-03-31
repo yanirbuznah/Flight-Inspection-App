@@ -55,6 +55,18 @@ namespace Flight_Inspection_App
                 }
             }
         }
+        public string VM_AirSpeed
+        {
+            get { return _fgm.AirSpeed; }
+            set
+            { }
+        }
+        public string VM_Altitude
+        {
+            get { return _fgm.Altitude; }
+            set
+            { }
+        }
         public float VM_Speed
         {
             get { return _fgm.Speed; }

@@ -32,7 +32,7 @@
                 <Image Source="/Controls/ControlImages/math-minus-icon.png" Height="20" Width="25" Margin="5,0,1,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
             </Button>
-            <TextBlock x:Name="speed" Height="18"  Text="{Binding VM_Speed,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="22"></TextBlock>
+            <TextBlock x:Name="speed" Height="18"  Text="{Binding VM_VideoSpeed,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="22"></TextBlock>
             <Button Command="{Binding IncreaseTheSpeed}" Click="Button_Click" Height="26" Width="29" Margin="1,0,0,0">
                 <Image Source="/Controls/ControlImages/math-add-icon.png" Height="20" Width="20" Margin="-20,0,-20,0"/>
             </Button>

@@ -55,7 +55,7 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public float VM_VideoSpeed
+        public string VM_VideoSpeed
         {
             get { return _fgm.VideoSpeed; }
             set
@@ -132,9 +132,9 @@ namespace Flight_Inspection_App
         {
             get => _fgm.Throttle;
         }
-        public float VM_Radder
+        public string VM_Rudder
         {
-            get => _fgm.Radder;
+            get => _fgm.Rudder;
         }
         public float VM_Elevator
         {

@@ -6,13 +6,6 @@
              xmlns:local="clr-namespace:Flight_Inspection_App.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="800">
-    <UserControl.CommandBindings>
-        <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
-        <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
-        <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
-        <CommandBinding Command="MediaCommands.FastForward" CanExecute="SpeedDown_CanExecute" Executed="SpeedDown_Executed" />
-        <CommandBinding Command="MediaCommands.FastForward" CanExecute="SpeedUp_CanExecute" Executed="SpeedUp_Executed" />
-    </UserControl.CommandBindings>
     <Grid>
         <ToolBar Grid.Row="1" Height="40" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
             <Separator />

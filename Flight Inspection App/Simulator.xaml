@@ -30,7 +30,7 @@
         <Viewbox Margin="576,6,40,246">
             <Controls:Joystick Height="379" Width="458"/>
         </Viewbox>
-        <Slider Margin="612,193,92,234" Value="{Binding VM_Radder,Mode=OneWay}" Foreground="#FF08E07F" HorizontalAlignment="Stretch" Width="100" Height="23" Minimum="-30" Maximum="30"/>
+        <Slider Margin="612,193,92,234" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FF08E07F" HorizontalAlignment="Stretch" Width="100" Height="23" Minimum="-30" Maximum="30"/>
         <Slider Width="21" Height="82" Value="{Binding VM_Throttle,Mode=OneWay}" Margin="549,134,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical"></Slider>
         <!--<Viewbox  Margin="0,256,599,-11">
             <Controls:UserControl1 />

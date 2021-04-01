@@ -31,6 +31,7 @@ namespace Flight_Inspection_App.Controls
 
 			InitializeComponent();
 
+		
 			DispatcherTimer timer = new DispatcherTimer();
 			timer.Interval = TimeSpan.FromSeconds(1);
 			timer.Start();
@@ -128,11 +129,7 @@ namespace Flight_Inspection_App.Controls
 
 		}
 
-		private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			lblProgressStatus.Text = TimeSpan.FromSeconds(sliProgress.Value).ToString(@"hh\:mm\:ss");
-		}
-
+		
 		private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
 		{
 
@@ -155,6 +152,19 @@ namespace Flight_Inspection_App.Controls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+			
+		}
+		private void silProgress_DragStarted(object sender, DragStartedEventArgs e)
+        {
+			userIsDraggingSlider = true;
+        }
+		private void silProgress_DragCompleted(object sender, DragStartedEventArgs e)
+        {
+			userIsDraggingSlider = false;
         }
     }
 

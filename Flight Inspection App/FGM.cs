@@ -23,11 +23,15 @@ namespace Flight_Inspection_App
         private float sleepTime = 100;
         private string _ip = "127.0.0.1";
         bool isStopped = false;
-        int parametersLineIndex;
+        int currentLineIndex;
+        string currentFlightTime;
+        string flightTime;
+        int numOfRows=0;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
-        public FGM(Client client) {
+        public FGM(Client client)
+        {
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
@@ -69,14 +73,6 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-/*        private void UpdateFeaturesValues(string line)
-        {
-            List<String> listStrLineElements = line.Split(',').ToList();
-            for (int i = 0; i < _features.Capacity; i++)
-            {
-                _features[i].Value = listStrLineElements[i];
-            }
-        }*/
         private void UpdateFeaturesValues(string[] arrCsv)
         {
 
@@ -84,7 +80,7 @@ namespace Flight_Inspection_App
             for (int i = 0; i < arrCsv.Length; i++)
             {
                 List<String> listStrLineElements = arrCsv[i].Split(',').ToList();
-                for (int j=0; j <42 ; ++j)
+                for (int j = 0; j < 42; ++j)
                 {
                     _features[j].AddValue(listStrLineElements[j]);
                 }
@@ -96,32 +92,37 @@ namespace Flight_Inspection_App
         {
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_file.Key);
-           
+            numOfRows = arrCsv.Length;
+            FlightTime = numOfRows.ToString();
             UpdateFeaturesValues(arrCsv);
             new Thread(() =>
             {
                 isStopped = false;
                 if (_telnetClient.isConnected)
                 {
-                        string line;
-                        parametersLineIndex = 0;
-                        for(; parametersLineIndex<arrCsv.Length && !isStopped; ++parametersLineIndex)
-                        {
-                            Altitude = _features[16].Values[parametersLineIndex]; 
-                            RollDegrees = _features[17].Values[parametersLineIndex];
-                            PitchDegrees = _features[18].Values[parametersLineIndex];
-                            HeadingDegrees = _features[19].Values[parametersLineIndex];
-                            AirSpeed = _features[21].Values[parametersLineIndex];
-                            FlightDirection = _features[37].Values[parametersLineIndex];
-                            line = arrCsv[parametersLineIndex];
-                            wh.WaitOne(Timeout.Infinite);
-                            //UpdateFeaturesValues(line);
-                            line += "\r\n";
-                            Console.WriteLine(line);
-                            _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                            _telnetClient.getNs().Flush();
-                            Thread.Sleep((int)sleepTime);
-                        }
+
+                    string line;
+                    currentLineIndex = 0;
+                    for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
+                    {
+                        Altitude = _features[16].Values[currentLineIndex];
+                        RollDegrees = _features[17].Values[currentLineIndex];
+                        PitchDegrees = _features[18].Values[currentLineIndex];
+                        HeadingDegrees = _features[19].Values[currentLineIndex];
+                        AirSpeed = _features[21].Values[currentLineIndex];
+                        FlightDirection = _features[37].Values[currentLineIndex];
+                        line = arrCsv[currentLineIndex];
+                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - currentLineIndex) / 10)).ToString(@"hh\:mm\:ss"); 
+                        wh.WaitOne(Timeout.Infinite);
+                        //UpdateFeaturesValues(line);
+                        line += "\r\n";
+                        Console.WriteLine(line);
+                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                        _telnetClient.getNs().Flush();
+                        CurrentLineIndex = currentLineIndex;
+                        Thread.Sleep((int)sleepTime);
+                    }
+
 
                 }
             }).Start();
@@ -141,11 +142,51 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        string altitude="0";
+        public string FlightTime
+        {
+            get { return flightTime; }
+            set
+            {
+                if(flightTime != value)
+                {
+                    flightTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int CurrentLineIndex
+        {
+            get { return currentLineIndex; }
+            set
+            {
+                    currentLineIndex = value;
+                    OnPropertyChanged();
+            }
+        }
+        public int GetNumOfRows()
+        {
+            return numOfRows;
+        }
+       
+
+        public string CurrentFlightTime
+        {
+            get { return currentFlightTime; }
+            set
+            {
+                if (currentFlightTime != value)
+                {
+                    currentFlightTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        string altitude = "0";
         public string Altitude
         {
             get { return altitude; }
-            private set {
+            private set
+            {
                 altitude = value;
                 OnPropertyChanged();
             }
@@ -156,7 +197,7 @@ namespace Flight_Inspection_App
             get { return _airSpeed; }
             private set
             {
-                _airSpeed= value;
+                _airSpeed = value;
                 OnPropertyChanged();
             }
         }
@@ -248,7 +289,7 @@ namespace Flight_Inspection_App
             {
                 wh.Set();
             }
-         
+
         }
         public void stopSimulatorThread()
         {
@@ -264,8 +305,8 @@ namespace Flight_Inspection_App
 
         public void decreaseSpeed()
         {
-            if((videoSpeed - (float)0.1) > 0)
-                videoSpeed -= (float)0.1;
+            if ((videoSpeed - (float)0.1) > 0)
+                VideoSpeed -= (float)0.1;
         }
     }
 }

@@ -129,14 +129,14 @@ namespace Flight_Inspection_App
         {
             return _fgm.CurrentLineIndex.ToString();
         }
-        public string VM_CurrentFlightTime
+        public int VM_CurrentFlightTime
         {
-            get { return _fgm.CurrentLineIndex.ToString(); }
-            set { if(_fgm.CurrentLineIndex.ToString() != value)
+            get { return _fgm.CurrentLineIndex; }
+            set 
                 {
-                    _fgm.CurrentLineIndex = int.Parse(value);
+                    _fgm.CurrentLineIndex = value;
                     OnPropertyChanged();
-                } }
+                } 
         }
         public string getCurrentFlightTime()
         {

@@ -128,6 +128,7 @@ namespace Flight_Inspection_App
                         Console.WriteLine(line);
                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                         _telnetClient.getNs().Flush();
+                        CurrentLineIndex = currentLineIndex;
                         Thread.Sleep((int)sleepTime);
                     }
 
@@ -166,29 +167,15 @@ namespace Flight_Inspection_App
             get { return currentLineIndex; }
             set
             {
-                if(currentLineIndex != value)
-                {
                     currentLineIndex = value;
                     OnPropertyChanged();
-                }
             }
         }
         public int GetNumOfRows()
         {
             return numOfRows;
         }
-        public int CurrentLinexIndex
-        {
-            get { return currentLineIndex; }
-            set
-            {
-                if (currentLineIndex != value)
-                {
-                    currentLineIndex = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+       
         public string FlightTimeMin
         {
             get { return flightTimeMin; }

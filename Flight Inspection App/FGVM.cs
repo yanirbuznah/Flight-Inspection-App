@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Flight_Inspection_App.Commands;
+using OxyPlot;
+using OxyPlot.Series;
 
 namespace Flight_Inspection_App
 {
@@ -223,6 +225,36 @@ namespace Flight_Inspection_App
             return false;
         }
 
+        public string VM_Graph_Title
+        {
+            get
+            {
+                return _fgm.Graph_Title;
+            }
+        }
+        public IList<DataPoint> VM_Graph_Points
+        {
+            get
+            {
+                return _fgm.Graph_Points;
+            }
+        }
 
+        public Feature VM_IntresingFeature
+        {
+            get
+            {
+                return _fgm.IntresingFeature;
+            }
+            set
+            {
+                if (_fgm.IntresingFeature != value)
+                {
+                    _fgm.IntresingFeature = value;
+                    OnPropertyChanged();
+                    
+                }
+            }
+        }
     }
 }

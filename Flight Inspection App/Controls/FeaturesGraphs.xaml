@@ -3,13 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Flight_Inspection_App.Controls"
+             xmlns:local="clr-namespace:Flight_Inspection_App.Controls" xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="270">
     <Grid Background="Transparent">
-        <Canvas Name="feature1Graph" Background="White"
-             Width="122" Height="122"
-            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"/>
+        <!--<oxy:PlotView  Width="122" Height="122" Model="{Binding VM_Model}" Name="feature1Graph" Background="White"
+            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"/>-->
+        <oxy:Plot Title="{Binding VM_Graph_Title}"  Width="122" Height="122" Name="feature1Graph" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0">
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding VM_Graph_Points}"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
+
         <Canvas Name="feature2Graph" Background="White"
              Width="123" Height="123"
             VerticalAlignment="Top" HorizontalAlignment="Left" Margin="137,9,0,0"/>

@@ -1,4 +1,6 @@
 ﻿using CsvHelper;
+using OxyPlot;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,10 +30,6 @@ namespace Flight_Inspection_App
         string flightTime;
         int numOfRows = 0;
         int numOfCol = 0;
-        int aileronIndex;
-        int elevatorIndex;
-        int rudderIndex;
-        int throttleIndex;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -40,7 +38,7 @@ namespace Flight_Inspection_App
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
-            IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(x => (string)x);
+            IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(name => (string)name);
             List<string> featursNames = chunkNames.ToList();
             _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
         }
@@ -84,29 +82,22 @@ namespace Flight_Inspection_App
 
             for (int i = 0; i < arrCsv.Length; i++)
             {
-                List<String> listStrLineElements = arrCsv[i].Split(',').ToList();
+                List<string> listStrLineElements = arrCsv[i].Split(',').ToList();
                 for (int j = 0; j < numOfCol; ++j)
                 {
-                    _features[j].AddValue(listStrLineElements[j]);
-                    if (_features[j].Name == "aileron")
-                    {
-                        aileronIndex = j;
-                    }
-                    else if (_features[j].Name == "elevator")
-                    {
-                        elevatorIndex = j;
-                    }
-                    else if (_features[j].Name == "throttle")
-                    {
-                        throttleIndex = j;
-                    }
-                    else if (_features[j].Name == "rudder")
-                    {
-                        rudderIndex = j;
-                    }
+                    _features[j].AddPoint(i,listStrLineElements[j]);
+                    //_features[j].AddValue(listStrLineElements[j]);
                 }
-
             }
+        }
+        private void UF(string[] arrCsv)
+        {
+            List<string> listStrLineElements = arrCsv[currentLineIndex].Split(',').ToList();
+            for (int j = 0; j < numOfCol; ++j)
+            {
+                _features[j].AddPoint(currentLineIndex, listStrLineElements[j]);
+            }
+            NotifyPropertyChanged("Graph_Points");
         }
 
         public void Start()
@@ -117,6 +108,7 @@ namespace Flight_Inspection_App
             numOfCol = arrCsv[0].Split(',').Length;
             FlightTime = numOfRows.ToString();
             UpdateFeaturesValues(arrCsv);
+            
             new Thread(() =>
             {
                 isStopped = false;
@@ -126,10 +118,11 @@ namespace Flight_Inspection_App
                     currentLineIndex = 0;
                     for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
                     {
-                        Throttle = _features[throttleIndex].Values[currentLineIndex];
-                        Rudder = _features[rudderIndex].Values[currentLineIndex];
-                        Elevator = 50 * float.Parse(_features[elevatorIndex].Values[currentLineIndex]);
-                        Aileron = 50 * float.Parse(_features[aileronIndex].Values[currentLineIndex]);
+                        
+                        Throttle = _features[6].Values[currentLineIndex];
+                        Rudder = _features[2].Values[currentLineIndex];
+                        Elevator = 100 * float.Parse(_features[1].Values[currentLineIndex]);
+                        Aileron = 100 * float.Parse(_features[0].Values[currentLineIndex]);
                         Altitude = _features[16].Values[currentLineIndex];
                         RollDegrees = _features[17].Values[currentLineIndex];
                         PitchDegrees = _features[18].Values[currentLineIndex];
@@ -145,6 +138,7 @@ namespace Flight_Inspection_App
                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                         _telnetClient.getNs().Flush();
                         CurrentLineIndex = currentLineIndex;
+                        NotifyPropertyChanged("Graph_Points");
                         Thread.Sleep((int)sleepTime);
                     }
 
@@ -180,6 +174,31 @@ namespace Flight_Inspection_App
             float newSpeed = videoSpeed - (float)0.1;
             if (newSpeed > 0)
                 VideoSpeed = newSpeed.ToString("F");
+        }
+        public string Graph_Title {
+            get
+            {
+                if(IntresingFeature != null)
+                    return IntresingFeature.Name;
+                return "";
+            }
+            private set
+            {
+                Graph_Title = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public IList<DataPoint> Graph_Points
+        { 
+            get
+            {   
+                if(IntresingFeature == null)
+                    return new List<DataPoint>();
+                return new List<DataPoint>(IntresingFeature.Points.Take(CurrentLineIndex));
+            }
+
         }
 
         public string FlightTime
@@ -346,7 +365,20 @@ namespace Flight_Inspection_App
             }
         }
         public List<Feature> Features { get { return _features; } }
-
+        private Feature _intresingFeature; 
+        public Feature IntresingFeature
+        {
+            get
+            {
+                return _intresingFeature;
+            }
+            set
+            {
+                _intresingFeature = value;
+                NotifyPropertyChanged("Graph_Points");
+                OnPropertyChanged();
+            }
+        }
         public bool getStatus()
         {
             return _telnetClient.getStatus();

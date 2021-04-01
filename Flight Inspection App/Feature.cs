@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Flight_Inspection_App
     {
         public string Name { get; set; }
         private List<string> _Values = new List<string>();
+        private IList<DataPoint> _Points = new List<DataPoint>();
 
         public List<string> Values {
             get { return _Values; }
@@ -19,6 +21,19 @@ namespace Flight_Inspection_App
         {
             _Values.Add(value);
         }
+        public void AddPoint(int line, string value)
+        {
+            double x = line / 10;
+            double y = Double.Parse(value);
+            Points.Add(new DataPoint(x,y));
+            _Values.Add(value);
+        }
+        public IList<DataPoint> Points
+        {
+            get{ return _Points; }
+            
+        }
+
     }
 
 }

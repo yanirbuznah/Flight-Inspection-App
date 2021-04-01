@@ -86,5 +86,10 @@ namespace Flight_Inspection_App
         {
 
         }
+
+        private void Slider_ValueChanged()
+        {
+
+        }
     }
 }

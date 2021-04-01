@@ -40,54 +40,9 @@ namespace Flight_Inspection_App.Controls
 		{
 			_vm = vm;
 		}
-		public static void Play()
-		{
-
-		}
-		public static void Pause()
-		{
-
-		}
-		public static void Stop()
-		{
-
-		}
-		public static void SpeedUp()
-		{
-
-		}
-		public static void SpeedDown()
-		{
-
-		}
-
 		private void Open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = true;
-		}
-
-		private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-
-		}
-		private void Play_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
-
-		}
-
-		private void Play_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-
-		}
-
-		private void Pause_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
-
-		}
-
-		private void Pause_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-
 		}
 
 		private void Stop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -95,50 +50,11 @@ namespace Flight_Inspection_App.Controls
 			e.CanExecute = mediaPlayerIsPlaying;
 		}
 
-		private void Stop_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-
-			mediaPlayerIsPlaying = false;
-		}
-		private void SpeedDown_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
-
-		}
-
-		private void SpeedDown_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-
-		}
-		private void SpeedUp_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
-
-		}
-
-		private void SpeedUp_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-
-		}
 		private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
 		{
 			userIsDraggingSlider = true;
 		}
 
-		private void sliProgress_DragCompleted(object sender, DragCompletedEventArgs e)
-		{
-			userIsDraggingSlider = false;
-
-		}
-
-		
-		private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
-		{
-
-		}
-
-		private void pbVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-
-		}
 		private void increase_speed(object sender, RoutedEventArgs e)
 		{
 
@@ -166,6 +82,7 @@ namespace Flight_Inspection_App.Controls
         {
 			userIsDraggingSlider = false;
         }
-    }
+
+	}
 
 }

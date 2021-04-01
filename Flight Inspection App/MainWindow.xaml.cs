@@ -22,15 +22,15 @@ namespace Flight_Inspection_App
     /// </summary>
     public partial class MainWindow : NavigationWindow, INotifyPropertyChanged
     {
-        HomePage home;
-        IViewModel vm;
+        HomePage _home;
+        IViewModel _vm;
         public MainWindow() 
         {
             InitializeComponent();
-            vm = new FGVM(new FGM(new Client()));
-            DataContext = vm;
-            home = new HomePage(vm);
-            Navigate(home);
+            _vm = new FGVM(new FGM(new Client()));
+            DataContext = _vm;
+            _home = new HomePage(_vm);
+            Navigate(_home);
         }
 
 
@@ -42,7 +42,7 @@ namespace Flight_Inspection_App
 
         public HomePage GetHomePage()
         {
-            return home;
+            return _home;
         }
     }
 }

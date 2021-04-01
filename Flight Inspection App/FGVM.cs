@@ -132,11 +132,11 @@ namespace Flight_Inspection_App
         public int VM_CurrentFlightTime
         {
             get { return _fgm.CurrentLineIndex; }
-            set { if(_fgm.CurrentLineIndex != value)
+            set 
                 {
                     _fgm.CurrentLineIndex = value;
                     OnPropertyChanged();
-                } }
+                } 
         }
         public string getCurrentFlightTime()
         {

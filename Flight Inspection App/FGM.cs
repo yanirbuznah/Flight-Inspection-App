@@ -25,7 +25,6 @@ namespace Flight_Inspection_App
         bool isStopped = false;
         int currentLineIndex;
         string currentFlightTime;
-        string flightTimeSec;
         string flightTime;
         int numOfRows=0;
         private ManualResetEvent wh = new ManualResetEvent(true);
@@ -74,14 +73,6 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /*        private void UpdateFeaturesValues(string line)
-                {
-                    List<String> listStrLineElements = line.Split(',').ToList();
-                    for (int i = 0; i < _features.Capacity; i++)
-                    {
-                        _features[i].Value = listStrLineElements[i];
-                    }
-                }*/
         private void UpdateFeaturesValues(string[] arrCsv)
         {
 

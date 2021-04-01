@@ -128,6 +128,14 @@ namespace Flight_Inspection_App
         {
             get { return _fgm.Aileron; }
         }
+        public string VM_Throttle
+        {
+            get => _fgm.Throttle;
+        }
+        public float VM_Radder
+        {
+            get => _fgm.Radder;
+        }
         public float VM_Elevator
         {
             get { return _fgm.Elevator; }

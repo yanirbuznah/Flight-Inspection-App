@@ -29,6 +29,8 @@ namespace Flight_Inspection_App
         int numOfRows=0;
         int aileronIndex;
         int elevatorIndex;
+        int radderIndex;
+        int throttleIndex;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -93,6 +95,14 @@ namespace Flight_Inspection_App
                     {
                         elevatorIndex = j;
                     }
+                    if(_features[j].Name == "throttle")
+                    {
+                        throttleIndex = j;
+                    }
+                    if(_features[j].Name == "radder")
+                    {
+                        radderIndex = j;
+                    }
                 }
 
             }
@@ -114,6 +124,8 @@ namespace Flight_Inspection_App
                     currentLineIndex = 0;
                     for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
                     {
+                        Throttle = _features[throttleIndex].Values[currentLineIndex];
+                        Radder = 50*float.Parse(_features[radderIndex].Values[currentLineIndex]);
                         Elevator = 50*float.Parse(_features[elevatorIndex].Values[currentLineIndex]);
                         Aileron = 50*float.Parse(_features[aileronIndex].Values[currentLineIndex]);
                         Altitude = _features[16].Values[currentLineIndex];
@@ -142,7 +154,7 @@ namespace Flight_Inspection_App
 
         public float VideoSpeed
         {
-            get { return videoSpeed; }
+            get => videoSpeed; 
             set
             {
                 if (videoSpeed != value)
@@ -155,7 +167,7 @@ namespace Flight_Inspection_App
         }
         public string FlightTime
         {
-            get { return flightTime; }
+            get => flightTime; 
             set
             {
                 if(flightTime != value)
@@ -167,7 +179,7 @@ namespace Flight_Inspection_App
         }
         public int CurrentLineIndex
         {
-            get { return currentLineIndex; }
+            get => currentLineIndex; 
             set
             {
                     currentLineIndex = value;
@@ -182,7 +194,7 @@ namespace Flight_Inspection_App
 
         public string CurrentFlightTime
         {
-            get { return currentFlightTime; }
+            get => currentFlightTime; 
             set
             {
                 if (currentFlightTime != value)
@@ -195,7 +207,7 @@ namespace Flight_Inspection_App
         string altitude = "0";
         public string Altitude
         {
-            get { return altitude; }
+            get => altitude; 
             private set
             {
                 altitude = value;
@@ -205,7 +217,7 @@ namespace Flight_Inspection_App
         string _airSpeed = "0";
         public string AirSpeed
         {
-            get { return _airSpeed; }
+            get =>  _airSpeed; 
             private set
             {
                 _airSpeed = value;
@@ -215,7 +227,7 @@ namespace Flight_Inspection_App
         string _flightDirection = "0";
         public string FlightDirection
         {
-            get { return _flightDirection; }
+            get => _flightDirection;
             private set
             {
                 _flightDirection = value;
@@ -225,7 +237,7 @@ namespace Flight_Inspection_App
         string _headingDegrees = "0";
         public string HeadingDegrees
         {
-            get { return _headingDegrees; }
+            get => _headingDegrees; 
             private set
             {
                 _headingDegrees = value;
@@ -235,7 +247,7 @@ namespace Flight_Inspection_App
         string _rollDegrees = "0";
         public string RollDegrees
         {
-            get { return _rollDegrees; }
+            get => _rollDegrees; 
             private set
             {
                 _rollDegrees = value;
@@ -245,14 +257,14 @@ namespace Flight_Inspection_App
         string _pitchDegrees = "0";
         public string PitchDegrees
         {
-            get { return _pitchDegrees; }
+            get =>_pitchDegrees;
             private set
             {
                 _pitchDegrees = value;
                 OnPropertyChanged();
             }
         }
-        public float _aileron = 0;
+        float _aileron = 0;
         public float Aileron
         {
             get => _aileron;
@@ -262,7 +274,7 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        public float _elevator = 0;
+        float _elevator = 0;
         public float Elevator
         {
             get => _elevator;
@@ -272,9 +284,29 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
+        string _throttle = "0";
+        public string Throttle
+        {
+            get => _throttle;
+            set
+            {
+                _throttle = value;
+                OnPropertyChanged();
+            }
+        }
+        float _radder = 0;
+        public float Radder
+        {
+            get => _radder;
+            set
+            {
+                _radder = value;
+                OnPropertyChanged();
+            }
+        }
         public string Ip
         {
-            get { return _ip; }
+            get => _ip; 
             set
             {
                 if (_ip != value)
@@ -286,7 +318,7 @@ namespace Flight_Inspection_App
         }
         public int Port
         {
-            get { return _port; }
+            get => _port; 
             set
             {
                 if (_port != value)

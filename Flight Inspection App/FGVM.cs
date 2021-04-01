@@ -114,11 +114,6 @@ namespace Flight_Inspection_App
             }
         }
 
-        public string getCurrentTime()
-        {
-
-            return _fgm.CurrentLineIndex.ToString();
-        }
         public int VM_CurrentLineIndex
         {
             get { return _fgm.CurrentLineIndex; }
@@ -129,6 +124,14 @@ namespace Flight_Inspection_App
                 } 
         }
 
+        public float VM_Aileron
+        {
+            get { return _fgm.Aileron; }
+        }
+        public float VM_Elevator
+        {
+            get { return _fgm.Elevator; }
+        }
         public string VM_HeadingDegrees
         {
             get { return _fgm.HeadingDegrees; }

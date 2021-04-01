@@ -27,6 +27,8 @@ namespace Flight_Inspection_App
         string currentFlightTime;
         string flightTime;
         int numOfRows=0;
+        int aileronIndex;
+        int elevatorIndex;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
@@ -83,6 +85,14 @@ namespace Flight_Inspection_App
                 for (int j = 0; j < 42; ++j)
                 {
                     _features[j].AddValue(listStrLineElements[j]);
+                    if(_features[j].Name == "aileron")
+                    {
+                        aileronIndex = j;
+                    }
+                    if (_features[j].Name == "elevator")
+                    {
+                        elevatorIndex = j;
+                    }
                 }
 
             }
@@ -100,11 +110,12 @@ namespace Flight_Inspection_App
                 isStopped = false;
                 if (_telnetClient.isConnected)
                 {
-
                     string line;
                     currentLineIndex = 0;
                     for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
                     {
+                        Elevator = 50*float.Parse(_features[elevatorIndex].Values[currentLineIndex]);
+                        Aileron = 50*float.Parse(_features[aileronIndex].Values[currentLineIndex]);
                         Altitude = _features[16].Values[currentLineIndex];
                         RollDegrees = _features[17].Values[currentLineIndex];
                         PitchDegrees = _features[18].Values[currentLineIndex];
@@ -238,6 +249,26 @@ namespace Flight_Inspection_App
             private set
             {
                 _pitchDegrees = value;
+                OnPropertyChanged();
+            }
+        }
+        public float _aileron = 0;
+        public float Aileron
+        {
+            get => _aileron;
+            private set
+            {
+                _aileron = value;
+                OnPropertyChanged();
+            }
+        }
+        public float _elevator = 0;
+        public float Elevator
+        {
+            get => _elevator;
+            private set
+            {
+                _elevator = value;
                 OnPropertyChanged();
             }
         }

@@ -100,6 +100,7 @@ namespace Flight_Inspection_App
                 isStopped = false;
                 if (_telnetClient.isConnected)
                 {
+
                     string line;
                     currentLineIndex = 0;
                     for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
@@ -121,6 +122,7 @@ namespace Flight_Inspection_App
                         CurrentLineIndex = currentLineIndex;
                         Thread.Sleep((int)sleepTime);
                     }
+
 
                 }
             }).Start();

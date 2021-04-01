@@ -166,6 +166,17 @@ namespace Flight_Inspection_App.Controls
         {
 			userIsDraggingSlider = false;
         }
-    }
+		private void sliProgress_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			Slider slider = sender as Slider;
+			FGVM viewModel = (FGVM)DataContext;
+			if (userIsDraggingSlider)
+			{
+				viewModel.getCurrentFlightTime();
+			}
+
+		}
+
+	}
 
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,23 +17,28 @@ namespace Flight_Inspection_App
     public class FGM : IModel
     {
         private KeyValuePair<string, string> _file;
-        List<string> _featuresNames;
+        List<Feature> _features;
         private int _port = 5400;
-
-        private float speed = 1;
+        private float videoSpeed = 1;
         private float sleepTime = 100;
         private string _ip = "127.0.0.1";
         bool isStopped = false;
+        int currentLineIndex;
+        string flightTimeMin;
+        string flightTimeSec;
+        string flightTime;
+        int numOfRows=0;
         private ManualResetEvent wh = new ManualResetEvent(true);
         public event PropertyChangedEventHandler PropertyChanged;
         Client _telnetClient;
-        public FGM(Client client) {
+        public FGM(Client client)
+        {
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
-            XElement purchaseOrder = XElement.Load(xmlPlaybackFilepath);
-            IEnumerable<string> partNos = purchaseOrder.Descendants("name").Select(x => (string)x);
-            _featuresNames = partNos.Distinct().ToList();
-
+            XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
+            IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(x => (string)x);
+            List<string> featursNames = chunkNames.ToList();
+            _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
         }
 
 
@@ -44,7 +51,7 @@ namespace Flight_Inspection_App
         {
             _telnetClient.Disconnect();
         }
-        public KeyValuePair<string, string> File
+        public KeyValuePair<string, string> ThisFile
         {
             get
             { return _file; }
@@ -67,43 +74,203 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /*        private void UpdateFeaturesValues(string line)
+                {
+                    List<String> listStrLineElements = line.Split(',').ToList();
+                    for (int i = 0; i < _features.Capacity; i++)
+                    {
+                        _features[i].Value = listStrLineElements[i];
+                    }
+                }*/
+        private void UpdateFeaturesValues(string[] arrCsv)
+        {
+
+
+            for (int i = 0; i < arrCsv.Length; i++)
+            {
+                List<String> listStrLineElements = arrCsv[i].Split(',').ToList();
+                for (int j = 0; j < 42; ++j)
+                {
+                    _features[j].AddValue(listStrLineElements[j]);
+                }
+
+            }
+        }
 
         public void Start()
         {
-
+            string[] arrCsv;
+            arrCsv = File.ReadAllLines(_file.Key);
+            numOfRows = arrCsv.Length;
+            FlightTime = numOfRows.ToString();
+            UpdateFeaturesValues(arrCsv);
             new Thread(() =>
             {
                 isStopped = false;
                 if (_telnetClient.isConnected)
                 {
-                    var file = new System.IO.StreamReader(_file.Key);
                     string line;
-                    while (!isStopped && (line = file.ReadLine()) != null)
+                    currentLineIndex = 0;
+                    for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
                     {
+                        Altitude = _features[16].Values[currentLineIndex];
+                        RollDegrees = _features[17].Values[currentLineIndex];
+                        PitchDegrees = _features[18].Values[currentLineIndex];
+                        HeadingDegrees = _features[19].Values[currentLineIndex];
+                        AirSpeed = _features[21].Values[currentLineIndex];
+                        FlightDirection = _features[37].Values[currentLineIndex];
+                        line = arrCsv[currentLineIndex];
+                        FlightTimeMin = (((arrCsv.Length - currentLineIndex) / 10)/60).ToString();
+                        FlightTimeSec = (((arrCsv.Length - currentLineIndex)/10) % 60).ToString();
                         wh.WaitOne(Timeout.Infinite);
+                        //UpdateFeaturesValues(line);
                         line += "\r\n";
                         Console.WriteLine(line);
                         _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                         _telnetClient.getNs().Flush();
                         Thread.Sleep((int)sleepTime);
                     }
-                    file.Close();
+
                 }
             }).Start();
         }
 
 
-        public float Speed
+        public float VideoSpeed
         {
-            get { return speed; }
+            get { return videoSpeed; }
             set
             {
-                if (speed != value)
+                if (videoSpeed != value)
                 {
-                    speed = value;
-                    sleepTime = 100 / speed;
+                    videoSpeed = value;
+                    sleepTime = 100 / videoSpeed;
                     OnPropertyChanged();
                 }
+            }
+        }
+        public string FlightTime
+        {
+            get { return flightTime; }
+            set
+            {
+                if(flightTime != value)
+                {
+                    flightTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int CurrentLineIndex
+        {
+            get { return currentLineIndex; }
+            set
+            {
+                if(currentLineIndex != value)
+                {
+                    currentLineIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int GetNumOfRows()
+        {
+            return numOfRows;
+        }
+        public int CurrentLinexIndex
+        {
+            get { return currentLineIndex; }
+            set
+            {
+                if (currentLineIndex != value)
+                {
+                    currentLineIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string FlightTimeMin
+        {
+            get { return flightTimeMin; }
+            set
+            {
+                if (flightTimeMin != value)
+                {
+                    flightTimeMin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string FlightTimeSec
+        {
+            get { return flightTimeSec; }
+            set
+            {
+                if (flightTimeSec != value)
+                {
+                    flightTimeSec = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        string altitude = "0";
+        public string Altitude
+        {
+            get { return altitude; }
+            private set
+            {
+                altitude = value;
+                OnPropertyChanged();
+            }
+        }
+        string _airSpeed = "0";
+        public string AirSpeed
+        {
+            get { return _airSpeed; }
+            private set
+            {
+                _airSpeed = value;
+                OnPropertyChanged();
+            }
+        }
+        string _flightDirection = "0";
+        public string FlightDirection
+        {
+            get { return _flightDirection; }
+            private set
+            {
+                _flightDirection = value;
+                OnPropertyChanged();
+            }
+        }
+        string _headingDegrees = "0";
+        public string HeadingDegrees
+        {
+            get { return _headingDegrees; }
+            private set
+            {
+                _headingDegrees = value;
+                OnPropertyChanged();
+            }
+        }
+        string _rollDegrees = "0";
+        public string RollDegrees
+        {
+            get { return _rollDegrees; }
+            private set
+            {
+                _rollDegrees = value;
+                OnPropertyChanged();
+            }
+        }
+        string _pitchDegrees = "0";
+        public string PitchDegrees
+        {
+            get { return _pitchDegrees; }
+            private set
+            {
+                _pitchDegrees = value;
+                OnPropertyChanged();
             }
         }
         public string Ip
@@ -130,7 +297,7 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public List<string> FeaturesNames { get { return _featuresNames; } }
+        public List<Feature> Features { get { return _features; } }
 
         public bool getStatus()
         {
@@ -154,7 +321,7 @@ namespace Flight_Inspection_App
             {
                 wh.Set();
             }
-         
+
         }
         public void stopSimulatorThread()
         {
@@ -164,14 +331,14 @@ namespace Flight_Inspection_App
 
         public void increaseSpeed()
         {
-            Speed = Speed + (float)0.1;
+            VideoSpeed += (float)0.1;
         }
 
 
         public void decreaseSpeed()
         {
-            if((speed - (float)0.1) > 0)
-                Speed = Speed - (float)0.1;
+            if ((videoSpeed - (float)0.1) > 0)
+                VideoSpeed -= (float)0.1;
         }
     }
 }

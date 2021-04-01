@@ -55,14 +55,14 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public float VM_Speed
+        public float VM_VideoSpeed
         {
-            get { return _fgm.Speed; }
+            get { return _fgm.VideoSpeed; }
             set
             {
-                if (_fgm.Speed != value)
+                if (_fgm.VideoSpeed != value)
                 {
-                    _fgm.Speed = value;
+                    _fgm.VideoSpeed = value;
                     OnPropertyChanged();
                 }
             }
@@ -81,21 +81,95 @@ namespace Flight_Inspection_App
                 }
             }
         }
+
+        public string VM_Altitude
+        {
+            get { return _fgm.Altitude; }
+        }
+        public string VM_AirSpeed
+        {
+            get { return _fgm.AirSpeed; }
+        }
+        public string VM_FlightDirection
+        {
+            get { return _fgm.FlightDirection; }
+        }
+
+        public string VM_FlightTime
+        {
+            get { return _fgm.FlightTime; }
+        }
+  
+        public string VM_FlightTimeMin
+        {
+            get { return _fgm.FlightTimeMin; }
+            set
+            {
+                if(_fgm.FlightTimeMin != value)
+                {
+                    _fgm.FlightTimeMin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public string VM_FlightTimeSec
+        {
+            get { return _fgm.FlightTimeSec; }
+            set
+            {
+                if(_fgm.FlightTimeSec != value)
+                {
+                    _fgm.FlightTimeSec = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string getCurrentTime()
+        {
+            return _fgm.CurrentLineIndex.ToString();
+        }
+        public string VM_CurrentFlightTime
+        {
+            get { return _fgm.CurrentLineIndex.ToString(); }
+            set { if(_fgm.CurrentLineIndex.ToString() != value)
+                {
+                    _fgm.CurrentLineIndex = int.Parse(value);
+                    OnPropertyChanged();
+                } }
+        }
+        public string getCurrentFlightTime()
+        {
+            return _fgm.CurrentLineIndex.ToString();
+        }
+
+        public string VM_HeadingDegrees
+        {
+            get { return _fgm.HeadingDegrees; }
+        }
+        public string VM_RollDegrees
+        {
+            get { return _fgm.RollDegrees; }
+        }
+        public string VM_PitchDegrees
+        {
+            get { return _fgm.PitchDegrees; }
+        }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public List<string> VM_FeaturesNames { get { return _fgm.FeaturesNames; } }
+        public List<Feature> VM_FeaturesNames { get { return _fgm.Features; } }
 
 
         public KeyValuePair<string, string> VM_File
         {
-            get { return _fgm.File; }
+            get { return _fgm.ThisFile; }
             set
             {
-                if (_fgm.File.Key != value.Key)
+                if (_fgm.ThisFile.Key != value.Key)
                 {
-                    _fgm.File = value;
+                    _fgm.ThisFile = value;
                     OnPropertyChanged();
                     _fgm.Start();
                 }
@@ -134,10 +208,24 @@ namespace Flight_Inspection_App
         {
             _fgm.increaseSpeed();
         }
+        
 
         public void decreaseSpeed()
         {
             _fgm.decreaseSpeed();
         }
+
+        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(field, newValue))
+            {
+                field = newValue;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }

@@ -23,12 +23,10 @@ namespace Flight_Inspection_App
     public partial class Simulator : Page
     {
         IViewModel _vm;
-        ControlBar cb;
         public Simulator(IViewModel vm)
         {
             InitializeComponent();
             _vm = vm;
-            cb = new ControlBar(vm);
             DataContext = vm;
         }
 

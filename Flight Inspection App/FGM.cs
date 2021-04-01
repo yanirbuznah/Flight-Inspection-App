@@ -24,7 +24,7 @@ namespace Flight_Inspection_App
         private string _ip = "127.0.0.1";
         bool isStopped = false;
         int currentLineIndex;
-        string flightTimeMin;
+        string currentFlightTime;
         string flightTimeSec;
         string flightTime;
         int numOfRows=0;
@@ -120,8 +120,7 @@ namespace Flight_Inspection_App
                         AirSpeed = _features[21].Values[currentLineIndex];
                         FlightDirection = _features[37].Values[currentLineIndex];
                         line = arrCsv[currentLineIndex];
-                        FlightTimeMin = (((arrCsv.Length - currentLineIndex) / 10)/60).ToString();
-                        FlightTimeSec = (((arrCsv.Length - currentLineIndex)/10) % 60).ToString();
+                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - currentLineIndex) / 10)).ToString(@"hh\:mm\:ss"); 
                         wh.WaitOne(Timeout.Infinite);
                         //UpdateFeaturesValues(line);
                         line += "\r\n";
@@ -176,26 +175,15 @@ namespace Flight_Inspection_App
             return numOfRows;
         }
        
-        public string FlightTimeMin
+
+        public string CurrentFlightTime
         {
-            get { return flightTimeMin; }
+            get { return currentFlightTime; }
             set
             {
-                if (flightTimeMin != value)
+                if (currentFlightTime != value)
                 {
-                    flightTimeMin = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public string FlightTimeSec
-        {
-            get { return flightTimeSec; }
-            set
-            {
-                if (flightTimeSec != value)
-                {
-                    flightTimeSec = value;
+                    currentFlightTime = value;
                     OnPropertyChanged();
                 }
             }

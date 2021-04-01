@@ -100,26 +100,15 @@ namespace Flight_Inspection_App
             get { return _fgm.FlightTime; }
         }
   
-        public string VM_FlightTimeMin
+
+        public string VM_CurrentFlightTime
         {
-            get { return _fgm.FlightTimeMin; }
+            get { return _fgm.CurrentFlightTime; }
             set
             {
-                if(_fgm.FlightTimeMin != value)
+                if(_fgm.CurrentFlightTime != value)
                 {
-                    _fgm.FlightTimeMin = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        public string VM_FlightTimeSec
-        {
-            get { return _fgm.FlightTimeSec; }
-            set
-            {
-                if(_fgm.FlightTimeSec != value)
-                {
-                    _fgm.FlightTimeSec = value;
+                    _fgm.CurrentFlightTime = value;
                     OnPropertyChanged();
                 }
             }
@@ -127,9 +116,10 @@ namespace Flight_Inspection_App
 
         public string getCurrentTime()
         {
+
             return _fgm.CurrentLineIndex.ToString();
         }
-        public int VM_CurrentFlightTime
+        public int VM_CurrentLineIndex
         {
             get { return _fgm.CurrentLineIndex; }
             set 
@@ -137,10 +127,6 @@ namespace Flight_Inspection_App
                     _fgm.CurrentLineIndex = value;
                     OnPropertyChanged();
                 } 
-        }
-        public string getCurrentFlightTime()
-        {
-            return _fgm.CurrentLineIndex.ToString();
         }
 
         public string VM_HeadingDegrees

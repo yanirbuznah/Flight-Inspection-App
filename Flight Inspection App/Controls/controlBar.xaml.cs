@@ -156,8 +156,8 @@ namespace Flight_Inspection_App.Controls
 
         private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-
-        }
+			
+		}
 		private void silProgress_DragStarted(object sender, DragStartedEventArgs e)
         {
 			userIsDraggingSlider = true;

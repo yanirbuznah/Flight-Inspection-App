@@ -15,3 +15,5 @@ Download the zip for this repository or use git on the termianl. The terminal co
 git clone https://www.github.com/yanirbuznah/Flight-Inspection-App
 ```
 
+### Running The Flight-Inspection-App
+Upon installation, after compiling the app,you will see the home page screen.There are two blanks you need to fill up in order to connect to a server: IP & Port.

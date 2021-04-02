@@ -1,20 +1,16 @@
-﻿using System;
+﻿using Flight_Inspection_App.Commands;
+using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Flight_Inspection_App.Commands;
 
 namespace Flight_Inspection_App
 {
     public class FGVM : IViewModel
     {
-        FGM _fgm;
-        public PauseCommand PauseTheFlight { get;private set; }
+        private readonly FGM _fgm;
+        public PauseCommand PauseTheFlight { get; private set; }
         public PlayCommand PlayTheFlight { get; private set; }
         public PlusCommand IncreaseTheSpeed { get; private set; }
         public MinusCommand DecreaseTheSpeed { get; private set; }
@@ -29,20 +25,19 @@ namespace Flight_Inspection_App
             };
             PauseTheFlight = new PauseCommand(PauseThread);
             PlayTheFlight = new PlayCommand(ContinueRunning);
-            IncreaseTheSpeed = new PlusCommand(increaseSpeed);
-            DecreaseTheSpeed = new MinusCommand(decreaseSpeed);
+            IncreaseTheSpeed = new PlusCommand(IncreaseSpeed);
+            DecreaseTheSpeed = new MinusCommand(DecreaseSpeed);
             StopTheFlight = new StopCommand(StopFlight);
 
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
 
-  
+
         public string VM_Ip
         {
             get { return _fgm.Ip; }
@@ -99,14 +94,14 @@ namespace Flight_Inspection_App
         {
             get { return _fgm.FlightTime; }
         }
-  
+
 
         public string VM_CurrentFlightTime
         {
             get { return _fgm.CurrentFlightTime; }
             set
             {
-                if(_fgm.CurrentFlightTime != value)
+                if (_fgm.CurrentFlightTime != value)
                 {
                     _fgm.CurrentFlightTime = value;
                     OnPropertyChanged();
@@ -117,11 +112,11 @@ namespace Flight_Inspection_App
         public int VM_CurrentLineIndex
         {
             get { return _fgm.CurrentLineIndex; }
-            set 
-                {
-                    _fgm.CurrentLineIndex = value;
-                    OnPropertyChanged();
-                } 
+            set
+            {
+                _fgm.CurrentLineIndex = value;
+                OnPropertyChanged();
+            }
         }
 
         public float VM_Aileron
@@ -168,7 +163,6 @@ namespace Flight_Inspection_App
                 {
                     _fgm.ThisFile = value;
                     OnPropertyChanged();
-                    _fgm.Start();
                 }
             }
             //need to do the same for every component in Simulator.
@@ -186,43 +180,73 @@ namespace Flight_Inspection_App
         public void Start()
         {
             _fgm.Start();
-            _fgm.setStatus(true);
+            _fgm.SetStatus(true);
         }
         public void PauseThread()
         {
-            _fgm.pauseThread();
+            _fgm.PauseThread();
         }
         public void ContinueRunning()
         {
-            _fgm.continueThread();
+            _fgm.ContinueThread();
         }
         public void StopFlight()
         {
-            _fgm.stopSimulatorThread(); 
-        }
-        
-        public void increaseSpeed()
-        {
-            _fgm.increaseSpeed();
-        }
-        
-
-        public void decreaseSpeed()
-        {
-            _fgm.decreaseSpeed();
+            _fgm.StopSimulatorThread();
         }
 
-        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+        public void IncreaseSpeed()
         {
-            if (!Equals(field, newValue))
+            _fgm.IncreaseSpeed();
+        }
+
+
+        public void DecreaseSpeed()
+        {
+            _fgm.DecreaseSpeed();
+        }
+
+        /*        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+                {
+                    if (!Equals(field, newValue))
+                    {
+                        field = newValue;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                        return true;
+                    }
+                    return false;
+                }*/
+
+        public string VM_Graph_Title
+        {
+            get
             {
-                field = newValue;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-                return true;
+                return _fgm.Graph_Title;
             }
-            return false;
+        }
+        public IList<DataPoint> VM_Graph_Points
+        {
+            get
+            {
+                return _fgm.Graph_Points;
+            }
         }
 
+        public Feature VM_IntresingFeature
+        {
+            get
+            {
+                return _fgm.IntresingFeature;
+            }
+            set
+            {
+                if (_fgm.IntresingFeature != value)
+                {
+                    _fgm.IntresingFeature = value;
+                    OnPropertyChanged();
 
+                }
+            }
+        }
     }
 }

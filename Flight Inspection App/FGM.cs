@@ -1,15 +1,11 @@
-﻿using CsvHelper;
+﻿using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace Flight_Inspection_App
@@ -17,32 +13,28 @@ namespace Flight_Inspection_App
     public class FGM : IModel
     {
         private KeyValuePair<string, string> _file;
-        List<Feature> _features;
+        private readonly List<Feature> _features;
         private int _port = 5400;
-        private float videoSpeed = 1;
-        private float sleepTime = 100;
+        private float _videoSpeed = 1;
+        private float _sleepTime = 100;
         private string _ip = "127.0.0.1";
-        bool isStopped = false;
-        int currentLineIndex;
-        string currentFlightTime;
-        string flightTime;
-        int numOfRows = 0;
-        int numOfCol = 0;
-        int aileronIndex;
-        int elevatorIndex;
-        int rudderIndex;
-        int throttleIndex;
-        private ManualResetEvent wh = new ManualResetEvent(true);
+        bool _isStopped = false;
+        private int _currentLineIndex;
+        private string _currentFlightTime;
+        private string _flightTime;
+        private int _numOfCols = 0;
+        private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
-        Client _telnetClient;
+        private readonly Client _telnetClient;
         public FGM(Client client)
         {
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
-            IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(x => (string)x);
+            IEnumerable<string> chunkNames = playbackXml.Descendants("output").Descendants("name").Select(name => (string)name);
             List<string> featursNames = chunkNames.ToList();
             _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
+            _numOfCols = _features.Capacity;
         }
 
 
@@ -64,159 +56,170 @@ namespace Flight_Inspection_App
             {
                 _file = value;
                 OnPropertyChanged();
+                _isStopped = true;
+                Thread.Sleep((int)_sleepTime);
                 Start();
             }
         }
 
         public void NotifyPropertyChanged(string propName)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void UpdateFeaturesValues(string[] arrCsv)
+        private void CalcFeaturesValues(string[] arrCsv)
         {
 
 
             for (int i = 0; i < arrCsv.Length; i++)
             {
-                List<String> listStrLineElements = arrCsv[i].Split(',').ToList();
-                for (int j = 0; j < numOfCol; ++j)
+                List<string> listStrLineElements = arrCsv[i].Split(',').ToList();
+                for (int j = 0; j < _numOfCols; ++j)
                 {
-                    _features[j].AddValue(listStrLineElements[j]);
-                    if (_features[j].Name == "aileron")
-                    {
-                        aileronIndex = j;
-                    }
-                    else if (_features[j].Name == "elevator")
-                    {
-                        elevatorIndex = j;
-                    }
-                    else if (_features[j].Name == "throttle")
-                    {
-                        throttleIndex = j;
-                    }
-                    else if (_features[j].Name == "rudder")
-                    {
-                        rudderIndex = j;
-                    }
+                    _features[j].AddPoint(i, listStrLineElements[j]);
                 }
-
             }
+        }
+
+
+        private void UpdateFeaturesValues()
+        {
+            Aileron = 100 * float.Parse(_features[0].Values[_currentLineIndex]);
+            Elevator = 100 * float.Parse(_features[1].Values[_currentLineIndex]);
+            Rudder = _features[2].Values[_currentLineIndex];
+            Throttle = _features[6].Values[_currentLineIndex];
+            Altitude = _features[16].Values[_currentLineIndex];
+            RollDegrees = _features[17].Values[_currentLineIndex];
+            PitchDegrees = _features[18].Values[_currentLineIndex];
+            HeadingDegrees = _features[19].Values[_currentLineIndex];
+            AirSpeed = _features[21].Values[_currentLineIndex];
+            FlightDirection = _features[37].Values[_currentLineIndex];
         }
 
         public void Start()
         {
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_file.Key);
-            numOfRows = arrCsv.Length;
-            numOfCol = arrCsv[0].Split(',').Length;
-            FlightTime = numOfRows.ToString();
-            UpdateFeaturesValues(arrCsv);
+            NumOfRows = arrCsv.Length;
+            FlightTime = NumOfRows.ToString();
+            CalcFeaturesValues(arrCsv);
+
             new Thread(() =>
             {
-                isStopped = false;
-                if (_telnetClient.isConnected)
+                _isStopped = false;
+                string line;
+                CurrentLineIndex = 0;
+                for (; CurrentLineIndex < arrCsv.Length && !_isStopped; ++CurrentLineIndex)
                 {
-                    string line;
-                    currentLineIndex = 0;
-                    for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
+
+                    UpdateFeaturesValues();
+                    line = arrCsv[_currentLineIndex] + "\r\n";
+                    CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
+                    wh.WaitOne(Timeout.Infinite);
+                    Console.WriteLine(line);
+                    if (_telnetClient.IsConnected)
                     {
-                        Throttle = _features[throttleIndex].Values[currentLineIndex];
-                        Rudder = _features[rudderIndex].Values[currentLineIndex];
-                        Elevator = 50 * float.Parse(_features[elevatorIndex].Values[currentLineIndex]);
-                        Aileron = 50 * float.Parse(_features[aileronIndex].Values[currentLineIndex]);
-                        Altitude = _features[16].Values[currentLineIndex];
-                        RollDegrees = _features[17].Values[currentLineIndex];
-                        PitchDegrees = _features[18].Values[currentLineIndex];
-                        HeadingDegrees = _features[19].Values[currentLineIndex];
-                        AirSpeed = _features[21].Values[currentLineIndex];
-                        FlightDirection = _features[37].Values[currentLineIndex];
-                        line = arrCsv[currentLineIndex];
-                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - currentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
-                        wh.WaitOne(Timeout.Infinite);
-                        //UpdateFeaturesValues(line);
-                        line += "\r\n";
-                        Console.WriteLine(line);
-                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                        _telnetClient.getNs().Flush();
-                        CurrentLineIndex = currentLineIndex;
-                        Thread.Sleep((int)sleepTime);
+                        _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                        _telnetClient.GetNs().Flush();
                     }
-
-
+                    NotifyPropertyChanged("Graph_Points");
+                    Thread.Sleep((int)_sleepTime);
                 }
+
             }).Start();
         }
 
 
         public string VideoSpeed
         {
-            get { return videoSpeed.ToString("F"); }
+            get { return _videoSpeed.ToString("F"); }
             set
             {
-                if (videoSpeed.ToString("F") != value)
+                if (_videoSpeed.ToString("F") != value)
                 {
-                    videoSpeed = float.Parse(value);
-                    sleepTime = 100 / videoSpeed;
+                    _videoSpeed = float.Parse(value);
+                    _sleepTime = 100 / _videoSpeed;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public void increaseSpeed()
+        public void IncreaseSpeed()
         {
-            float newSpeed = videoSpeed + (float)0.1;
+            float newSpeed = _videoSpeed + (float)0.1;
             VideoSpeed = newSpeed.ToString("F");
         }
 
 
-        public void decreaseSpeed()
+        public void DecreaseSpeed()
         {
-            float newSpeed = videoSpeed - (float)0.1;
+            float newSpeed = _videoSpeed - (float)0.1;
             if (newSpeed > 0)
                 VideoSpeed = newSpeed.ToString("F");
         }
 
+        public string Graph_Title
+        {
+            get
+            {
+                if (IntresingFeature != null)
+                    return IntresingFeature.Name;
+                return "";
+            }
+
+        }
+
+
+        public IList<DataPoint> Graph_Points
+        {
+            get
+            {
+                if (IntresingFeature == null)
+                    return new List<DataPoint>();
+                return new List<DataPoint>(IntresingFeature.Points.Take(CurrentLineIndex));
+            }
+
+        }
+
         public string FlightTime
         {
-            get => flightTime;
+            get => _flightTime;
             set
             {
-                if (flightTime != value)
+                if (_flightTime != value)
                 {
-                    flightTime = value;
+                    _flightTime = value;
                     OnPropertyChanged();
                 }
             }
         }
         public int CurrentLineIndex
         {
-            get => currentLineIndex;
+            get => _currentLineIndex;
             set
             {
-                currentLineIndex = value;
+                _currentLineIndex = value;
                 OnPropertyChanged();
             }
         }
-        public int GetNumOfRows()
+        public int NumOfRows
         {
-            return numOfRows;
+            get; set;
         }
 
 
         public string CurrentFlightTime
         {
-            get => currentFlightTime;
+            get => _currentFlightTime;
             set
             {
-                if (currentFlightTime != value)
+                if (_currentFlightTime != value)
                 {
-                    currentFlightTime = value;
+                    _currentFlightTime = value;
                     OnPropertyChanged();
                 }
             }
@@ -230,6 +233,7 @@ namespace Flight_Inspection_App
                 altitude = value;
                 OnPropertyChanged();
             }
+
         }
         string _airSpeed = "0";
         public string AirSpeed
@@ -311,7 +315,7 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-       string _rudder = "0";
+        string _rudder = "0";
         public string Rudder
         {
             get => _rudder;
@@ -346,22 +350,32 @@ namespace Flight_Inspection_App
             }
         }
         public List<Feature> Features { get { return _features; } }
+        private Feature _intresingFeature;
+        public Feature IntresingFeature
+        {
+            get => _intresingFeature;
 
-        public bool getStatus()
-        {
-            return _telnetClient.getStatus();
+            set
+            {
+                _intresingFeature = value;
+                OnPropertyChanged();
+            }
         }
-        public void setStatus(bool val)
+        public bool GetStatus()
         {
-            _telnetClient.setStatus(val);
+            return _telnetClient.GetStatus();
         }
-        public void pauseThread()
+        public void SetStatus(bool val)
+        {
+            _telnetClient.SetStatus(val);
+        }
+        public void PauseThread()
         {
             wh.Reset();
         }
-        public void continueThread()
+        public void ContinueThread()
         {
-            if (isStopped)
+            if (_isStopped)
             {
                 Start();
             }
@@ -371,10 +385,10 @@ namespace Flight_Inspection_App
             }
 
         }
-        public void stopSimulatorThread()
+        public void StopSimulatorThread()
         {
-            wh.Set();//Maybe improve that the client sees 10 pixels before the stop.
-            isStopped = true;
+            wh.Set();
+            _isStopped = true;
         }
     }
 }

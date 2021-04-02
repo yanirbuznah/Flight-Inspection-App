@@ -8,12 +8,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid Height="250" Margin="275,100,275,100"  Width="250">
-            <HelixToolkit:HelixViewport3D x:Name="myView" ZoomExtentsWhenLoaded="True">
+        <Grid >
+            <HelixToolkit:HelixViewport3D x:Name="myView"   ZoomExtentsWhenLoaded="True" ShowViewCube="True" ViewCubeWidth="2" ViewCubeHeight="2">
                 <!-- Remember to add light to the scene -->
                 <HelixToolkit:SunLight/>
-                <ModelVisual3D x:Name="model"/>
-                <!-- You can also add elements here in the xaml -->
+                <ModelVisual3D x:Name="model">
+
+                    <ModelVisual3D.Transform>
+                        <Transform3DGroup>
+            <RotateTransform3D>
+                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="1,0,0" Angle="{Binding  VM_RollDegrees}"/>
+                </RotateTransform3D.Rotation>
+            </RotateTransform3D>
+            <RotateTransform3D>
+                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,1,0" Angle="{Binding VM_PitchDegrees}"/>
+                </RotateTransform3D.Rotation>
+            </RotateTransform3D>
+            <RotateTransform3D>
+                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D Axis="0,0,1" Angle="{Binding VM_HeadingDegrees}"/>
+                </RotateTransform3D.Rotation>
+            </RotateTransform3D>
+        </Transform3DGroup>
+                    </ModelVisual3D.Transform>
+                </ModelVisual3D>
+                    <!-- You can also add elements here in the xaml -->
                 <!--<HelixToolkit:GridLinesVisual3D Width="8" Length="8" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>-->
             </HelixToolkit:HelixViewport3D>
         </Grid>

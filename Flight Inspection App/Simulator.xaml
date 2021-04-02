@@ -35,6 +35,9 @@
         <!--<Viewbox  Margin="0,256,599,-11">
             <Controls:UserControl1 />
         </Viewbox>-->
+        <Viewbox Margin="0,256,599,-11">
+            <Button Content="3D Model" Height="19" Width="59" Click="HeliWindow"></Button>
+        </Viewbox>
     </Grid>
 
 

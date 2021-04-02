@@ -14,14 +14,10 @@
             <ListBox Name="lbFeaturesNames" />
         </DockPanel>-->
 
-        <ListBox Name="lbFeaturesNames" HorizontalContentAlignment="Stretch" ItemsSource="{Binding VM_FeaturesNames}">
+        <ListBox Name="lbFeaturesNames" HorizontalContentAlignment="Stretch" SelectedItem="{Binding Path=VM_IntresingFeature}" ItemsSource="{Binding VM_FeaturesNames}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
-                        <!--<Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>-->
                         <TextBlock Text="{Binding Name}" />
                     </Grid>
                 </DataTemplate>

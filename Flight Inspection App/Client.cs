@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Flight_Inspection_App
@@ -41,16 +35,16 @@ namespace Flight_Inspection_App
         {
             return _ns;
         }
-       
+
         public void Disconnect()
         {
             _ns.Close();
             _client.Close();
             IsConnected = false;
         }
-        
 
-        public void SetStatus (bool val)
+
+        public void SetStatus(bool val)
         {
             isRunning = val;
         }

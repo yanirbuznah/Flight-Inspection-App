@@ -1,22 +1,16 @@
-﻿using System;
+﻿using Flight_Inspection_App.Commands;
+using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Flight_Inspection_App.Commands;
-using OxyPlot;
-using OxyPlot.Series;
 
 namespace Flight_Inspection_App
 {
     public class FGVM : IViewModel
     {
         private readonly FGM _fgm;
-        public PauseCommand PauseTheFlight { get;private set; }
+        public PauseCommand PauseTheFlight { get; private set; }
         public PlayCommand PlayTheFlight { get; private set; }
         public PlusCommand IncreaseTheSpeed { get; private set; }
         public MinusCommand DecreaseTheSpeed { get; private set; }
@@ -43,7 +37,7 @@ namespace Flight_Inspection_App
         }
 
 
-  
+
         public string VM_Ip
         {
             get { return _fgm.Ip; }
@@ -100,14 +94,14 @@ namespace Flight_Inspection_App
         {
             get { return _fgm.FlightTime; }
         }
-  
+
 
         public string VM_CurrentFlightTime
         {
             get { return _fgm.CurrentFlightTime; }
             set
             {
-                if(_fgm.CurrentFlightTime != value)
+                if (_fgm.CurrentFlightTime != value)
                 {
                     _fgm.CurrentFlightTime = value;
                     OnPropertyChanged();
@@ -118,11 +112,11 @@ namespace Flight_Inspection_App
         public int VM_CurrentLineIndex
         {
             get { return _fgm.CurrentLineIndex; }
-            set 
-                {
-                    _fgm.CurrentLineIndex = value;
-                    OnPropertyChanged();
-                } 
+            set
+            {
+                _fgm.CurrentLineIndex = value;
+                OnPropertyChanged();
+            }
         }
 
         public float VM_Aileron
@@ -198,30 +192,30 @@ namespace Flight_Inspection_App
         }
         public void StopFlight()
         {
-            _fgm.StopSimulatorThread(); 
+            _fgm.StopSimulatorThread();
         }
-        
+
         public void IncreaseSpeed()
         {
             _fgm.IncreaseSpeed();
         }
-        
+
 
         public void DecreaseSpeed()
         {
             _fgm.DecreaseSpeed();
         }
 
-/*        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
-        {
-            if (!Equals(field, newValue))
-            {
-                field = newValue;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-                return true;
-            }
-            return false;
-        }*/
+        /*        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+                {
+                    if (!Equals(field, newValue))
+                    {
+                        field = newValue;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                        return true;
+                    }
+                    return false;
+                }*/
 
         public string VM_Graph_Title
         {
@@ -250,7 +244,7 @@ namespace Flight_Inspection_App
                 {
                     _fgm.IntresingFeature = value;
                     OnPropertyChanged();
-                    
+
                 }
             }
         }

@@ -1,17 +1,11 @@
-﻿using CsvHelper;
-using OxyPlot;
-using OxyPlot.Series;
+﻿using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace Flight_Inspection_App
@@ -26,9 +20,9 @@ namespace Flight_Inspection_App
         private string _ip = "127.0.0.1";
         bool _isStopped = false;
         private int _currentLineIndex;
-        private  string _currentFlightTime;
-        private  string _flightTime;
-        private  int _numOfCols = 0;
+        private string _currentFlightTime;
+        private string _flightTime;
+        private int _numOfCols = 0;
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
@@ -62,7 +56,7 @@ namespace Flight_Inspection_App
             {
                 _file = value;
                 OnPropertyChanged();
-                _isStopped= true;
+                _isStopped = true;
                 Thread.Sleep((int)_sleepTime);
                 Start();
             }
@@ -114,29 +108,29 @@ namespace Flight_Inspection_App
             FlightTime = NumOfRows.ToString();
             CalcFeaturesValues(arrCsv);
 
-                new Thread(() =>
+            new Thread(() =>
+            {
+                _isStopped = false;
+                string line;
+                CurrentLineIndex = 0;
+                for (; CurrentLineIndex < arrCsv.Length && !_isStopped; ++CurrentLineIndex)
                 {
-                     _isStopped = false;
-                    string line;
-                    CurrentLineIndex = 0;
-                    for (; CurrentLineIndex < arrCsv.Length && !_isStopped; ++CurrentLineIndex)
+
+                    UpdateFeaturesValues();
+                    line = arrCsv[_currentLineIndex] + "\r\n";
+                    CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
+                    wh.WaitOne(Timeout.Infinite);
+                    Console.WriteLine(line);
+                    if (_telnetClient.IsConnected)
                     {
-
-                        UpdateFeaturesValues();
-                        line = arrCsv[_currentLineIndex] +"\r\n";
-                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
-                        wh.WaitOne(Timeout.Infinite);
-                        Console.WriteLine(line);
-                        if (_telnetClient.IsConnected)
-                        {
-                            _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                            _telnetClient.GetNs().Flush();
-                        }
-                        NotifyPropertyChanged("Graph_Points");
-                        Thread.Sleep((int)_sleepTime);
+                        _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                        _telnetClient.GetNs().Flush();
                     }
+                    NotifyPropertyChanged("Graph_Points");
+                    Thread.Sleep((int)_sleepTime);
+                }
 
-                }).Start();
+            }).Start();
         }
 
 
@@ -167,8 +161,9 @@ namespace Flight_Inspection_App
             if (newSpeed > 0)
                 VideoSpeed = newSpeed.ToString("F");
         }
-        
-        public string Graph_Title {
+
+        public string Graph_Title
+        {
             get
             {
                 if (IntresingFeature != null)
@@ -213,7 +208,7 @@ namespace Flight_Inspection_App
         }
         public int NumOfRows
         {
-            get;set;
+            get; set;
         }
 
 
@@ -238,7 +233,7 @@ namespace Flight_Inspection_App
                 altitude = value;
                 OnPropertyChanged();
             }
-            
+
         }
         string _airSpeed = "0";
         public string AirSpeed
@@ -320,7 +315,7 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-       string _rudder = "0";
+        string _rudder = "0";
         public string Rudder
         {
             get => _rudder;
@@ -355,11 +350,11 @@ namespace Flight_Inspection_App
             }
         }
         public List<Feature> Features { get { return _features; } }
-        private Feature _intresingFeature; 
+        private Feature _intresingFeature;
         public Feature IntresingFeature
         {
             get => _intresingFeature;
-            
+
             set
             {
                 _intresingFeature = value;

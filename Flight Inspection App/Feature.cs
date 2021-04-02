@@ -1,9 +1,6 @@
 ﻿using OxyPlot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Flight_Inspection_App
 {
@@ -14,7 +11,8 @@ namespace Flight_Inspection_App
         private readonly List<string> _Values = new();
         private readonly IList<DataPoint> _Points = new List<DataPoint>();
 
-        public List<string> Values {
+        public List<string> Values
+        {
             get { return _Values; }
         }
         public void AddValue(string value)
@@ -25,13 +23,13 @@ namespace Flight_Inspection_App
         {
             double x = line / 10;
             double y = Double.Parse(value);
-            Points.Add(new DataPoint(x,y));
+            Points.Add(new DataPoint(x, y));
             _Values.Add(value);
         }
         public IList<DataPoint> Points
         {
-            get{ return _Points; }
-            
+            get { return _Points; }
+
         }
 
     }

@@ -1,19 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
 using Path = System.IO.Path;
 
 namespace Flight_Inspection_App.Controls
@@ -23,12 +12,12 @@ namespace Flight_Inspection_App.Controls
     /// </summary>
     public partial class FilesComponent : UserControl
     {
-      
+
         public FilesComponent()
         {
             InitializeComponent();
         }
-      
+
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -44,7 +33,7 @@ namespace Flight_Inspection_App.Controls
             if (openFileDialog.ShowDialog() == true)
             {
                 foreach (string filePath in openFileDialog.FileNames)
-                    lbFiles.Items.Add(new KeyValuePair<string,string>(filePath,Path.GetFileName(filePath)));
+                    lbFiles.Items.Add(new KeyValuePair<string, string>(filePath, Path.GetFileName(filePath)));
             }
         }
 

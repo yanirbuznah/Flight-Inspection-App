@@ -62,6 +62,8 @@ namespace Flight_Inspection_App
             {
                 _file = value;
                 OnPropertyChanged();
+                _isStopped= true;
+                Thread.Sleep((int)_sleepTime);
                 Start();
             }
         }
@@ -112,9 +114,9 @@ namespace Flight_Inspection_App
             FlightTime = NumOfRows.ToString();
             CalcFeaturesValues(arrCsv);
 
-            new Thread(() =>
-            {
-                _isStopped = false;
+                new Thread(() =>
+                {
+                     _isStopped = false;
                     string line;
                     CurrentLineIndex = 0;
                     for (; CurrentLineIndex < arrCsv.Length && !_isStopped; ++CurrentLineIndex)
@@ -134,7 +136,7 @@ namespace Flight_Inspection_App
                         Thread.Sleep((int)_sleepTime);
                     }
 
-            }).Start();
+                }).Start();
         }
 
 

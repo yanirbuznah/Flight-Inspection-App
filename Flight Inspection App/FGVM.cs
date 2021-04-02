@@ -169,7 +169,6 @@ namespace Flight_Inspection_App
                 {
                     _fgm.ThisFile = value;
                     OnPropertyChanged();
-                    //_fgm.Start();
                 }
             }
             //need to do the same for every component in Simulator.

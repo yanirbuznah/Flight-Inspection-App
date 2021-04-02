@@ -15,7 +15,7 @@ namespace Flight_Inspection_App
 {
     public class FGVM : IViewModel
     {
-        FGM _fgm;
+        private readonly FGM _fgm;
         public PauseCommand PauseTheFlight { get;private set; }
         public PlayCommand PlayTheFlight { get; private set; }
         public PlusCommand IncreaseTheSpeed { get; private set; }
@@ -31,16 +31,15 @@ namespace Flight_Inspection_App
             };
             PauseTheFlight = new PauseCommand(PauseThread);
             PlayTheFlight = new PlayCommand(ContinueRunning);
-            IncreaseTheSpeed = new PlusCommand(increaseSpeed);
-            DecreaseTheSpeed = new MinusCommand(decreaseSpeed);
+            IncreaseTheSpeed = new PlusCommand(IncreaseSpeed);
+            DecreaseTheSpeed = new MinusCommand(DecreaseSpeed);
             StopTheFlight = new StopCommand(StopFlight);
 
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
 
@@ -188,33 +187,33 @@ namespace Flight_Inspection_App
         public void Start()
         {
             _fgm.Start();
-            _fgm.setStatus(true);
+            _fgm.SetStatus(true);
         }
         public void PauseThread()
         {
-            _fgm.pauseThread();
+            _fgm.PauseThread();
         }
         public void ContinueRunning()
         {
-            _fgm.continueThread();
+            _fgm.ContinueThread();
         }
         public void StopFlight()
         {
-            _fgm.stopSimulatorThread(); 
+            _fgm.StopSimulatorThread(); 
         }
         
-        public void increaseSpeed()
+        public void IncreaseSpeed()
         {
-            _fgm.increaseSpeed();
+            _fgm.IncreaseSpeed();
         }
         
 
-        public void decreaseSpeed()
+        public void DecreaseSpeed()
         {
-            _fgm.decreaseSpeed();
+            _fgm.DecreaseSpeed();
         }
 
-        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
+/*        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
         {
             if (!Equals(field, newValue))
             {
@@ -223,7 +222,7 @@ namespace Flight_Inspection_App
                 return true;
             }
             return false;
-        }
+        }*/
 
         public string VM_Graph_Title
         {

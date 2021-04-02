@@ -23,23 +23,25 @@ namespace Flight_Inspection_App.Controls
 	/// </summary>
 	public partial class ControlBar : UserControl
 	{
-		private bool mediaPlayerIsPlaying = false;
-		private bool userIsDraggingSlider = false;
-		private IViewModel _vm;
+		private readonly bool mediaPlayerIsPlaying = false;
+/*		private bool userIsDraggingSlider = false;
+		private readonly IViewModel _vm;*/
 		public ControlBar()
 		{
 
 			InitializeComponent();
 
-		
-			DispatcherTimer timer = new DispatcherTimer();
-			timer.Interval = TimeSpan.FromSeconds(1);
-			timer.Start();
+
+            DispatcherTimer timer = new()
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            timer.Start();
 		}
-		public ControlBar(IViewModel vm) : this()
+/*		public ControlBar(IViewModel vm) : this()
 		{
-			_vm = vm;
-		}
+			//_vm = vm;
+		}*/
 		private void Open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = true;
@@ -50,9 +52,9 @@ namespace Flight_Inspection_App.Controls
 			e.CanExecute = mediaPlayerIsPlaying;
 		}
 
-		private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
+/*		private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
 		{
-			userIsDraggingSlider = true;
+			//userIsDraggingSlider = true;
 		}
 
 		private void increase_speed(object sender, RoutedEventArgs e)
@@ -76,13 +78,13 @@ namespace Flight_Inspection_App.Controls
 		}
 		private void silProgress_DragStarted(object sender, DragStartedEventArgs e)
         {
-			userIsDraggingSlider = true;
+			//userIsDraggingSlider = true;
         }
 		private void silProgress_DragCompleted(object sender, DragStartedEventArgs e)
         {
-			userIsDraggingSlider = false;
+		//	userIsDraggingSlider = false;
         }
-
+*/
 	}
 
 }

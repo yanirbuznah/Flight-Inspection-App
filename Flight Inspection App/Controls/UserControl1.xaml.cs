@@ -26,6 +26,7 @@ namespace Flight_Inspection_App.Controls
         {
             InitializeComponent();
             Create3DViewPort();
+            
         }
         private void Create3DViewPort()
         {

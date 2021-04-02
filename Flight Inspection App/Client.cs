@@ -14,7 +14,7 @@ namespace Flight_Inspection_App
 
     public class Client
     {
-        private TcpClient _client;
+        private readonly TcpClient _client;
         private NetworkStream _ns;
         bool isRunning = false;
         public Client()
@@ -28,7 +28,7 @@ namespace Flight_Inspection_App
             {
                 _client.Connect(IPAddress.Parse(ip), port);
                 _ns = _client.GetStream();
-                isConnected = true;
+                IsConnected = true;
             }
             catch
             {
@@ -37,7 +37,7 @@ namespace Flight_Inspection_App
             }
 
         }
-        public NetworkStream getNs()
+        public NetworkStream GetNs()
         {
             return _ns;
         }
@@ -46,19 +46,19 @@ namespace Flight_Inspection_App
         {
             _ns.Close();
             _client.Close();
-            isConnected = false;
+            IsConnected = false;
         }
         
 
-        public void setStatus (bool val)
+        public void SetStatus (bool val)
         {
             isRunning = val;
         }
-        public bool getStatus()
+        public bool GetStatus()
         {
             return isRunning;
         }
-        public bool isConnected
+        public bool IsConnected
         {
             get; set;
         }

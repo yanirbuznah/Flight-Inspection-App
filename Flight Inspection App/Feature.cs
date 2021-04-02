@@ -11,8 +11,8 @@ namespace Flight_Inspection_App
     public class Feature
     {
         public string Name { get; set; }
-        private List<string> _Values = new List<string>();
-        private IList<DataPoint> _Points = new List<DataPoint>();
+        private readonly List<string> _Values = new();
+        private readonly IList<DataPoint> _Points = new List<DataPoint>();
 
         public List<string> Values {
             get { return _Values; }

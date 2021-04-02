@@ -19,28 +19,28 @@ namespace Flight_Inspection_App
     public class FGM : IModel
     {
         private KeyValuePair<string, string> _file;
-        List<Feature> _features;
+        private readonly List<Feature> _features;
         private int _port = 5400;
-        private float videoSpeed = 1;
-        private float sleepTime = 100;
+        private float _videoSpeed = 1;
+        private float _sleepTime = 100;
         private string _ip = "127.0.0.1";
-        bool isStopped = false;
-        int currentLineIndex;
-        string currentFlightTime;
-        string flightTime;
-        int numOfRows = 0;
-        int numOfCol = 0;
-        private ManualResetEvent wh = new ManualResetEvent(true);
+        bool _isStopped = false;
+        private int _currentLineIndex;
+        private  string _currentFlightTime;
+        private  string _flightTime;
+        private  int _numOfCols = 0;
+        private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
-        Client _telnetClient;
+        private readonly Client _telnetClient;
         public FGM(Client client)
         {
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
-            IEnumerable<string> chunkNames = playbackXml.Descendants("name").Select(name => (string)name);
+            IEnumerable<string> chunkNames = playbackXml.Descendants("output").Descendants("name").Select(name => (string)name);
             List<string> featursNames = chunkNames.ToList();
             _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
+            _numOfCols = _features.Capacity;
         }
 
 
@@ -68,133 +68,120 @@ namespace Flight_Inspection_App
 
         public void NotifyPropertyChanged(string propName)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void UpdateFeaturesValues(string[] arrCsv)
+        private void CalcFeaturesValues(string[] arrCsv)
         {
 
 
             for (int i = 0; i < arrCsv.Length; i++)
             {
                 List<string> listStrLineElements = arrCsv[i].Split(',').ToList();
-                for (int j = 0; j < numOfCol; ++j)
+                for (int j = 0; j < _numOfCols; ++j)
                 {
-                    _features[j].AddPoint(i,listStrLineElements[j]);
-                    //_features[j].AddValue(listStrLineElements[j]);
+                    _features[j].AddPoint(i, listStrLineElements[j]);
                 }
             }
         }
-        private void UF(string[] arrCsv)
+
+
+        private void UpdateFeaturesValues()
         {
-            List<string> listStrLineElements = arrCsv[currentLineIndex].Split(',').ToList();
-            for (int j = 0; j < numOfCol; ++j)
-            {
-                _features[j].AddPoint(currentLineIndex, listStrLineElements[j]);
-            }
-            NotifyPropertyChanged("Graph_Points");
+            Aileron = 100 * float.Parse(_features[0].Values[_currentLineIndex]);
+            Elevator = 100 * float.Parse(_features[1].Values[_currentLineIndex]);
+            Rudder = _features[2].Values[_currentLineIndex];
+            Throttle = _features[6].Values[_currentLineIndex];
+            Altitude = _features[16].Values[_currentLineIndex];
+            RollDegrees = _features[17].Values[_currentLineIndex];
+            PitchDegrees = _features[18].Values[_currentLineIndex];
+            HeadingDegrees = _features[19].Values[_currentLineIndex];
+            AirSpeed = _features[21].Values[_currentLineIndex];
+            FlightDirection = _features[37].Values[_currentLineIndex];
         }
 
         public void Start()
         {
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_file.Key);
-            numOfRows = arrCsv.Length;
-            numOfCol = arrCsv[0].Split(',').Length;
-            FlightTime = numOfRows.ToString();
-            UpdateFeaturesValues(arrCsv);
-            
+            NumOfRows = arrCsv.Length;
+            FlightTime = NumOfRows.ToString();
+            CalcFeaturesValues(arrCsv);
+
             new Thread(() =>
             {
-                isStopped = false;
-                if (_telnetClient.isConnected)
-                {
+                _isStopped = false;
                     string line;
-                    currentLineIndex = 0;
-                    for (; currentLineIndex < arrCsv.Length && !isStopped; ++currentLineIndex)
+                    CurrentLineIndex = 0;
+                    for (; CurrentLineIndex < arrCsv.Length && !_isStopped; ++CurrentLineIndex)
                     {
-                        
-                        Throttle = _features[6].Values[currentLineIndex];
-                        Rudder = _features[2].Values[currentLineIndex];
-                        Elevator = 100 * float.Parse(_features[1].Values[currentLineIndex]);
-                        Aileron = 100 * float.Parse(_features[0].Values[currentLineIndex]);
-                        Altitude = _features[16].Values[currentLineIndex];
-                        RollDegrees = _features[17].Values[currentLineIndex];
-                        PitchDegrees = _features[18].Values[currentLineIndex];
-                        HeadingDegrees = _features[19].Values[currentLineIndex];
-                        AirSpeed = _features[21].Values[currentLineIndex];
-                        FlightDirection = _features[37].Values[currentLineIndex];
-                        line = arrCsv[currentLineIndex];
-                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - currentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
+
+                        UpdateFeaturesValues();
+                        line = arrCsv[_currentLineIndex] +"\r\n";
+                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
                         wh.WaitOne(Timeout.Infinite);
-                        //UpdateFeaturesValues(line);
-                        line += "\r\n";
                         Console.WriteLine(line);
-                        _telnetClient.getNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                        _telnetClient.getNs().Flush();
-                        CurrentLineIndex = currentLineIndex;
+                        if (_telnetClient.IsConnected)
+                        {
+                            _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                            _telnetClient.GetNs().Flush();
+                        }
                         NotifyPropertyChanged("Graph_Points");
-                        Thread.Sleep((int)sleepTime);
+                        Thread.Sleep((int)_sleepTime);
                     }
 
-
-                }
             }).Start();
         }
 
 
         public string VideoSpeed
         {
-            get { return videoSpeed.ToString("F"); }
+            get { return _videoSpeed.ToString("F"); }
             set
             {
-                if (videoSpeed.ToString("F") != value)
+                if (_videoSpeed.ToString("F") != value)
                 {
-                    videoSpeed = float.Parse(value);
-                    sleepTime = 100 / videoSpeed;
+                    _videoSpeed = float.Parse(value);
+                    _sleepTime = 100 / _videoSpeed;
                     OnPropertyChanged();
                 }
             }
         }
 
-        public void increaseSpeed()
+        public void IncreaseSpeed()
         {
-            float newSpeed = videoSpeed + (float)0.1;
+            float newSpeed = _videoSpeed + (float)0.1;
             VideoSpeed = newSpeed.ToString("F");
         }
 
 
-        public void decreaseSpeed()
+        public void DecreaseSpeed()
         {
-            float newSpeed = videoSpeed - (float)0.1;
+            float newSpeed = _videoSpeed - (float)0.1;
             if (newSpeed > 0)
                 VideoSpeed = newSpeed.ToString("F");
         }
+        
         public string Graph_Title {
             get
             {
-                if(IntresingFeature != null)
+                if (IntresingFeature != null)
                     return IntresingFeature.Name;
                 return "";
             }
-            private set
-            {
-                Graph_Title = value;
-                OnPropertyChanged();
-            }
+
         }
 
 
         public IList<DataPoint> Graph_Points
-        { 
+        {
             get
-            {   
-                if(IntresingFeature == null)
+            {
+                if (IntresingFeature == null)
                     return new List<DataPoint>();
                 return new List<DataPoint>(IntresingFeature.Points.Take(CurrentLineIndex));
             }
@@ -203,39 +190,39 @@ namespace Flight_Inspection_App
 
         public string FlightTime
         {
-            get => flightTime;
+            get => _flightTime;
             set
             {
-                if (flightTime != value)
+                if (_flightTime != value)
                 {
-                    flightTime = value;
+                    _flightTime = value;
                     OnPropertyChanged();
                 }
             }
         }
         public int CurrentLineIndex
         {
-            get => currentLineIndex;
+            get => _currentLineIndex;
             set
             {
-                currentLineIndex = value;
+                _currentLineIndex = value;
                 OnPropertyChanged();
             }
         }
-        public int GetNumOfRows()
+        public int NumOfRows
         {
-            return numOfRows;
+            get;set;
         }
 
 
         public string CurrentFlightTime
         {
-            get => currentFlightTime;
+            get => _currentFlightTime;
             set
             {
-                if (currentFlightTime != value)
+                if (_currentFlightTime != value)
                 {
-                    currentFlightTime = value;
+                    _currentFlightTime = value;
                     OnPropertyChanged();
                 }
             }
@@ -249,6 +236,7 @@ namespace Flight_Inspection_App
                 altitude = value;
                 OnPropertyChanged();
             }
+            
         }
         string _airSpeed = "0";
         public string AirSpeed
@@ -368,32 +356,29 @@ namespace Flight_Inspection_App
         private Feature _intresingFeature; 
         public Feature IntresingFeature
         {
-            get
-            {
-                return _intresingFeature;
-            }
+            get => _intresingFeature;
+            
             set
             {
                 _intresingFeature = value;
-                NotifyPropertyChanged("Graph_Points");
                 OnPropertyChanged();
             }
         }
-        public bool getStatus()
+        public bool GetStatus()
         {
-            return _telnetClient.getStatus();
+            return _telnetClient.GetStatus();
         }
-        public void setStatus(bool val)
+        public void SetStatus(bool val)
         {
-            _telnetClient.setStatus(val);
+            _telnetClient.SetStatus(val);
         }
-        public void pauseThread()
+        public void PauseThread()
         {
             wh.Reset();
         }
-        public void continueThread()
+        public void ContinueThread()
         {
-            if (isStopped)
+            if (_isStopped)
             {
                 Start();
             }
@@ -403,10 +388,10 @@ namespace Flight_Inspection_App
             }
 
         }
-        public void stopSimulatorThread()
+        public void StopSimulatorThread()
         {
-            wh.Set();//Maybe improve that the client sees 10 pixels before the stop.
-            isStopped = true;
+            wh.Set();
+            _isStopped = true;
         }
     }
 }

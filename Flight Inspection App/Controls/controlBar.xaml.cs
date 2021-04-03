@@ -25,53 +25,6 @@ namespace Flight_Inspection_App.Controls
             };
             timer.Start();
         }
-        /*		public ControlBar(IViewModel vm) : this()
-                {
-                    //_vm = vm;
-                }*/
-        private void Open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void Stop_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = mediaPlayerIsPlaying;
-        }
-
-        /*		private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
-                {
-                    //userIsDraggingSlider = true;
-                }
-
-                private void increase_speed(object sender, RoutedEventArgs e)
-                {
-
-                }
-
-                private void decrease_speed(object sender, RoutedEventArgs e)
-                {
-
-                }
-
-                private void Button_Click(object sender, RoutedEventArgs e)
-                {
-
-                }
-
-                private void sliProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-                {
-
-                }
-                private void silProgress_DragStarted(object sender, DragStartedEventArgs e)
-                {
-                    //userIsDraggingSlider = true;
-                }
-                private void silProgress_DragCompleted(object sender, DragStartedEventArgs e)
-                {
-                //	userIsDraggingSlider = false;
-                }
-        */
     }
 
 }

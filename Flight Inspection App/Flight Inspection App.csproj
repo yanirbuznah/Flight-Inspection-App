@@ -8,12 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="bacground.PNG" />
+    <None Remove="button2.PNG" />
+    <None Remove="Capture.PNG" />
+    <None Remove="Controls\1stPart.PNG" />
+    <None Remove="Controls\3rdpart.PNG" />
+    <None Remove="Controls\4thpart.PNG" />
+    <None Remove="Controls\5thpart.PNG" />
+    <None Remove="Controls\6thpart.PNG" />
+    <None Remove="Controls\airplAne1.PNG" />
+    <None Remove="Controls\airplaneForCompass.PNG" />
+    <None Remove="Controls\altitudepseedbackground.PNG" />
+    <None Remove="Controls\colorGraphs.PNG" />
+    <None Remove="Controls\compass.PNG" />
     <None Remove="Controls\ControlImages\math-add-icon.png" />
     <None Remove="Controls\ControlImages\math-minus-icon.png" />
     <None Remove="Controls\ControlImages\Pause-icon.png" />
     <None Remove="Controls\ControlImages\Play-icon.png" />
     <None Remove="Controls\ControlImages\Stop-icon.png" />
+    <None Remove="Controls\dataInfo.PNG" />
+    <None Remove="Controls\featuresBackground.PNG" />
     <None Remove="Controls\folder-icon.png" />
+    <None Remove="Controls\graphBackground.PNG" />
+    <None Remove="Controls\graphColor.PNG" />
+    <None Remove="Controls\secondPart.PNG" />
     <None Remove="Images\backgroundImage.jpg" />
     <None Remove="Images\Heli_bell.obj" />
     <None Remove="playback_small.xml" />
@@ -27,12 +45,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="bacground.PNG" />
+    <Resource Include="button2.PNG" />
+    <Resource Include="Capture.PNG" />
+    <Resource Include="Controls\1stPart.PNG" />
+    <Resource Include="Controls\3rdpart.PNG" />
+    <Resource Include="Controls\4thpart.PNG" />
+    <Resource Include="Controls\5thpart.PNG" />
+    <Resource Include="Controls\6thpart.PNG" />
+    <Resource Include="Controls\airplAne1.PNG" />
+    <Resource Include="Controls\airplaneForCompass.PNG" />
+    <Resource Include="Controls\altitudepseedbackground.PNG" />
+    <Resource Include="Controls\colorGraphs.PNG" />
+    <Resource Include="Controls\compass.PNG" />
     <Resource Include="Controls\ControlImages\folder-icon.png" />
     <Resource Include="Controls\ControlImages\math-add-icon.png" />
     <Resource Include="Controls\ControlImages\math-minus-icon.png" />
     <Resource Include="Controls\ControlImages\Pause-icon.png" />
     <Resource Include="Controls\ControlImages\Play-icon.png" />
     <Resource Include="Controls\ControlImages\Stop-icon.png" />
+    <Resource Include="Controls\dataInfo.PNG" />
+    <Resource Include="Controls\featuresBackground.PNG" />
+    <Resource Include="Controls\graphBackground.PNG" />
+    <Resource Include="Controls\graphColor.PNG" />
+    <Resource Include="Controls\secondPart.PNG" />
     <Resource Include="Images\backgroundImage.jpg" />
     <Resource Include="Images\Heli_bell.obj" />
     <Resource Include="playback_small.xml" />

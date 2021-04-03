@@ -8,30 +8,42 @@
              d:DesignHeight="250" d:DesignWidth="300">
     <Grid Margin="0,0,0,0">
         <RichTextBox Margin="10,39,44,10">
+            <RichTextBox.Background>
+                <ImageBrush ImageSource="/Controls/6thpart.PNG"/>
+            </RichTextBox.Background>
+
             <FlowDocument>
                 <Paragraph>
-                    <Label x:Name="Altitude" Content="Altitude: " HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FF22ADA5"/>
-                    <Label x:Name="AltitudeValue" Content="{Binding VM_Altitude}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                    <Label x:Name="Altitude" Content="Altitude: " HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="#FFFDFDFD" FontWeight="Bold" FontFamily="Aharoni">
+                        <Label.Background>
+                            <ImageBrush/>
+                        </Label.Background>
+                    </Label>
+                    <Label x:Name="AltitudeValue" Content="{Binding VM_Altitude}" Margin="0,-15,-5,0" Foreground="#FFFDFDFD" Width="65" HorizontalAlignment="Center" FontFamily="Aharoni"/>
                 </Paragraph>
                 <Paragraph>
-                    <Label x:Name="AirSpeed" Content="Air Speed: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
-                    <Label x:Name="AirSpeedValue" Content="{Binding VM_AirSpeed}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                    <Label x:Name="AirSpeed" Content="Air Speed: " Margin="0,-15,0,0" Foreground="#FFFDFDFD" FontFamily="Aharoni"/>
+                    <Label x:Name="AirSpeedValue" Content="{Binding VM_AirSpeed}" Margin="0,-15,-5,0" Foreground="#FFFDFDFD" Width="65" HorizontalAlignment="Center" FontFamily="Aharoni"/>
                 </Paragraph>
                 <Paragraph>
-                    <Label x:Name="FlightDirection" Content="Flight Direction: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
-                    <Label x:Name="FlightDirectionValue" Content="{Binding VM_FlightDirection}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                    <Label x:Name="FlightDirection" Content="Flight Direction: " Margin="0,-15,0,0" Foreground="#FFFDFDFD" FontWeight="Bold" FontFamily="Aharoni"/>
+                    <Label x:Name="FlightDirectionValue" Content="{Binding VM_FlightDirection}" Margin="0,-15,-5,0" Foreground="#FFFDFDFD" Width="65" HorizontalAlignment="Center" FontFamily="Aharoni"/>
                 </Paragraph>
                 <Paragraph>
-                    <Label x:Name="HeadingDegrees" Content="Heading Degrees: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
-                    <Label x:Name="HeadingDegreesValue" Content="{Binding VM_HeadingDegrees}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                    <Label x:Name="HeadingDegrees" Content="Heading Degrees: " Margin="0,-15,0,0" Foreground="#FFFDFDFD" FontFamily="Aharoni"/>
+                    <Label x:Name="HeadingDegreesValue" Content="{Binding VM_HeadingDegrees}" Margin="0,-15,-5,0" Foreground="#FFFDFDFD" Width="65" HorizontalAlignment="Center" FontFamily="Aharoni"/>
                 </Paragraph>
                 <Paragraph>
-                    <Label x:Name="RollDegrees" Content="Roll Degrees: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
-                    <Label x:Name="RollDegreesValue" Content="{Binding VM_RollDegrees}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                    <Label x:Name="RollDegrees" Content="Roll Degrees: " Margin="0,-15,0,0" Foreground="#FFFDFDFD" FontFamily="Aharoni"/>
+                    <Label x:Name="RollDegreesValue" Content="{Binding VM_RollDegrees}" Margin="0,-15,-5,0" Foreground="#FFFDFDFD" Width="65" HorizontalAlignment="Center" FontFamily="Aharoni"/>
                 </Paragraph>
                 <Paragraph>
-                    <Label x:Name="PitchDegrees" Content="Pitch Degrees: " Margin="0,-15,0,0" Foreground="#FF16A9A2"/>
-                    <Label x:Name="PitchDegreesValue" Content="{Binding VM_PitchDegrees}" Margin="0,-15,-5,0" Foreground="#FF2782E5" Width="65" HorizontalAlignment="Center"/>
+                    <Label x:Name="PitchDegrees" Content="Pitch Degrees: " Margin="0,-15,0,0" Foreground="#FFFDFDFD" FontFamily="Aharoni"/>
+                    <Label x:Name="PitchDegreesValue" Content="{Binding VM_PitchDegrees}" Margin="0,-15,-5,0" Foreground="#FFFDFDFD" Width="65" HorizontalAlignment="Center" FontFamily="Aharoni">
+                        <Label.Background>
+                            <ImageBrush/>
+                        </Label.Background>
+                    </Label>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

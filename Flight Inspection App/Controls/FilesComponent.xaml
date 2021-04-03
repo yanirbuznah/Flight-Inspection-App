@@ -13,9 +13,16 @@
             </Button>
         </WrapPanel>
         <ListBox  Name="lbFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_File}">
+            <ListBox.Background>
+                <ImageBrush ImageSource="/Controls/1stPart.PNG"/>
+            </ListBox.Background>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Value}" />
+                    <TextBlock Text="{Binding Value}" Foreground="#FFFDFDFD" >
+                        <TextBlock.Background>
+                            <ImageBrush/>
+                        </TextBlock.Background>
+                    </TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 

@@ -14,7 +14,10 @@
             <ListBox Name="lbFeaturesNames" />
         </DockPanel>-->
 
-        <ListBox Name="lbFeaturesNames" HorizontalContentAlignment="Stretch" SelectedItem="{Binding Path=VM_IntresingFeature}" ItemsSource="{Binding VM_FeaturesNames}">
+        <ListBox Name="lbFeaturesNames" HorizontalContentAlignment="Stretch" SelectedItem="{Binding Path=VM_IntresingFeature}" ItemsSource="{Binding VM_FeaturesNames}" Foreground="#FFFDFDFD">
+            <ListBox.Background>
+                <ImageBrush ImageSource="/Controls/secondPart.PNG"/>
+            </ListBox.Background>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">

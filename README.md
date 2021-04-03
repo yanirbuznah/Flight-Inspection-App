@@ -16,4 +16,6 @@ git clone https://www.github.com/yanirbuznah/Flight-Inspection-App
 ```
 
 ### Running The Flight-Inspection-App
-Upon installation, after compiling the app,you will see the home page screen.There are two blanks you need to fill up in order to connect to a server: IP & Port.
+Upon installation, after compiling the app,you will see the home page screen.There are two blanks you need to fill up in order to connect to server : IP & Port.
+After clicking connect, press the "Start now" button and wait for the next screen to show up.
+![flightinspectionapp](https://user-images.githubusercontent.com/56928005/113473237-fdc92d00-9470-11eb-94e5-99232c864170.PNG)

@@ -34,7 +34,6 @@
     <Resource Include="Controls\ControlImages\Play-icon.png" />
     <Resource Include="Controls\ControlImages\Stop-icon.png" />
     <Resource Include="Images\backgroundImage.jpg" />
-    <Resource Include="Images\Heli_bell.obj" />
     <Resource Include="playback_small.xml" />
   </ItemGroup>
 </Project>

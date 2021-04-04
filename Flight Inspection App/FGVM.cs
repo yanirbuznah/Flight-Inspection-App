@@ -77,15 +77,15 @@ namespace Flight_Inspection_App
             }
         }
 
-        public string VM_Altitude
+        public double VM_Altitude
         {
             get { return _fgm.Altitude; }
         }
-        public string VM_AirSpeed
+        public double VM_AirSpeed
         {
             get { return _fgm.AirSpeed; }
         }
-        public string VM_FlightDirection
+        public double VM_FlightDirection
         {
             get { return _fgm.FlightDirection; }
         }
@@ -119,31 +119,31 @@ namespace Flight_Inspection_App
             }
         }
 
-        public float VM_Aileron
+        public double VM_Aileron
         {
             get { return _fgm.Aileron; }
         }
-        public string VM_Throttle
+        public double VM_Throttle
         {
             get => _fgm.Throttle;
         }
-        public string VM_Rudder
+        public double VM_Rudder
         {
             get => _fgm.Rudder;
         }
-        public float VM_Elevator
+        public double VM_Elevator
         {
             get { return _fgm.Elevator; }
         }
-        public string VM_HeadingDegrees
+        public double VM_HeadingDegrees
         {
             get { return _fgm.HeadingDegrees; }
         }
-        public string VM_RollDegrees
+        public double VM_RollDegrees
         {
             get { return _fgm.RollDegrees; }
         }
-        public string VM_PitchDegrees
+        public double VM_PitchDegrees
         {
             get { return _fgm.PitchDegrees; }
         }
@@ -217,21 +217,34 @@ namespace Flight_Inspection_App
                     return false;
                 }*/
 
-        public string VM_Graph_Title
+        public string VM_FeatureTitle
         {
             get
             {
-                return _fgm.Graph_Title;
+                return _fgm.FeatureTitle;
             }
         }
-        public IList<DataPoint> VM_Graph_Points
+        public string VM_MostCorreltiveFeatureTitle
         {
             get
             {
-                return _fgm.Graph_Points;
+                return _fgm.MostCorreltiveFeatureTitle;
             }
         }
-
+        public IList<DataPoint> VM_FeaturePoints
+        {
+            get
+            {
+                return _fgm.FeaturePoints;
+            }
+        }
+        public IList<DataPoint> VM_MostCorreltiveFeaturePoints
+        {
+            get
+            {
+                return _fgm.MostCorreltiveFeaturePoints;
+            }
+        }
         public Feature VM_IntresingFeature
         {
             get

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Xml.Linq;
 
+
 namespace Flight_Inspection_App
 {
     public class FGM : IModel
@@ -26,6 +27,7 @@ namespace Flight_Inspection_App
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
+        private AnomalyDetectionUtil ad = new();
         public FGM(Client client)
         {
             _telnetClient = client;
@@ -71,6 +73,30 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void UpdateCorrelationFeatures()
+        {
+            for (int i = 0; i < _numOfCols; ++i)
+            {
+
+                double corrlation = 0;
+
+                for (int j = 0; j < _numOfCols; ++j)
+                {
+                    if (i != j)
+                    {
+                        double newCorrlation = Math.Abs(
+                                ad.Pearson(_features[i].Values, _features[j].Values,NumOfRows ));
+
+                        if (corrlation <= newCorrlation)
+                        {
+                             corrlation = newCorrlation;
+                            _features[i].MostCorrelativeFeature = _features[j];
+                            _features[i].LineReg = ad.LinearReg(_features[i].Points, NumOfRows);
+                        }
+                    }
+                }
+            }
+        }
         private void CalcFeaturesValues(string[] arrCsv)
         {
 
@@ -83,13 +109,14 @@ namespace Flight_Inspection_App
                     _features[j].AddPoint(i, listStrLineElements[j]);
                 }
             }
+            UpdateCorrelationFeatures();
         }
 
 
         private void UpdateFeaturesValues()
         {
-            Aileron = 100 * float.Parse(_features[0].Values[_currentLineIndex]);
-            Elevator = 100 * float.Parse(_features[1].Values[_currentLineIndex]);
+            Aileron = 100 * _features[0].Values[_currentLineIndex];
+            Elevator = 100 * _features[1].Values[_currentLineIndex];
             Rudder = _features[2].Values[_currentLineIndex];
             Throttle = _features[6].Values[_currentLineIndex];
             Altitude = _features[16].Values[_currentLineIndex];
@@ -116,19 +143,21 @@ namespace Flight_Inspection_App
                 for (; CurrentLineIndex < arrCsv.Length && !_isStopped; ++CurrentLineIndex)
                 {
 
-                    UpdateFeaturesValues();
-                    line = arrCsv[_currentLineIndex] + "\r\n";
-                    CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
-                    wh.WaitOne(Timeout.Infinite);
-                    Console.WriteLine(line);
-                    if (_telnetClient.IsConnected)
-                    {
-                        _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                        _telnetClient.GetNs().Flush();
+                        UpdateFeaturesValues();
+                        line = arrCsv[_currentLineIndex] +"\r\n";
+                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
+                        wh.WaitOne(Timeout.Infinite);
+                        Console.WriteLine(line);
+                        if (_telnetClient.IsConnected)
+                        {
+                            _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                            _telnetClient.GetNs().Flush();
+                        }
+                        NotifyPropertyChanged("FeaturePoints");
+                        NotifyPropertyChanged("MostCorreltiveFeaturePoints");
+
+                        Thread.Sleep((int)_sleepTime);
                     }
-                    NotifyPropertyChanged("Graph_Points");
-                    Thread.Sleep((int)_sleepTime);
-                }
 
             }).Start();
         }
@@ -161,8 +190,8 @@ namespace Flight_Inspection_App
             if (newSpeed > 0)
                 VideoSpeed = newSpeed.ToString("F");
         }
-
-        public string Graph_Title
+        
+        public string FeatureTitle
         {
             get
             {
@@ -174,13 +203,35 @@ namespace Flight_Inspection_App
         }
 
 
-        public IList<DataPoint> Graph_Points
+        public IList<DataPoint> FeaturePoints
         {
             get
             {
                 if (IntresingFeature == null)
                     return new List<DataPoint>();
                 return new List<DataPoint>(IntresingFeature.Points.Take(CurrentLineIndex));
+            }
+
+        }
+        public string MostCorreltiveFeatureTitle
+        {
+            get
+            {
+                if (IntresingFeature != null)
+                    return IntresingFeature.MostCorrelativeFeature.Name;
+                return "";
+            }
+
+        }
+
+
+        public IList<DataPoint> MostCorreltiveFeaturePoints
+        {
+            get
+            {
+                if (IntresingFeature == null)
+                    return new List<DataPoint>();
+                return new List<DataPoint>(IntresingFeature.MostCorrelativeFeature.Points.Take(CurrentLineIndex));
             }
 
         }
@@ -224,8 +275,8 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        string altitude = "0";
-        public string Altitude
+        double altitude = 0;
+        public double Altitude
         {
             get => altitude;
             private set
@@ -235,8 +286,8 @@ namespace Flight_Inspection_App
             }
 
         }
-        string _airSpeed = "0";
-        public string AirSpeed
+        double _airSpeed = 0;
+        public double AirSpeed
         {
             get => _airSpeed;
             private set
@@ -245,8 +296,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        string _flightDirection = "0";
-        public string FlightDirection
+        double _flightDirection = 0;
+        public double FlightDirection
         {
             get => _flightDirection;
             private set
@@ -255,8 +306,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        string _headingDegrees = "0";
-        public string HeadingDegrees
+        double _headingDegrees = 0;
+        public double HeadingDegrees
         {
             get => _headingDegrees;
             private set
@@ -265,8 +316,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        string _rollDegrees = "0";
-        public string RollDegrees
+        double _rollDegrees = 0;
+        public double RollDegrees
         {
             get => _rollDegrees;
             private set
@@ -275,8 +326,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        string _pitchDegrees = "0";
-        public string PitchDegrees
+        double _pitchDegrees = 0;
+        public double PitchDegrees
         {
             get => _pitchDegrees;
             private set
@@ -285,8 +336,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        float _aileron = 0;
-        public float Aileron
+        double _aileron = 0;
+        public double Aileron
         {
             get => _aileron;
             private set
@@ -295,8 +346,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        float _elevator = 0;
-        public float Elevator
+        double _elevator = 0;
+        public double Elevator
         {
             get => _elevator;
             private set
@@ -305,8 +356,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        string _throttle = "0";
-        public string Throttle
+        double _throttle = 0;
+        public double Throttle
         {
             get => _throttle;
             set
@@ -315,8 +366,8 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        string _rudder = "0";
-        public string Rudder
+       double _rudder = 0;
+        public double Rudder
         {
             get => _rudder;
             set

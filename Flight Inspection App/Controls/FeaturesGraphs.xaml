@@ -9,20 +9,20 @@
     <Grid Background="Transparent">
         <!--<oxy:PlotView  Width="122" Height="122" Model="{Binding VM_Model}" Name="feature1Graph" Background="White"
             VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"/>-->
-        <oxy:Plot Title="{Binding VM_FeatureTitle}" TitleFontSize="10"  Width="122" Height="122" Name="feature1Graph" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0">
+        <oxy:Plot Title="{Binding VM_FeatureTitle}" TitleFontSize="10"  Width="122" Height="122" Name="feature1Graph" Background="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,279,0,0">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_FeaturePoints}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
-        <oxy:Plot Title="{Binding VM_MostCorreltiveFeatureTitle}"  TitleFontSize="10" Width="122" Height="122" Name="feature2Graph" Background="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="137,9,0,0">
+        <oxy:Plot Title="{Binding VM_MostCorreltiveFeatureTitle}"  TitleFontSize="10" Width="122" Height="122" Name="feature2Graph" Background="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="138,279,0,0">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_MostCorreltiveFeaturePoints}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
-        
-        <Canvas Name="regressionGraph" Background="White"
+
+        <Canvas Name="regressionGraph"
              Width="250" Height="250"
-            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,137,0,0"/>
+            VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0"/>
     </Grid>
 
 </UserControl>

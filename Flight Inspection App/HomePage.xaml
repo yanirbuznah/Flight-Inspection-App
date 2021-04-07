@@ -29,10 +29,14 @@
             </Button.Background>
         </Button>
 
-        <TextBox x:Name="IP" Margin="59,282,539,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI"   Text="{Binding Path=VM_Ip ,Mode=TwoWay}" />
-        <TextBox x:Name="PORT" Margin="59,350,539,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" Text="{Binding Path=VM_Port ,Mode=TwoWay}" />
-        <Label HorizontalAlignment="Left" Margin="138,240,0,0" Content="IP" VerticalAlignment="Top" Width="44" Background="{x:Null}" FontWeight="Bold" FontSize="24" Foreground="White" BorderBrush="{x:Null}"/>
-        <Label HorizontalAlignment="Left" Margin="126,310,0,0" Content="Port" VerticalAlignment="Top" Width="76" Background="{x:Null}" FontWeight="Bold" FontSize="24" Foreground="White" BorderBrush="{x:Null}"/>
+        <TextBox x:Name="IP" Margin="59,282,539,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI"   Text="{Binding Path=VM_Ip ,Mode=TwoWay}" Background="#91E29C57" Foreground="#FFFFFBFB" />
+        <TextBox x:Name="PORT" Margin="59,350,539,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" Text="{Binding Path=VM_Port ,Mode=TwoWay}" Background="#91E29C57" Foreground="#FFF3F3F3" />
+        <Label HorizontalAlignment="Left" Margin="138,240,0,0" Content="IP" VerticalAlignment="Top" Width="44" FontWeight="Bold" FontSize="24" BorderBrush="{x:Null}" Foreground="#FF231E0D">
+            <Label.Background>
+                <ImageBrush/>
+            </Label.Background>
+        </Label>
+        <Label HorizontalAlignment="Left" Margin="126,310,0,0" Content="Port" VerticalAlignment="Top" Width="76" Background="{x:Null}" FontWeight="Bold" FontSize="24" BorderBrush="{x:Null}" Foreground="#FF231E0D"/>
 
 
     </Grid>

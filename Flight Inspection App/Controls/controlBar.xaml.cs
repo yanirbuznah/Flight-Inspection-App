@@ -11,24 +11,18 @@ namespace Flight_Inspection_App.Controls
     public partial class ControlBar : UserControl
     {
         private readonly bool mediaPlayerIsPlaying = false;
-        /*		private bool userIsDraggingSlider = false;
-                private readonly IViewModel _vm;*/
+        private bool userIsDraggingSlider = false;
+ 
         public ControlBar()
         {
 
             InitializeComponent();
-
-
             DispatcherTimer timer = new()
             {
                 Interval = TimeSpan.FromSeconds(1)
             };
             timer.Start();
         }
-        /*		public ControlBar(IViewModel vm) : this()
-                {
-                    //_vm = vm;
-                }*/
         private void Open_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;

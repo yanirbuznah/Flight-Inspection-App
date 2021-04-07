@@ -10,11 +10,29 @@ namespace Flight_Inspection_App
     public partial class Simulator : Page
     {
         IViewModel _vm;
+        ControlBarVM _cbvm;
+        FileComponentVM _fcvm;
+        FeaturesPanelVM _fpvm;
+        FeaturesGraphsVM _fegvm;
+        FlightInstrumentsVM _fivm;
+        JoystickVM _jvm;
         public Simulator(IViewModel vm)
         {
             InitializeComponent();
             _vm = vm;
             DataContext = vm;
+            _cbvm = new ControlBarVM((_vm as FGVM).getModel());
+            _fcvm = new FileComponentVM((_vm as FGVM).getModel());
+            _fpvm = new FeaturesPanelVM((_vm as FGVM).getModel());
+            _fegvm = new FeaturesGraphsVM((_vm as FGVM).getModel());
+            _fivm = new FlightInstrumentsVM((_vm as FGVM).getModel());
+            _jvm = new JoystickVM((_vm as FGVM).getModel());
+            controlbar.DataContext = _cbvm;
+            fileselector.DataContext = _fcvm;
+            features.DataContext = _fpvm;
+            featuregraphs.DataContext = _fegvm;
+            flightinstruments.DataContext = _fivm;
+            joystick.DataContext = _jvm;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

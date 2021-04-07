@@ -11,6 +11,7 @@ namespace Flight_Inspection_App
     {
         HomePage _home;
         IViewModel _vm;
+
         public MainWindow()
         {
             InitializeComponent();

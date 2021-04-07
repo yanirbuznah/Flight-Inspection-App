@@ -22,9 +22,4 @@
         </ListBox>
 
     </DockPanel>
-    <!--<UserControl.Resources>
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-        </Style>
-    </UserControl.Resources>-->
 </UserControl>

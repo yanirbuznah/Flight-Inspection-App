@@ -8,8 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Canvas  x:Name="Base" Margin="0" Width="340" Height="340">
-            <Slider Margin="90,354,115,227" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FF40CB8C" Width="150" Height="21" Minimum="-30" Maximum="30" Background="#3FF71010" BorderBrush="#FF0ED633"/>
-            <Slider Margin="-75,95,252,321" Value="{Binding VM_Throttle,Mode=OneWay}" Width="21" Height="150" Orientation="Vertical" Maximum="30" Minimum="-30" Background="#3FF71010" Canvas.Left="42"/>
+            <Slider Margin="90,354,115,227" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FF40CB8C" Width="150" Height="21" Minimum="-30" Maximum="30" Background="#3F10C2F7" BorderBrush="#FF0ED633"/>
+            <Slider Margin="-75,95,252,321" Value="{Binding VM_Throttle,Mode=OneWay}" Width="21" Height="150" Orientation="Vertical" Maximum="30" Minimum="-30" Background="#3F10F7F7" Canvas.Left="42"/>
 
 
             <Ellipse HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="340">
@@ -65,10 +65,7 @@
                         </TransformGroup>
                     </Ellipse.RenderTransform>
                     <Ellipse.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Color="#FF8A8A8A" />
-                            <GradientStop Color="#FFB71E1E" Offset="1" />
-                        </RadialGradientBrush>
+                        <ImageBrush ImageSource="/Controls/airplaneForCompass.PNG"/>
                     </Ellipse.Fill>
                 </Ellipse>
                 <Ellipse HorizontalAlignment="Left" Height="37" VerticalAlignment="Top" Width="39" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Canvas.Left="14.001" Canvas.Top="11.001">

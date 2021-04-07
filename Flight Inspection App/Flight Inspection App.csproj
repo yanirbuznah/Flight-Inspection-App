@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="button2.PNG" />
+    <None Remove="Capture.PNG" />
+    <None Remove="Controls\airplaneForCompass.PNG" />
     <None Remove="Controls\ControlImages\math-add-icon.png" />
     <None Remove="Controls\ControlImages\math-minus-icon.png" />
     <None Remove="Controls\ControlImages\Pause-icon.png" />
@@ -27,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="button2.PNG" />
+    <Resource Include="Capture.PNG" />
+    <Resource Include="Controls\airplaneForCompass.PNG" />
     <Resource Include="Controls\ControlImages\folder-icon.png" />
     <Resource Include="Controls\ControlImages\math-add-icon.png" />
     <Resource Include="Controls\ControlImages\math-minus-icon.png" />

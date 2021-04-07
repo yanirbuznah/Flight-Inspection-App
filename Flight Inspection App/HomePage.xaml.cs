@@ -43,5 +43,9 @@ namespace Flight_Inspection_App
 
 
         }
+        private void Disconnect_Click(object sender, RoutedEventArgs e)
+        {
+            _vm.Disconnect();
+        }
     }
 }

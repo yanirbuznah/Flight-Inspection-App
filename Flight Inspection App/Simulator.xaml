@@ -29,12 +29,6 @@
             <Controls:Joystick x:Name="joystick" Height="379" Width="458" Margin="1000,-20,50,450"/>
         </Viewbox>
         <Viewbox>
-            <Slider Margin="605,202,95,225" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FF08E07F" Width="100" Height="23" Minimum="-30" Maximum="30"/>
-        </Viewbox>
-        <Viewbox>
-            <Slider Margin="527,47,252,321" Value="{Binding VM_Throttle,Mode=OneWay}" Width="21" Height="82" Orientation="Vertical"/>
-        </Viewbox>
-        <Viewbox>
             <Button Content="3D Model" Click="HeliWindow" Margin="21,317,597,64" FontWeight="Bold" FontSize="36"/>
         </Viewbox>
     </Grid>

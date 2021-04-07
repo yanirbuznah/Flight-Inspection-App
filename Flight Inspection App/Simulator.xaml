@@ -29,7 +29,7 @@
             <Controls:Joystick x:Name="joystick" Height="379" Width="458" Margin="1000,-20,50,450"/>
         </Viewbox>
         <Viewbox>
-            <Button Content="3D Model" Click="HeliWindow" Margin="21,317,597,64" FontWeight="Bold" FontSize="36"/>
+            <Button Content="3D Model" Click="HeliWindow" Margin="21,317,597,64" FontWeight="Bold" FontSize="36" Background="#54E0741A"/>
         </Viewbox>
     </Grid>
 

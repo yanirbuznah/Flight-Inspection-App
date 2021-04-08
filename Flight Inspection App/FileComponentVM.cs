@@ -13,14 +13,26 @@ namespace Flight_Inspection_App
 
         }
 
-        public KeyValuePair<string, string> VM_File
+        public KeyValuePair<string, string> VM_FileCsv
         {
-            get { return _fgm.ThisFile; }
+            get { return _fgm.ThisCsvFile; }
             set
             {
-                if (_fgm.ThisFile.Key != value.Key)
+                if (_fgm.ThisCsvFile.Key != value.Key)
                 {
-                    _fgm.ThisFile = value;
+                    _fgm.ThisCsvFile = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public KeyValuePair<string, string> VM_FileDll
+        {
+            get { return _fgm.ThisDllFile; }
+            set
+            {
+                if (_fgm.ThisDllFile.Key != value.Key)
+                {
+                    _fgm.ThisDllFile = value;
                     OnPropertyChanged();
                 }
             }

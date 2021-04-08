@@ -24,6 +24,7 @@ namespace Flight_Inspection_App
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
+            
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 

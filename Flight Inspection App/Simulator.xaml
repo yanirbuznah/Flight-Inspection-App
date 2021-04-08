@@ -1,4 +1,4 @@
-﻿<Page x:Class="Flight_Inspection_App.Simulator"
+<Page x:Class="Flight_Inspection_App.Simulator"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,30 +6,37 @@
       xmlns:Controls="clr-namespace:Flight_Inspection_App.Controls"
       xmlns:local="clr-namespace:Flight_Inspection_App"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1200"
       Title="Simulator">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Images/backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <Viewbox>
-            <Controls:FilesComponent x:Name="fileselector" Margin="10,82,668,146" Width="110" Height="205"/>
+            <Controls:FilesComponent x:Name="fileselector" Margin="-450,10,750,250" Width="192" Height="421"/>
         </Viewbox>
         <Viewbox>
-            <Controls:FeaturesPanel x:Name="features" Margin="130,74,548,154" Width="122" Height="222"/>
+            <Controls:FeaturesPanel x:Name="features" Margin="-10,20,400,120" Width="96" Height="214"/>
         </Viewbox>
         <Controls:ControlBar x:Name="controlbar" Loaded="ControlBar_Loaded_4"/>
         <Viewbox>
-            <Controls:FeaturesGraphs x:Name="featuregraphs" Margin="257,10,270,43" Width="273" Height="397"/>
+            <Controls:FeaturesGraphs x:Name="featuregraphs" Margin="299,10,270,43" Width="474" Height="478"/>
         </Viewbox>
         <Viewbox>
-            <Controls:FlightInstruments x:Name="flightinstruments" Margin="530,185,-31,47" Width="301" Height="218"/>
+            <Controls:FlightInstruments x:Name="flightinstruments" Margin="750,100,-31,47" Width="260" Height="215"/>
         </Viewbox>
         <Viewbox>
-            <Controls:Joystick x:Name="joystick" Height="379" Width="458" Margin="1000,-20,50,450"/>
+            <Controls:Joystick x:Name="joystick" Height="925" Width="990" Margin="1550,-300,-250,450"/>
         </Viewbox>
         <Viewbox>
-            <Button Content="3D Model" Click="HeliWindow" Margin="21,317,597,64" FontWeight="Bold" FontSize="36" Background="#54E0741A"/>
+            <Button Content="3D Model" Click="HeliWindow" Margin="-85,160,400,90" FontWeight="Bold" FontSize="14" Height="24" Width="70" Background="#54E0741A">
+                <Button.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.BorderBrush>
+            </Button>
         </Viewbox>
     </Grid>
 

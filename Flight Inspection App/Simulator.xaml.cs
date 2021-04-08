@@ -9,14 +9,15 @@ namespace Flight_Inspection_App
     /// </summary>
     public partial class Simulator : Page
     {
-        IViewModel _vm;
+        FGVM _vm;
         ControlBarVM _cbvm;
         FileComponentVM _fcvm;
         FeaturesPanelVM _fpvm;
         FeaturesGraphsVM _fegvm;
         FlightInstrumentsVM _fivm;
         JoystickVM _jvm;
-        public Simulator(IViewModel vm)
+
+        public Simulator(FGVM vm)
         {
             InitializeComponent();
             _vm = vm;
@@ -31,13 +32,20 @@ namespace Flight_Inspection_App
             fileselector.DataContext = _fcvm;
             features.DataContext = _fpvm;
             featuregraphs.DataContext = _fegvm;
+
             flightinstruments.DataContext = _fivm;
             joystick.DataContext = _jvm;
+
+
         }
+
+
+
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+           
         }
 
         private void Graph_Loaded(object sender, RoutedEventArgs e)

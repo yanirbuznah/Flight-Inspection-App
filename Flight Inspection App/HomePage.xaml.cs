@@ -11,10 +11,10 @@ namespace Flight_Inspection_App
     public partial class HomePage : Page, INotifyPropertyChanged
     {
         Simulator s;
-        IViewModel _vm;
+        FGVM _vm;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public HomePage(IViewModel vm)
+        public HomePage(FGVM vm)
         {
             DataContext = vm;
             InitializeComponent();

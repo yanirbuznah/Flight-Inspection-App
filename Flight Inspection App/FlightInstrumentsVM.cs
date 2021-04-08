@@ -12,6 +12,8 @@ namespace Flight_Inspection_App
         {
 
         }
+
+
         public double VM_Altitude
         {
             get { return _fgm.Altitude; }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Flight_Inspection_App.Controls.Joystick"
+<UserControl x:Class="Flight_Inspection_App.Controls.Joystick"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Flight_Inspection_App.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
-    <Grid>
+    <Grid Margin="0,0,-31,-54">
         <Canvas  x:Name="Base" Margin="0" Width="340" Height="340">
             <Slider Margin="90,354,115,227" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FF40CB8C" Width="150" Height="21" Minimum="-30" Maximum="30" Background="#3F10C2F7" BorderBrush="#FF0ED633"/>
             <Slider Margin="-75,95,252,321" Value="{Binding VM_Throttle,Mode=OneWay}" Width="21" Height="150" Orientation="Vertical" Maximum="30" Minimum="-30" Background="#3F10F7F7" Canvas.Left="42"/>

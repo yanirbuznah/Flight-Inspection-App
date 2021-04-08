@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows.Controls;
 using System.Xml.Linq;
 
 
@@ -13,7 +15,8 @@ namespace Flight_Inspection_App
 {
     public class FGM : IModel
     {
-        private KeyValuePair<string, string> _file;
+        private KeyValuePair<string, string> _csvFile;
+        private KeyValuePair<string, string> _dllFile;
         private readonly List<Feature> _features;
         private int _port = 5400;
         private float _videoSpeed = 1;
@@ -27,7 +30,8 @@ namespace Flight_Inspection_App
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
-        private AnomalyDetectionUtil ad = new();
+
+        private UserControl _graph;
         public FGM(Client client)
         {
             _telnetClient = client;
@@ -37,6 +41,7 @@ namespace Flight_Inspection_App
             List<string> featursNames = chunkNames.ToList();
             _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
             _numOfCols = _features.Capacity;
+            //IntresingFeature = _features[0];
         }
 
 
@@ -49,25 +54,35 @@ namespace Flight_Inspection_App
         {
             _telnetClient.Disconnect();
         }
-        public KeyValuePair<string, string> ThisFile
+        public KeyValuePair<string, string> ThisCsvFile
         {
             get
-            { return _file; }
+            { return _csvFile; }
 
             set
             {
-                _file = value;
+                _csvFile = value;
                 OnPropertyChanged();
                 _isStopped = true;
                 Thread.Sleep((int)_sleepTime);
                 Start();
             }
         }
-
-        public void NotifyPropertyChanged(string propName)
+        public KeyValuePair<string, string> ThisDllFile
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            get
+            { return _dllFile; }
+
+            set
+            {
+                _dllFile = value;
+                GenerateGraph();
+                OnPropertyChanged("Graph");
+                OnPropertyChanged();
+
+            }
         }
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -85,17 +100,21 @@ namespace Flight_Inspection_App
                     if (i != j)
                     {
                         double newCorrlation = Math.Abs(
-                                ad.Pearson(_features[i].Values, _features[j].Values,NumOfRows ));
+                                AnomalyDetectionUtil.Pearson(_features[i].Values, _features[j].Values,NumOfRows ));
 
                         if (corrlation <= newCorrlation)
                         {
                              corrlation = newCorrlation;
                             _features[i].MostCorrelativeFeature = _features[j];
-                            _features[i].LineReg = ad.LinearReg(_features[i].Points, NumOfRows);
+                           
+
                         }
                     }
                 }
+               
             }
+            _features.ForEach((x) => x.CalcCorrelationPoints());
+            _features.ForEach((x) => x.CalcLineRegresion());
         }
         private void CalcFeaturesValues(string[] arrCsv)
         {
@@ -110,6 +129,7 @@ namespace Flight_Inspection_App
                 }
             }
             UpdateCorrelationFeatures();
+            
         }
 
 
@@ -130,10 +150,11 @@ namespace Flight_Inspection_App
         public void Start()
         {
             string[] arrCsv;
-            arrCsv = File.ReadAllLines(_file.Key);
+            arrCsv = File.ReadAllLines(_csvFile.Key);
             NumOfRows = arrCsv.Length;
             FlightTime = NumOfRows.ToString();
             CalcFeaturesValues(arrCsv);
+
 
             new Thread(() =>
             {
@@ -153,10 +174,11 @@ namespace Flight_Inspection_App
                             _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
                             _telnetClient.GetNs().Flush();
                         }
-                        NotifyPropertyChanged("FeaturePoints");
-                        NotifyPropertyChanged("MostCorreltiveFeaturePoints");
+                        OnPropertyChanged("FeaturePoints");
+                        OnPropertyChanged("MostCorreltiveFeaturePoints");
+                        OnPropertyChanged("lastCorrelationPoints");
 
-                        Thread.Sleep((int)_sleepTime);
+                         Thread.Sleep((int)_sleepTime);
                     }
 
             }).Start();
@@ -217,9 +239,9 @@ namespace Flight_Inspection_App
         {
             get
             {
-                if (IntresingFeature != null)
-                    return IntresingFeature.MostCorrelativeFeature.Name;
-                return "";
+                if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
+                    return "";
+                return IntresingFeature.MostCorrelativeFeature.Name;
             }
 
         }
@@ -229,13 +251,122 @@ namespace Flight_Inspection_App
         {
             get
             {
-                if (IntresingFeature == null)
+                if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
                     return new List<DataPoint>();
                 return new List<DataPoint>(IntresingFeature.MostCorrelativeFeature.Points.Take(CurrentLineIndex));
             }
 
         }
+        public double MostCorreltiveFeatureMaxValue
+        {
+            get
+            {
+                if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
+                    return 0;
+                return IntresingFeature.MostCorrelativeFeature.MaxValue;
+            }
+        }
 
+        public double MostCorreltiveFeatureMinValue
+        {
+            get
+            {
+                if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
+                    return 0;
+                return IntresingFeature.MostCorrelativeFeature.MinValue;
+            }
+        }
+        public double FeatureMinValue
+        {
+            get
+            {
+                if (IntresingFeature != null)
+                    return IntresingFeature.MinValue;
+                return 0;
+            }
+        }
+        public float Slope
+        {
+            get
+            {
+                if (IntresingFeature== null || IntresingFeature.Slope== null)
+                    return 0;
+                return IntresingFeature.Slope;
+
+            }
+        }
+        public float Intercept
+        {
+            get
+            {
+                if (IntresingFeature == null || IntresingFeature.Intercept == null)
+                    return 0;
+                return IntresingFeature.Intercept;
+
+            }
+        }
+        public double FeatureMaxValue
+        {
+            get
+            {
+                if (IntresingFeature != null)
+                    return IntresingFeature.MaxValue;
+                return 0;
+            }
+        }
+        public List<DataPoint> CorrelationPoints
+        {
+            get
+            {
+                if (IntresingFeature == null || IntresingFeature.CorrelationPoints == null)
+                    return new List<DataPoint>();
+                return new List<DataPoint>(IntresingFeature.CorrelationPoints);
+            }
+        }
+
+        public List<DataPoint> lastCorrelationPoints
+        {
+            get
+            {
+                if (IntresingFeature == null || IntresingFeature.CorrelationPoints == null)
+                    return new List<DataPoint>();
+                return new List<DataPoint>(IntresingFeature.CorrelationPoints.Skip(CurrentLineIndex-300).Take(CurrentLineIndex));
+            }
+        }
+        public void GenerateGraph()
+        {
+            Assembly a = Assembly.LoadFile(_dllFile.Key);
+            // Get the type to use.
+            Type myType = a.GetType("WpfLibrary.Graph");
+            UserControl Graph = Activator.CreateInstance(myType) as UserControl;
+            _graph =  Graph;
+            // Get the method to call.
+            /*
+                        MethodInfo detect = myType.GetMethod("Detect");
+                        MethodInfo setIntres = myType.GetMethod("setIntrestingFeatureIndex");
+                        MethodInfo currentTime = myType.GetMethod("CurrentTime");*/
+
+
+            // Create an instance.
+
+            // Execute the method.
+            /*            detect.Invoke(Graph, new object[] { @"C:\Users\yanir\Desktop\flightgearProject\anomaly_flight.csv" });
+                        setIntres.Invoke(Graph, new object[] { 5 });
+                        currentTime.Invoke(Graph, new object[] { 300 });*/
+            //Detector.Children.Add(Graph);
+            /*            setIntres.Invoke(Graph, new object[] { 0 });*/
+
+        }
+        public UserControl Graph
+        {
+            get => _graph;
+            set
+            {
+                if (value != _graph)
+                    _graph = value;
+                OnPropertyChanged();
+            }
+        }
         public string FlightTime
         {
             get => _flightTime;
@@ -254,6 +385,7 @@ namespace Flight_Inspection_App
             set
             {
                 _currentLineIndex = value;
+
                 OnPropertyChanged();
             }
         }
@@ -376,6 +508,7 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
+
         public string Ip
         {
             get => _ip;
@@ -400,6 +533,20 @@ namespace Flight_Inspection_App
                 }
             }
         }
+
+        void ChangedIntrestingFeatureStates()
+        {
+            OnPropertyChanged("MostCorreltiveFeatureMinValue");
+            OnPropertyChanged("MostCorreltiveFeatureMaxValue");
+            OnPropertyChanged("FeatureMaxValue");
+            OnPropertyChanged("FeatureMinValue");
+            OnPropertyChanged("FeatureTitle");
+            OnPropertyChanged("MostCorreltiveFeatureTitle");
+            OnPropertyChanged("Slope");
+            OnPropertyChanged("Intercept");
+            OnPropertyChanged("CorrelationPoints");
+
+        }
         public List<Feature> Features { get { return _features; } }
         private Feature _intresingFeature;
         public Feature IntresingFeature
@@ -410,6 +557,9 @@ namespace Flight_Inspection_App
             {
                 _intresingFeature = value;
                 OnPropertyChanged();
+                ChangedIntrestingFeatureStates();
+
+
             }
         }
         public bool GetStatus()

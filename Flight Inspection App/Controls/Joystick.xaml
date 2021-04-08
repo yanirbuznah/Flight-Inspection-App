@@ -8,11 +8,15 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Canvas  x:Name="Base" Margin="0" Width="340" Height="340">
+            <Slider Margin="90,354,115,227" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FF40CB8C" Width="150" Height="21" Minimum="-30" Maximum="30" Background="#3F10C2F7" BorderBrush="#FF0ED633"/>
+            <Slider Margin="-75,95,252,321" Value="{Binding VM_Throttle,Mode=OneWay}" Width="21" Height="150" Orientation="Vertical" Maximum="30" Minimum="-30" Background="#3F10F7F7" Canvas.Left="42"/>
+
+
             <Ellipse HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="340">
                 <Ellipse.Fill>
                     <RadialGradientBrush>
                         <GradientStop Color="#FF2C2A2A" Offset="1" />
-                        <GradientStop Color="#FF3A3737" />
+                        <GradientStop Color="#8C22CDDE" />
                     </RadialGradientBrush>
                 </Ellipse.Fill>
             </Ellipse>
@@ -21,17 +25,18 @@
                     <RadialGradientBrush>
                         <GradientStop Color="#FF0E0E0E" Offset="1" />
                         <GradientStop Color="#FF1D1D1D" />
-                        <GradientStop Color="#FF323030" Offset="0.453" />
+                        <GradientStop Color="#8C61BDB5" Offset="0.453" />
+
                     </RadialGradientBrush>
                 </Ellipse.Fill>
             </Ellipse>
-            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z" Fill="#FF575757" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" Canvas.Left="147.875" Canvas.Top="37.625" />
-            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z" Fill="#FF575757" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" RenderTransformOrigin="0.5,0.5" Canvas.Left="147.875" Canvas.Top="284.125">
+            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z" Fill="#FF0FE0A7" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" Canvas.Left="147.875" Canvas.Top="37.625" />
+            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z" Fill="#FF0FE0A7" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" RenderTransformOrigin="0.5,0.5" Canvas.Left="147.875" Canvas.Top="284.125">
                 <Path.RenderTransform>
                     <ScaleTransform ScaleY="-1" />
                 </Path.RenderTransform>
             </Path>
-            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z" Fill="#FF575757" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" RenderTransformOrigin="0.5,0.5" Canvas.Left="270.875" Canvas.Top="162.125">
+            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z" Fill="#FF0FE0A7" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" RenderTransformOrigin="0.5,0.5" Canvas.Left="270.875" Canvas.Top="162.125">
                 <Path.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="-1" ScaleX="-1" />
@@ -39,7 +44,7 @@
                     </TransformGroup>
                 </Path.RenderTransform>
             </Path>
-            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z"  Fill="#FF575757" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" RenderTransformOrigin="0.5,0.5" Canvas.Left="24.375" Canvas.Top="163.625">
+            <Path Data="M205.75,65.625 L226.875,47.25 L248.5,65.625 z"  Fill="#FF0FE0A7" HorizontalAlignment="Left" Height="18.375" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Top" Width="42.75" RenderTransformOrigin="0.5,0.5" Canvas.Left="24.375" Canvas.Top="163.625">
                 <Path.RenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="90" />
@@ -50,53 +55,14 @@
 
             <Canvas  x:Name="Knob" VerticalAlignment="Top" HorizontalAlignment="Left" Width="0" Height="0" RenderTransformOrigin="0.5,0.5" Canvas.Left="125" Canvas.Top="125" >
                 <!--<Ellipse x:Name="Shadow" HorizontalAlignment="Left" Height="88" VerticalAlignment="Top" Width="86" Fill="#52131212" Canvas.Left="22" Canvas.Top="18" />-->
-                <Ellipse x:Name="KnobBase" HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.5,0.5" Canvas.Top="1">
-                    <Ellipse.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Color="#FF8A8A8A" />
-                            <GradientStop Color="#FF979797" Offset="1" />
-                        </RadialGradientBrush>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Ellipse HorizontalAlignment="Left" Height="74.313" VerticalAlignment="Top" Width="82.189" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Canvas.Left="0.613" Canvas.Top="1.692">
-                    <Ellipse.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Color="#C0828080" Offset="0.797" />
-                            <GradientStop Color="#FD000000" />
-                        </RadialGradientBrush>
-                    </Ellipse.Fill>
+                <Ellipse x:Name="KnobBase" HorizontalAlignment="Left" Height="90" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.5,0.5" Canvas.Top="1" Fill="#8C1C79A4">
                     <Ellipse.RenderTransform>
                         <TransformGroup>
-                            <RotateTransform Angle="-28.434" />
-                            <SkewTransform AngleX="-2.144" />
-                            <TranslateTransform X="-1.199" Y="0.649" />
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform X="{Binding VM_Aileron,Mode=OneWay}" Y="{Binding VM_Elevator,Mode=OneWay}"/>
                         </TransformGroup>
-                    </Ellipse.RenderTransform>
-                </Ellipse>
-                <Ellipse HorizontalAlignment="Left" Height="75.491"  VerticalAlignment="Top" Width="70.887" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Canvas.Left="12.396" Canvas.Top="5.057">
-                    <Ellipse.Fill>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#00858585" Offset="0" />
-                            <GradientStop Color="#1AFFFFFF" Offset="1" />
-                            <GradientStop Color="#3FC2C2C2" Offset="0.349" />
-                        </LinearGradientBrush>
-                    </Ellipse.Fill>
-                    <Ellipse.RenderTransform>
-                        <TransformGroup>
-                            <SkewTransform CenterX="3" CenterY="-4" />
-                            <RotateTransform Angle="-.7628" />
-                        </TransformGroup>
-                    </Ellipse.RenderTransform>
-                </Ellipse>
-                <Ellipse HorizontalAlignment="Left" Height="72.722" VerticalAlignment="Top" Width="72.936" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Canvas.Left="0.631" Canvas.Top="4.896">
-                    <Ellipse.Fill>
-                        <RadialGradientBrush>
-                            <GradientStop Color="#9A909090" Offset="1" />
-                            <GradientStop Color="Gray" />
-                        </RadialGradientBrush>
-                    </Ellipse.Fill>
-                    <Ellipse.RenderTransform>
-                        <RotateTransform Angle="-31.733"></RotateTransform>
                     </Ellipse.RenderTransform>
                 </Ellipse>
                 <Ellipse HorizontalAlignment="Left" Height="37" VerticalAlignment="Top" Width="39" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Canvas.Left="14.001" Canvas.Top="11.001">

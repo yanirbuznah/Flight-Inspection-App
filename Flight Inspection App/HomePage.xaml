@@ -13,13 +13,30 @@
             <ImageBrush ImageSource="/Images/backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <Button Content="Start Now" HorizontalAlignment="Left" Margin="507,330,0,0" VerticalAlignment="Top" Height="58" Width="260" Click="Start_Click"/>
-        <Button Content="Connect" HorizontalAlignment="Left" Margin="72,405,0,0" VerticalAlignment="Top" Height="35" Width="118" Click="Connect_Click"/>
+        <Button Content="Start Now" HorizontalAlignment="Left" Margin="643,326,0,0" VerticalAlignment="Top" Height="41" Width="125" Click="Start_Click" FontWeight="Bold" FontFamily="Calibri" FontSize="20" FontStyle="Italic">
+            <Button.Background>
+                <ImageBrush ImageSource="/Capture.PNG"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Connect" HorizontalAlignment="Left" Margin="169,405,0,0" VerticalAlignment="Top" Height="41" Width="126" Click="Connect_Click" FontSize="20" FontFamily="Calibri" FontWeight="Bold">
+            <Button.Background>
+                <ImageBrush ImageSource="/Capture.PNG"/>
+            </Button.Background>
+        </Button>
+        <Button Content="Disconnect"  HorizontalAlignment="Left" Margin="22,405,0,0" VerticalAlignment="Top" Height="41" Width="126" Click="Disconnect_Click" FontSize="20" FontFamily="Calibri" FontWeight="Bold">
+            <Button.Background>
+                <ImageBrush ImageSource="/Capture.PNG"/>
+            </Button.Background>
+        </Button>
 
-        <TextBox x:Name="IP" Margin="40,274,558,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI"   Text="{Binding Path=VM_Ip ,Mode=TwoWay}" />
-        <TextBox x:Name="PORT" Margin="40,353,558,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" Text="{Binding Path=VM_Port ,Mode=TwoWay}" />
-        <Label HorizontalAlignment="Left" Margin="126,240,0,0" Content="IP" VerticalAlignment="Top" Width="43" Background="{x:Null}" FontWeight="Bold" FontSize="24" Foreground="White" BorderBrush="{x:Null}"/>
-        <Label HorizontalAlignment="Left" Margin="113,319,0,0" Content="Port" VerticalAlignment="Top" Width="77" Background="{x:Null}" FontWeight="Bold" FontSize="24" Foreground="White" BorderBrush="{x:Null}"/>
+        <TextBox x:Name="IP" Margin="59,282,539,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI"   Text="{Binding Path=VM_Ip ,Mode=TwoWay}" Background="#91E29C57" Foreground="#FFFFFBFB" />
+        <TextBox x:Name="PORT" Margin="59,350,539,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" Text="{Binding Path=VM_Port ,Mode=TwoWay}" Background="#91E29C57" Foreground="#FFF3F3F3" />
+        <Label HorizontalAlignment="Left" Margin="138,240,0,0" Content="IP" VerticalAlignment="Top" Width="44" FontWeight="Bold" FontSize="24" BorderBrush="{x:Null}" Foreground="#FF231E0D">
+            <Label.Background>
+                <ImageBrush/>
+            </Label.Background>
+        </Label>
+        <Label HorizontalAlignment="Left" Margin="126,310,0,0" Content="Port" VerticalAlignment="Top" Width="76" Background="{x:Null}" FontWeight="Bold" FontSize="24" BorderBrush="{x:Null}" Foreground="#FF231E0D"/>
 
 
     </Grid>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,7 +41,11 @@ namespace Flight_Inspection_App
         {
             _vm.Connect();
 
-           
+
+        }
+        private void Disconnect_Click(object sender, RoutedEventArgs e)
+        {
+            _vm.Disconnect();
         }
     }
 }

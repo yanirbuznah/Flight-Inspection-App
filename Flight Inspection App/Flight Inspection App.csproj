@@ -8,14 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="button2.PNG" />
+    <None Remove="Capture.PNG" />
+    <None Remove="Controls\airplaneForCompass.PNG" />
     <None Remove="Controls\ControlImages\math-add-icon.png" />
     <None Remove="Controls\ControlImages\math-minus-icon.png" />
     <None Remove="Controls\ControlImages\Pause-icon.png" />
     <None Remove="Controls\ControlImages\Play-icon.png" />
     <None Remove="Controls\ControlImages\Stop-icon.png" />
+    <None Remove="Controls\flightinsturment.PNG" />
     <None Remove="Controls\folder-icon.png" />
+    <None Remove="Controls\North.PNG" />
     <None Remove="Images\backgroundImage.jpg" />
     <None Remove="Images\Heli_bell.obj" />
+    <None Remove="ip.PNG" />
+    <None Remove="ipInput.PNG" />
     <None Remove="playback_small.xml" />
   </ItemGroup>
 
@@ -23,17 +30,24 @@
     <PackageReference Include="CsvHelper" Version="26.1.0" />
     <PackageReference Include="HelixToolkit" Version="2.15.0" />
     <PackageReference Include="HelixToolkit.Wpf" Version="2.15.0" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="button2.PNG" />
+    <Resource Include="Capture.PNG" />
+    <Resource Include="Controls\airplaneForCompass.PNG" />
     <Resource Include="Controls\ControlImages\folder-icon.png" />
     <Resource Include="Controls\ControlImages\math-add-icon.png" />
     <Resource Include="Controls\ControlImages\math-minus-icon.png" />
     <Resource Include="Controls\ControlImages\Pause-icon.png" />
     <Resource Include="Controls\ControlImages\Play-icon.png" />
     <Resource Include="Controls\ControlImages\Stop-icon.png" />
+    <Resource Include="Controls\flightinsturment.PNG" />
+    <Resource Include="Controls\North.PNG" />
     <Resource Include="Images\backgroundImage.jpg" />
-    <Resource Include="Images\Heli_bell.obj" />
+    <Resource Include="ip.PNG" />
+    <Resource Include="ipInput.PNG" />
     <Resource Include="playback_small.xml" />
   </ItemGroup>
 </Project>

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace Flight_Inspection_App 
+namespace Flight_Inspection_App
 {
-    
+
     public interface IViewModel : INotifyPropertyChanged
     {
         public void Connect();
         public void Disconnect();
-        public void Start ();
-        
+        public void Start();
+
     }
 }

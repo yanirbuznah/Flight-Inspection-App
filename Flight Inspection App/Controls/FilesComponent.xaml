@@ -12,7 +12,7 @@
                 <Image Source="/Controls/ControlImages/folder-icon.png" Height="27" Width="38" />
             </Button>
         </WrapPanel>
-        <ListBox  Name="lbFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_File}">
+        <ListBox  Name="lbFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_File}" Background="#54E0741A" BorderBrush="#FFFF8000" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Foreground="White">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Value}" />
@@ -22,9 +22,4 @@
         </ListBox>
 
     </DockPanel>
-    <!--<UserControl.Resources>
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-        </Style>
-    </UserControl.Resources>-->
 </UserControl>

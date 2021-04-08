@@ -1,24 +1,15 @@
-﻿using System;
+﻿using Flight_Inspection_App.Commands;
+using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Flight_Inspection_App.Commands;
 
 namespace Flight_Inspection_App
 {
     public class FGVM : IViewModel
     {
-        FGM _fgm;
-        public PauseCommand PauseTheFlight { get;private set; }
-        public PlayCommand PlayTheFlight { get; private set; }
-        public PlusCommand IncreaseTheSpeed { get; private set; }
-        public MinusCommand DecreaseTheSpeed { get; private set; }
-        public StopCommand StopTheFlight { get; private set; }
+        protected readonly FGM _fgm;
 
         public FGVM(FGM fgm)
         {
@@ -27,22 +18,20 @@ namespace Flight_Inspection_App
             {
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
-            PauseTheFlight = new PauseCommand(PauseThread);
-            PlayTheFlight = new PlayCommand(ContinueRunning);
-            IncreaseTheSpeed = new PlusCommand(increaseSpeed);
-            DecreaseTheSpeed = new MinusCommand(decreaseSpeed);
-            StopTheFlight = new StopCommand(StopFlight);
+
 
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
+        public FGM getModel()
+        {
+            return _fgm;
+        }
 
-  
         public string VM_Ip
         {
             get { return _fgm.Ip; }
@@ -55,7 +44,7 @@ namespace Flight_Inspection_App
                 }
             }
         }
-        public float VM_VideoSpeed
+        public string VM_VideoSpeed
         {
             get { return _fgm.VideoSpeed; }
             set
@@ -82,86 +71,19 @@ namespace Flight_Inspection_App
             }
         }
 
-        public string VM_Altitude
+        public double VM_Throttle
         {
-            get { return _fgm.Altitude; }
+            get => _fgm.Throttle;
         }
-        public string VM_AirSpeed
+        public double VM_Rudder
         {
-            get { return _fgm.AirSpeed; }
+            get => _fgm.Rudder;
         }
-        public string VM_FlightDirection
-        {
-            get { return _fgm.FlightDirection; }
-        }
-
-        public string VM_FlightTime
-        {
-            get { return _fgm.FlightTime; }
-        }
-  
-
-        public string VM_CurrentFlightTime
-        {
-            get { return _fgm.CurrentFlightTime; }
-            set
-            {
-                if(_fgm.CurrentFlightTime != value)
-                {
-                    _fgm.CurrentFlightTime = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public string getCurrentTime()
-        {
-
-            return _fgm.CurrentLineIndex.ToString();
-        }
-        public int VM_CurrentLineIndex
-        {
-            get { return _fgm.CurrentLineIndex; }
-            set 
-                {
-                    _fgm.CurrentLineIndex = value;
-                    OnPropertyChanged();
-                } 
-        }
-
-        public string VM_HeadingDegrees
-        {
-            get { return _fgm.HeadingDegrees; }
-        }
-        public string VM_RollDegrees
-        {
-            get { return _fgm.RollDegrees; }
-        }
-        public string VM_PitchDegrees
-        {
-            get { return _fgm.PitchDegrees; }
-        }
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public List<Feature> VM_FeaturesNames { get { return _fgm.Features; } }
 
-
-        public KeyValuePair<string, string> VM_File
-        {
-            get { return _fgm.ThisFile; }
-            set
-            {
-                if (_fgm.ThisFile.Key != value.Key)
-                {
-                    _fgm.ThisFile = value;
-                    OnPropertyChanged();
-                    _fgm.Start();
-                }
-            }
-            //need to do the same for every component in Simulator.
-        }
         public void Connect()
         {
             _fgm.Connect();
@@ -175,43 +97,7 @@ namespace Flight_Inspection_App
         public void Start()
         {
             _fgm.Start();
-            _fgm.setStatus(true);
+            _fgm.SetStatus(true);
         }
-        public void PauseThread()
-        {
-            _fgm.pauseThread();
-        }
-        public void ContinueRunning()
-        {
-            _fgm.continueThread();
-        }
-        public void StopFlight()
-        {
-            _fgm.stopSimulatorThread(); 
-        }
-        
-        public void increaseSpeed()
-        {
-            _fgm.increaseSpeed();
-        }
-        
-
-        public void decreaseSpeed()
-        {
-            _fgm.decreaseSpeed();
-        }
-
-        private bool SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
-        {
-            if (!Equals(field, newValue))
-            {
-                field = newValue;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-                return true;
-            }
-            return false;
-        }
-
-
     }
 }

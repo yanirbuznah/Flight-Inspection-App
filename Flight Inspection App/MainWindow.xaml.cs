@@ -10,7 +10,7 @@ namespace Flight_Inspection_App
     public partial class MainWindow : NavigationWindow, INotifyPropertyChanged
     {
         HomePage _home;
-        IViewModel _vm;
+        FGVM _vm;
 
         public MainWindow()
         {

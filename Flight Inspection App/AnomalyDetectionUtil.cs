@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Flight_Inspection_App
 {
-    class AnomalyDetectionUtil
+    static class AnomalyDetectionUtil
     {
-        double Avg(IList<double> x, int size)
+        static double Avg(IList<double> x, int size)
         {
             double sum = 0;
             for (int i = 0; i < size; sum += x[i], i++) ;
@@ -18,7 +18,7 @@ namespace Flight_Inspection_App
         }
 
         // returns the variance of X and Y
-        double Var(IList<double> x, int size)
+        static double Var(IList<double> x, int size)
         {
             double av = Avg(x, size);
             double sum = 0;
@@ -30,7 +30,7 @@ namespace Flight_Inspection_App
         }
 
         // returns the covariance of X and Y
-        double Cov(IList<double> x, IList<double> y, int size)
+        static double Cov(IList<double> x, IList<double> y, int size)
         {
             double sum = 0;
             for (int i = 0; i < size; i++)
@@ -44,7 +44,7 @@ namespace Flight_Inspection_App
 
 
         // returns the Pearson correlation coefficient of X and Y
-        public double Pearson(IList<double> x, IList<double> y, int size)
+        public static double Pearson(IList<double> x, IList<double> y, int size)
         {
             double s = Math.Sqrt(Var(x, size)) * Math.Sqrt(Var(y, size));
             if (s == 0) return 0;
@@ -52,7 +52,7 @@ namespace Flight_Inspection_App
         }
 
         // performs a linear regression and returns the line equation
-        public Line LinearReg(IList<DataPoint> points, int size)
+        public static Line LinearReg(IList<DataPoint> points, int size)
         {
             List<double> x = new(), y = new();
             for (int i = 0; i < size; i++)
@@ -65,27 +65,11 @@ namespace Flight_Inspection_App
 
             return new Line(a, b);
         }
-
-        // returns the deviation between point p and the line equation of the points
-        double Dev(DataPoint p, IList<DataPoint> points, int size)
-        {
-            Line l = LinearReg(points, size);
-            return Dev(p, l);
-        }
-
-        // returns the deviation between point p and the line
-        double Dev(DataPoint p, Line l)
-        {
-            double x = p.Y - l.f(p.X);
-            if (x < 0)
-                x *= -1;
-            return x;
-        }
     }
 
-public class Line
+    public class Line
     {
-        double _a, _b;
+       public  double _a, _b;
         public Line()
         {
             _a = 0;

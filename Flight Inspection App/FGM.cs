@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,10 @@ namespace Flight_Inspection_App
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
+/*        private Annotation _detectorAnnotation;*/
+        MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomalies;
+        object Detector;
+
 
         private UserControl _graph;
         public FGM(Client client)
@@ -39,7 +44,8 @@ namespace Flight_Inspection_App
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
             IEnumerable<string> chunkNames = playbackXml.Descendants("output").Descendants("name").Select(name => (string)name);
             List<string> featursNames = chunkNames.ToList();
-            _features = featursNames.Select(s => new Feature() { Name = s }).ToList();
+            int i = 0;
+            _features = featursNames.Select(s => new Feature() { Name = s,Index = i++ }).ToList();
             _numOfCols = _features.Capacity;
             //IntresingFeature = _features[0];
         }
@@ -62,6 +68,10 @@ namespace Flight_Inspection_App
             set
             {
                 _csvFile = value;
+                if (_dllFile.Key != null)
+                {
+                    Detect.Invoke(Detector, new object[] { _csvFile.Key });
+                }
                 OnPropertyChanged();
                 _isStopped = true;
                 Thread.Sleep((int)_sleepTime);
@@ -76,8 +86,28 @@ namespace Flight_Inspection_App
             set
             {
                 _dllFile = value;
-                GenerateGraph();
-                OnPropertyChanged("Graph");
+                
+                    var a = Assembly.LoadFile(_dllFile.Key);
+                    // Get the type to use.
+                    Type myType = a.GetType("DetectorLibary.AnomalyDetector");
+                    Detector = Activator.CreateInstance(myType);
+                    // Get the method to call.
+
+                    Detect = myType.GetMethod("Detect");
+                    LearnNormal = myType.GetMethod("LearnNormal");
+                    GetAnnotation = myType.GetMethod("GetAnnotation");
+                    GetAnomalies = myType.GetMethod("GetAnomalies");
+
+
+                    // Execute the method.
+                    LearnNormal.Invoke(Detector, new object[] { @"C:\Users\yanir\Desktop\flightgearProject\reg_flight - Copy.csv" });
+                if(_csvFile.Key != null)
+                {
+                    Detect.Invoke(Detector, new object[] { _csvFile.Key });
+
+                }
+
+
                 OnPropertyChanged();
 
             }
@@ -151,12 +181,13 @@ namespace Flight_Inspection_App
         {
             string[] arrCsv;
             arrCsv = File.ReadAllLines(_csvFile.Key);
+            arrCsv = arrCsv.Skip(1).ToArray();
             NumOfRows = arrCsv.Length;
             FlightTime = NumOfRows.ToString();
             CalcFeaturesValues(arrCsv);
 
 
-            new Thread(() =>
+           new Thread(() =>
             {
                 _isStopped = false;
                 string line;
@@ -224,7 +255,29 @@ namespace Flight_Inspection_App
 
         }
 
+        public List<DataPoint> AnomalyPoints
+        {
+            get
+            {
+                if (IntresingFeature == null || Detector == null)
+                    return new List<DataPoint>();
+                return (List<DataPoint>)GetAnomalies.Invoke(Detector, new object[] { IntresingFeature.Index });
+            }
 
+        }
+
+
+        public Annotation Annotation
+        {
+            get
+            {
+                if (IntresingFeature == null || Detector == null)
+                    return null;
+                return (Annotation)GetAnnotation.Invoke(Detector, new object[] { IntresingFeature.Index });
+            }
+
+
+        }
         public IList<DataPoint> FeaturePoints
         {
             get
@@ -289,7 +342,7 @@ namespace Flight_Inspection_App
         {
             get
             {
-                if (IntresingFeature== null || IntresingFeature.Slope== null)
+                if (IntresingFeature== null )
                     return 0;
                 return IntresingFeature.Slope;
 
@@ -299,7 +352,7 @@ namespace Flight_Inspection_App
         {
             get
             {
-                if (IntresingFeature == null || IntresingFeature.Intercept == null)
+                if (IntresingFeature == null )
                     return 0;
                 return IntresingFeature.Intercept;
 
@@ -545,6 +598,8 @@ namespace Flight_Inspection_App
             OnPropertyChanged("Slope");
             OnPropertyChanged("Intercept");
             OnPropertyChanged("CorrelationPoints");
+            OnPropertyChanged("AnomalyPoints");
+            OnPropertyChanged("Annotation");
 
         }
         public List<Feature> Features { get { return _features; } }

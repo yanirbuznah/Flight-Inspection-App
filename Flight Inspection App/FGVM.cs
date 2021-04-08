@@ -16,18 +16,18 @@ namespace Flight_Inspection_App
             _fgm = fgm;
             _fgm.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
-                NotifyPropertyChanged("VM_" + e.PropertyName);
+                OnPropertyChanged("VM_" + e.PropertyName);
             };
 
 
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged(string propName)
-        {
-            
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
 
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public FGM getModel()
         {
             return _fgm;
@@ -80,10 +80,7 @@ namespace Flight_Inspection_App
         {
             get => _fgm.Rudder;
         }
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
 
         public void Connect()
         {

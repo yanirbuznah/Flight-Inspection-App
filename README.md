@@ -1,5 +1,5 @@
 # Flight-Inspection-App
-A WPF application that co-responds to the flight simulator app.
+A WPF application that co-responds to the flight simulator app.</br>
 This app shows the user the real-time flight information and inspects the different parameters of the flight :shipit:.</br> *This app was written in .NET 5.0*
 ## Getting Started
 These instructions will get the flight simulator up and running along with the flight inspection application.

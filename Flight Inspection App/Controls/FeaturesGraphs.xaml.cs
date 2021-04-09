@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using OxyPlot.Wpf;
+using OxyPlot;
 
 namespace Flight_Inspection_App.Controls
 {
@@ -18,11 +19,11 @@ namespace Flight_Inspection_App.Controls
 
         public FeaturesGraphs()
         {
+            
 
-          
-       
             InitializeComponent();
-           
+
+
 
         }
 

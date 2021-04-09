@@ -26,10 +26,9 @@ There are two blanks you need to fill up in order to connect to server : IP & Po
 After clicking connect, press the "Start now" button and wait for the next screen to show up.
 ![SimulatorScreen](https://user-images.githubusercontent.com/56928005/114172473-62d3c580-993e-11eb-9515-5976ba107106.png)<br/>
 
-Now the features window popped up.In order to start the flight, you will have to insert a csv file with flight information by clicking on the folder and then choosing the correct path to your file.
-Furthermore, there are multiplie features that can be shown on screen by pressing the feature name.
-* The futures list (next to the blank of the chosen csv file).In this window you can *pick a flight information*, and you will see it upon the top left graph showing the information .
-* The joystick, exemplifies the airplane movement (accordignly to x&y coordinates).The left slider to the joystick represents the throttle and the slider that is lcoated under the joystick represents the rudder.
-* Below the joystick features, you can see more flight information such as: Altitude,Speed,Flight direction etc..
-* 3D Model // TODO
-* And ofc the slider bar that you can speed up the csv line inputs, or lower the speed.And all the normal media-buttons we are used to.
+1. Pick a csv file in order to start your flight. The csv should contain a flight information description.
+2. Pick a dll file of the anomaly detector. You have variety of algorithms you can choose, and also you can add by yourself.
+3. **Enter The 3d Model**
+4. By clicking on a specific flight information, the graphs will show the progress during the flight.
+5. The joystick exemplifies the airplane movement. The left slider represents the throttle progression, and the buttom slider represents the rudder value.
+

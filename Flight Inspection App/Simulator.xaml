@@ -16,7 +16,7 @@
             <Controls:FilesComponent x:Name="fileselector" Margin="-450,10,750,250" Width="192" Height="421"/>
         </Viewbox>
         <Viewbox>
-            <Controls:FeaturesPanel x:Name="features" Margin="-10,20,400,120" Width="96" Height="214"/>
+            <Controls:FeaturesPanel x:Name="features" Margin="-215,20,400,120" Width="169" Height="413"/>
         </Viewbox>
         <Viewbox>
             <Controls:ControlBar x:Name="controlbar" Margin="0,345,0,-200" />

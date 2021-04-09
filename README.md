@@ -32,3 +32,6 @@ After clicking connect, press the "Start now" button and wait for the next scree
 4. By clicking on a specific flight information, the graphs will show the progress during the flight.
 5. The joystick exemplifies the airplane movement. The left slider represents the throttle progression, and the buttom slider represents the rudder value.
 
+#### Implementing your own dll 
+- Make sure your dll file is inside the Plugin folder.
+- Customize your dll file in a way that the main class there implements the IDetector interface.

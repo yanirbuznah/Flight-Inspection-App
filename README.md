@@ -24,7 +24,7 @@ Build the project, afterwards go to the Debug folder. Navigate to net5.0-windows
 When you open the Flight Inspection app.exe you will see the home-page screen as shown above.<br/>
 There are two blanks you need to fill up in order to connect to server : IP & Port.
 After clicking connect, press the "Start now" button and wait for the next screen to show up.
-![SimulatorScreen](https://user-images.githubusercontent.com/56928005/114172473-62d3c580-993e-11eb-9515-5976ba107106.png)<br/>
+![SimulatorScreen](https://user-images.githubusercontent.com/56928005/114229633-c383f200-9980-11eb-810e-1d96fb6e8c4c.png)<br/>
 
 1. Pick a csv file in order to start your flight. The csv should contain a flight information description.
 2. Pick a dll file of the anomaly detector. You have variety of algorithms you can choose, and also you can add by yourself.

@@ -166,7 +166,7 @@ namespace Flight_Inspection_App
             Altitude = _features[16].Values[_currentLineIndex];
             RollDegrees = _features[17].Values[_currentLineIndex];
             PitchDegrees = _features[18].Values[_currentLineIndex];
-            HeadingDegrees = _features[19].Values[_currentLineIndex];
+            HeadingDegrees = _features[20].Values[_currentLineIndex];
             AirSpeed = _features[21].Values[_currentLineIndex];
             FlightDirection = _features[37].Values[_currentLineIndex];
         }

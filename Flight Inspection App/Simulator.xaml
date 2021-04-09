@@ -18,8 +18,10 @@
         <Viewbox>
             <Controls:FeaturesPanel x:Name="features" Margin="-10,20,400,120" Width="96" Height="214"/>
         </Viewbox>
-        <Controls:ControlBar x:Name="controlbar" Loaded="ControlBar_Loaded_4"/>
         <Viewbox>
+            <Controls:ControlBar x:Name="controlbar" Margin="-10,470,-5,-50" Height="45" Width="1187"/>
+        </Viewbox>
+        <Viewbox Margin="-46,0,0,0">
             <Controls:FeaturesGraphs x:Name="featuregraphs" Margin="299,10,270,43" Width="474" Height="478"/>
         </Viewbox>
         <Viewbox>
@@ -28,7 +30,7 @@
         <Viewbox>
             <Controls:Joystick x:Name="joystick" Height="925" Width="990" Margin="1550,-300,-250,450"/>
         </Viewbox>
-        <Viewbox>
+        <Viewbox Margin="5,164,5,18">
             <Button Content="3D Model" Click="HeliWindow" Margin="-85,160,400,90" FontWeight="Bold" FontSize="14" Height="24" Width="70" Background="#54E0741A">
                 <Button.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

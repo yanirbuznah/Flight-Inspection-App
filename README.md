@@ -24,7 +24,7 @@ Build the project, afterwards go to the Debug folder. Navigate to net5.0-windows
 When you open the Flight Inspection app.exe you will see the home-page screen as shown above.<br/>
 There are two blanks you need to fill up in order to connect to server : IP & Port.
 After clicking connect, press the "Start now" button and wait for the next screen to show up.
-![מסך אפליקציה ראשי](https://user-images.githubusercontent.com/56928005/113912864-4d4a8880-97e4-11eb-875f-d2ad7d022f12.png)<br/>
+![SimulatorScreen](https://user-images.githubusercontent.com/56928005/114172473-62d3c580-993e-11eb-9515-5976ba107106.png)<br/>
 
 Now the features window popped up.In order to start the flight, you will have to insert a csv file with flight information by clicking on the folder and then choosing the correct path to your file.
 Furthermore, there are multiplie features that can be shown on screen by pressing the feature name.

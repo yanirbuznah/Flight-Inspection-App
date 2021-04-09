@@ -100,7 +100,7 @@ namespace Flight_Inspection_App
 
 
                     // Execute the method.
-                    LearnNormal.Invoke(Detector, new object[] { @"C:\Users\yanir\Desktop\flightgearProject\reg_flight - Copy.csv" });
+                    LearnNormal.Invoke(Detector, new object[] { @"..\..\..\Normal flight\reg_flight - Copy.csv" });
                 if(_csvFile.Key != null)
                 {
                     Detect.Invoke(Detector, new object[] { _csvFile.Key });

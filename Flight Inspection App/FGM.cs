@@ -122,26 +122,20 @@ namespace Flight_Inspection_App
         {
             for (int i = 0; i < _numOfCols; ++i)
             {
-
                 double corrlation = 0;
-
                 for (int j = 0; j < _numOfCols; ++j)
                 {
                     if (i != j)
                     {
                         double newCorrlation = Math.Abs(
                                 AnomalyDetectionUtil.Pearson(_features[i].Values, _features[j].Values,NumOfRows ));
-
                         if (corrlation <= newCorrlation)
                         {
                              corrlation = newCorrlation;
                             _features[i].MostCorrelativeFeature = _features[j];
-                           
-
                         }
                     }
                 }
-               
             }
             _features.ForEach((x) => x.CalcCorrelationPoints());
             _features.ForEach((x) => x.CalcLineRegresion());

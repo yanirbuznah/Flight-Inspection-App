@@ -20,7 +20,7 @@ Build the project, afterwards go to the Debug folder. Navigate to net5.0-windows
 ```Path: Flight Inspection App\bin\Debug\net5.0-windows```
 
 ### Running The Flight-Inspection-App
-![מסך פתיחה](https://user-images.githubusercontent.com/56928005/113912377-b54c9f00-97e3-11eb-8f33-b04c508ef208.png)<br/>
+![openScreen](https://user-images.githubusercontent.com/56928005/114165321-fdc7a200-9934-11eb-8bcf-17ff7ebb48a8.png)<br/>
 When you open the Flight Inspection app.exe you will see the home-page screen as shown above.<br/>
 There are two blanks you need to fill up in order to connect to server : IP & Port.
 After clicking connect, press the "Start now" button and wait for the next screen to show up.

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flight_Inspection_App.Commands;
 using OxyPlot;
+using OxyPlot.Wpf;
 
 namespace Flight_Inspection_App
 {
@@ -14,10 +15,10 @@ namespace Flight_Inspection_App
 
 
 
-        public DetectCommand Detect { get; private set; }
+
         public FeaturesGraphsVM(FGM m) : base(m)
         {
-            Detect = new DetectCommand(GenerateGraph);
+           
             
         }
 
@@ -54,25 +55,22 @@ namespace Flight_Inspection_App
             get => _fgm.CorrelationPoints;
         }
 
+
+        public List<DataPoint> VM_AnomalyPoints
+        {
+            get => _fgm.AnomalyPoints;
+        }
         public List<DataPoint> VM_lastCorrelationPoints
         {
             get => _fgm.lastCorrelationPoints;
         }
 
-        public UserControl VM_Graph
+        public Annotation VM_Annotation
         {
-                       
-            get => _fgm.Graph;
-        }
-        public void GenerateGraph()
-        {
-            _fgm.GenerateGraph();
+            get => _fgm.Annotation;
+
         }
 
-/*        public UserControl VM_GenerateGraph()
-        {
-            return _fgm.GenerateGraph();
-        }*/
 
         public KeyValuePair<string, string> VM_FileDll
         {

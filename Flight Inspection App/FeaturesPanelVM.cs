@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,11 @@ namespace Flight_Inspection_App
         public FeaturesPanelVM(FGM m) : base(m)
         {
 
+        }
+        public event PropertyChangedEventHandler IntrestingPropertyChanged;
+        protected void OnIntrestingPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            IntrestingPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public List<Feature> VM_FeaturesNames { get { return _fgm.Features; } }
@@ -26,7 +33,10 @@ namespace Flight_Inspection_App
                 if (_fgm.IntresingFeature != value)
                 {
                     _fgm.IntresingFeature = value;
+                    OnIntrestingPropertyChanged();
+                    
                     OnPropertyChanged();
+                    
 
                 }
             }

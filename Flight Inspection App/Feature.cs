@@ -91,6 +91,10 @@ namespace Flight_Inspection_App
         {
             get; set;
         }
+        public int Index
+        {
+            get;set;
+        }
 
     }
 

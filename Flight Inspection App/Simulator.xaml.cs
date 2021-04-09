@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using OxyPlot.Wpf;
+using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 
@@ -16,7 +19,7 @@ namespace Flight_Inspection_App
         FeaturesGraphsVM _fegvm;
         FlightInstrumentsVM _fivm;
         JoystickVM _jvm;
-
+        Annotation fixedAnnotation;
         public Simulator(FGVM vm)
         {
             InitializeComponent();
@@ -31,16 +34,27 @@ namespace Flight_Inspection_App
             controlbar.DataContext = _cbvm;
             fileselector.DataContext = _fcvm;
             features.DataContext = _fpvm;
+            _fpvm.IntrestingPropertyChanged += ChangeAnnoatation;
             featuregraphs.DataContext = _fegvm;
-
             flightinstruments.DataContext = _fivm;
             joystick.DataContext = _jvm;
+            fixedAnnotation = featuregraphs.MyPlot.Annotations[0];
 
 
         }
+        
+        public void ChangeAnnoatation(object sender, PropertyChangedEventArgs e)
+        {
 
-
-
+            if(_fegvm.VM_Annotation!= null)
+            {
+                featuregraphs.MyPlot.Annotations.Clear();
+                featuregraphs.MyPlot.Annotations.Add(fixedAnnotation);
+                featuregraphs.MyPlot.Annotations.Add(_fegvm.VM_Annotation);
+            }
+            
+        }
+     
 
 
         private void Button_Click(object sender, RoutedEventArgs e)

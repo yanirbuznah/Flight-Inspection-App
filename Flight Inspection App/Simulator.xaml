@@ -19,7 +19,7 @@
             <Controls:FeaturesPanel x:Name="features" Margin="-10,20,400,120" Width="96" Height="214"/>
         </Viewbox>
         <Viewbox>
-            <Controls:ControlBar x:Name="controlbar" Margin="0,330,0,-200" />
+            <Controls:ControlBar x:Name="controlbar" Margin="0,345,0,-200" />
         </Viewbox>
         <Viewbox Margin="-46,0,0,0">
             <Controls:FeaturesGraphs x:Name="featuregraphs" Margin="299,10,310,43" Width="474" Height="478"/>

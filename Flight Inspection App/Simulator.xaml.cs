@@ -19,7 +19,7 @@ namespace Flight_Inspection_App
         FeaturesGraphsVM _fegvm;
         FlightInstrumentsVM _fivm;
         JoystickVM _jvm;
-        Annotation fixedAnnotation;
+        Annotation _fixedAnnotation;
         public Simulator(FGVM vm)
         {
             InitializeComponent();
@@ -38,7 +38,8 @@ namespace Flight_Inspection_App
             featuregraphs.DataContext = _fegvm;
             flightinstruments.DataContext = _fivm;
             joystick.DataContext = _jvm;
-            fixedAnnotation = featuregraphs.MyPlot.Annotations[0];
+            _fixedAnnotation = featuregraphs.MyPlot.Annotations[0];
+            
 
 
         }
@@ -49,7 +50,7 @@ namespace Flight_Inspection_App
             if(_fegvm.VM_Annotation!= null)
             {
                 featuregraphs.MyPlot.Annotations.Clear();
-                featuregraphs.MyPlot.Annotations.Add(fixedAnnotation);
+                featuregraphs.MyPlot.Annotations.Add(_fixedAnnotation);
                 featuregraphs.MyPlot.Annotations.Add(_fegvm.VM_Annotation);
             }
             

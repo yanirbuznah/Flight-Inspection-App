@@ -24,8 +24,8 @@
         <Viewbox Margin="-46,0,0,0">
             <Controls:FeaturesGraphs x:Name="featuregraphs" Margin="299,10,310,43" Width="474" Height="478"/>
         </Viewbox>
-        <Viewbox>
-            <Controls:FlightInstruments x:Name="flightinstruments" Margin="750,100,-31,47" Width="260" Height="215"/>
+        <Viewbox Margin="845,184,0,-12">
+            <Controls:FlightInstruments x:Name="flightinstruments"  Width="260" Height="215"/>
         </Viewbox>
         <Viewbox>
             <Controls:Joystick x:Name="joystick" Height="925" Width="990" Margin="1550,-300,-250,450"/>

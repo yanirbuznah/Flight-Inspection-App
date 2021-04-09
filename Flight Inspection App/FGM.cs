@@ -25,13 +25,11 @@ namespace Flight_Inspection_App
         private string _ip = "127.0.0.1";
         bool _isStopped = false;
         private int _currentLineIndex;
-        private string _currentFlightTime;
-        private string _flightTime;
+        private string _currentFlightTime, _flightTime;
         private int _numOfCols = 0;
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
-/*        private Annotation _detectorAnnotation;*/
         MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomalies;
         object Detector;
 
@@ -47,6 +45,8 @@ namespace Flight_Inspection_App
             int i = 0;
             _features = featursNames.Select(s => new Feature() { Name = s,Index = i++ }).ToList();
             _numOfCols = _features.Capacity;
+            DetectorState = "Please Load Detector";
+            PbValue = 0;
             //IntresingFeature = _features[0];
         }
 
@@ -70,7 +70,17 @@ namespace Flight_Inspection_App
                 _csvFile = value;
                 if (_dllFile.Key != null)
                 {
-                    Detect.Invoke(Detector, new object[] { _csvFile.Key });
+
+                    new Thread(() =>
+                    {
+                        DetectorState = "Detecting..";
+                        PbValue = 70;
+                        Detect.Invoke(Detector, new object[] { _csvFile.Key });
+                        PbValue = 100;
+                        DetectorState = "Finish";
+
+                    }).Start();
+
                 }
                 OnPropertyChanged();
                 _isStopped = true;
@@ -86,26 +96,48 @@ namespace Flight_Inspection_App
             set
             {
                 _dllFile = value;
-                
-                    var a = Assembly.LoadFile(_dllFile.Key);
-                    // Get the type to use.
-                    Type myType = a.GetType("DetectorLibary.AnomalyDetector");
-                    Detector = Activator.CreateInstance(myType);
-                    // Get the method to call.
-
-                    Detect = myType.GetMethod("Detect");
-                    LearnNormal = myType.GetMethod("LearnNormal");
-                    GetAnnotation = myType.GetMethod("GetAnnotation");
-                    GetAnomalies = myType.GetMethod("GetAnomalies");
-
-
-                    // Execute the method.
-                    LearnNormal.Invoke(Detector, new object[] { @"..\..\..\Normal flight\reg_flight - Copy.csv" });
-                if(_csvFile.Key != null)
+                new Thread(() =>
                 {
-                    Detect.Invoke(Detector, new object[] { _csvFile.Key });
+                    PbValue = 10;
+                    DetectorState = "Load Detector..";
+                    try
+                    {
+                        var a = Assembly.LoadFile(_dllFile.Key);
+                        // Get the type to use.
+                        Type myType = a.GetType("DetectorLibary.AnomalyDetector");
+                        Detector = Activator.CreateInstance(myType);
+                        // Get the method to call.
 
-                }
+                        Detect = myType.GetMethod("Detect");
+                        LearnNormal = myType.GetMethod("LearnNormal");
+                        GetAnnotation = myType.GetMethod("GetAnnotation");
+                        GetAnomalies = myType.GetMethod("GetAnomalies");
+
+
+                        // Execute the method.
+
+                        DetectorState = "Learning..";
+                        PbValue = 30;
+                        LearnNormal.Invoke(Detector, new object[] { @"..\..\..\Normal flight\reg_flight - Copy.csv" });
+                        DetectorState = "Waiting to File to detect";
+                        PbValue = 50;
+                        if (_csvFile.Key != null)
+                        {
+                            DetectorState = "Detecting..";
+                            PbValue = 70;
+                            Detect.Invoke(Detector, new object[] { _csvFile.Key });
+                            PbValue = 100;
+                            DetectorState = "Finish";
+                        }
+                    }
+                    catch
+                    {
+                        DetectorState = "Failed to load Detector";
+                        PbValue = 0;
+                    }
+
+                }).Start();
+                   
 
 
                 OnPropertyChanged();
@@ -205,6 +237,20 @@ namespace Flight_Inspection_App
 
                          Thread.Sleep((int)_sleepTime);
                     }
+
+            }).Start();
+
+            new Thread(() =>
+            {
+                OnPropertyChanged("XxAxis");
+                OnPropertyChanged("XyAxis");
+                OnPropertyChanged("XzAxis");
+                OnPropertyChanged("YxAxis");
+                OnPropertyChanged("YyAxis");
+                OnPropertyChanged("YzAxis");
+                OnPropertyChanged("ZxAxis");
+                OnPropertyChanged("ZyAxis");
+                OnPropertyChanged("ZzAxis");
 
             }).Start();
         }
@@ -380,40 +426,7 @@ namespace Flight_Inspection_App
                 return new List<DataPoint>(IntresingFeature.CorrelationPoints.Skip(CurrentLineIndex-300).Take(CurrentLineIndex));
             }
         }
-        public void GenerateGraph()
-        {
-            Assembly a = Assembly.LoadFile(_dllFile.Key);
-            // Get the type to use.
-            Type myType = a.GetType("WpfLibrary.Graph");
-            UserControl Graph = Activator.CreateInstance(myType) as UserControl;
-            _graph =  Graph;
-            // Get the method to call.
-            /*
-                        MethodInfo detect = myType.GetMethod("Detect");
-                        MethodInfo setIntres = myType.GetMethod("setIntrestingFeatureIndex");
-                        MethodInfo currentTime = myType.GetMethod("CurrentTime");*/
 
-
-            // Create an instance.
-
-            // Execute the method.
-            /*            detect.Invoke(Graph, new object[] { @"C:\Users\yanir\Desktop\flightgearProject\anomaly_flight.csv" });
-                        setIntres.Invoke(Graph, new object[] { 5 });
-                        currentTime.Invoke(Graph, new object[] { 300 });*/
-            //Detector.Children.Add(Graph);
-            /*            setIntres.Invoke(Graph, new object[] { 0 });*/
-
-        }
-        public UserControl Graph
-        {
-            get => _graph;
-            set
-            {
-                if (value != _graph)
-                    _graph = value;
-                OnPropertyChanged();
-            }
-        }
         public string FlightTime
         {
             get => _flightTime;
@@ -611,6 +624,77 @@ namespace Flight_Inspection_App
 
             }
         }
+
+        private string _detectorState;
+
+        public string DetectorState
+        {
+            get => _detectorState;
+            private set
+            {
+                if (_detectorState != value)
+                {
+                    _detectorState = value;
+                    OnPropertyChanged();
+                }
+                    
+            }
+        }
+        private int _pbValue;
+        public int PbValue
+        {
+            get => _pbValue;
+            private set
+            { 
+            if(_pbValue != value)
+                {
+                    _pbValue = value;
+                    OnPropertyChanged();
+                }
+             } 
+        }
+
+
+        public double XxAxis
+        {
+            get => Math.Cos(HeadingDegrees)* Math.Cos(PitchDegrees);
+        }
+        public double YxAxis
+        {
+            get => Math.Sin(HeadingDegrees) * Math.Cos(PitchDegrees);
+        }
+        public double ZxAxis
+        {
+            get => Math.Sin(PitchDegrees);
+        }
+        public double XyAxis
+        {
+            get => ((-Math.Cos(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) - (Math.Sin(HeadingDegrees) * Math.Cos(RollDegrees));
+        }  
+        public double YyAxis
+        {
+            get => ((-Math.Sin(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) + (Math.Cos(HeadingDegrees) * Math.Cos(RollDegrees));
+
+        }
+        public double ZyAxis
+        {
+            get => Math.Cos(PitchDegrees) * Math.Sin(RollDegrees);
+        }
+        public double XzAxis
+        {
+            get => ((-Math.Cos(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) +(Math.Sin(HeadingDegrees) * Math.Sin(RollDegrees));
+        }
+        public double YzAxis
+        {
+            get => ((-Math.Sin(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) - (Math.Cos(HeadingDegrees) * Math.Sin(RollDegrees));
+
+
+        }
+        public double ZzAxis
+        {
+            get => Math.Cos(PitchDegrees) * Math.Sin(RollDegrees);
+        }
+
         public bool GetStatus()
         {
             return _telnetClient.GetStatus();

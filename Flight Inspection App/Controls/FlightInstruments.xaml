@@ -5,36 +5,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Flight_Inspection_App.Controls" xmlns:flight_inspection_app="clr-namespace:Flight_Inspection_App" d:DataContext="{d:DesignInstance Type=flight_inspection_app:FGVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="300">
     <Grid Margin="0,0,0,0">
-        <RichTextBox Margin="10,39,44,10" Background="{x:Null}" CaretBrush="#FFEA1111" BorderBrush="#FFFD7B0F" Foreground="#FFF1380F">
-            <FlowDocument>
-                <Paragraph>
-                    <Label x:Name="Altitude" Content="Altitude: " HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="Black" FontFamily="Calibri" FontWeight="Bold" FontSize="14" Background="#8CDC8243"/>
-                    <Label x:Name="AltitudeValue" Content="{Binding VM_Altitude}" Margin="0,-15,-5,0" Foreground="Black" Width="75" HorizontalAlignment="Center" FontWeight="Bold" Background="#8CDC8243"/>
-                </Paragraph>
-                <Paragraph>
-                    <Label x:Name="AirSpeed" Content="Air Speed: " Margin="0,-15,0,0" Foreground="Black" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="#8CDC8243"/>
-                    <Label x:Name="AirSpeedValue" Content="{Binding VM_AirSpeed}" Margin="0,-15,-5,0" Foreground="Black" Width="75" HorizontalAlignment="Center" FontWeight="Bold" Background="#8CDC8243"/>
-                </Paragraph>
-                <Paragraph>
-                    <Label x:Name="FlightDirection" Content="Flight Direction: " Margin="0,-15,0,0" Foreground="Black" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Background="#8CDC8243"/>
-                    <Label x:Name="FlightDirectionValue" Content="{Binding VM_FlightDirection}" Margin="0,-15,-5,0" Foreground="Black" Width="75" HorizontalAlignment="Center" FontWeight="Bold" Background="#8CDC8243"/>
-                </Paragraph>
-                <Paragraph>
-                    <Label x:Name="HeadingDegrees" Content="Heading Degrees: " Margin="0,-15,0,0" Foreground="Black" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Background="#8CDC8243"/>
-                    <Label x:Name="HeadingDegreesValue" Content="{Binding VM_HeadingDegrees}" Margin="0,-15,-5,0" Foreground="Black" Width="75" HorizontalAlignment="Center" FontWeight="Bold" Background="#8CDC8243"/>
-                </Paragraph>
-                <Paragraph>
-                    <Label x:Name="RollDegrees" Content="Roll Degrees: " Margin="0,-15,0,0" Foreground="Black" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="#8CDC8243"/>
-                    <Label x:Name="RollDegreesValue" Content="{Binding VM_RollDegrees}" Margin="0,-15,-5,0" Foreground="Black" Width="75" HorizontalAlignment="Center" FontWeight="Bold" Background="#8CDC8243"/>
-                </Paragraph>
-                <Paragraph>
-                    <Label x:Name="PitchDegrees" Content="Pitch Degrees: " Margin="0,-15,0,0" Foreground="Black" FontFamily="Calibri" FontWeight="Bold" FontSize="14" Background="#8CDC8243"/>
-                    <Label x:Name="PitchDegreesValue" Content="{Binding VM_PitchDegrees}" Margin="0,-15,-5,0" Foreground="Black" Width="75" HorizontalAlignment="Center" FontWeight="Bold" Background="#8CDC8243"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="Altitude"   Content="Altitude: " Grid.Row="1" Grid.Column="1" FontFamily="Calibri" FontWeight="Bold" FontSize="14" Foreground="Black" Background="#BFFFE7CB"/>
+        <Label x:Name="AltitudeValue" Grid.Row="1" Grid.Column="3" Content="{Binding VM_Altitude}"  Foreground="Black" Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="AirSpeed"   Content="Air Speed: " Grid.Row="2"  Grid.Column="1" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Foreground="Black" Background="#BFFFE7CB"/>
+        <Label x:Name="AirSpeedValue" Content="{Binding VM_AirSpeed}" Grid.Row="2" Grid.Column="3" Foreground="Black"  Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="FlightDirection" Content="Flight Direction: "   Grid.Row="3" Grid.Column="1" Foreground="Black" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="FlightDirectionValue" Content="{Binding VM_FlightDirection}"  Grid.Row="3" Grid.Column="3" Foreground="Black" Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="HeadingDegrees" Content="Heading Degrees: " Grid.Row="4" Grid.Column="1"  Foreground="Black" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="HeadingDegreesValue" Content="{Binding VM_HeadingDegrees}" Grid.Row="4" Grid.Column="3"  Foreground="Black" Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="RollDegrees" Content="Roll Degrees: " Grid.Row="5" Grid.Column="1"  Foreground="Black" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="RollDegreesValue" Content="{Binding VM_RollDegrees}" Grid.Row="5" Grid.Column="3" Foreground="Black" Width="100"  FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="PitchDegrees" Content="Pitch Degrees: " Grid.Row="6" Grid.Column="1" Foreground="Black" FontFamily="Calibri" FontWeight="Bold" FontSize="14" Background="#BFFFE7CB"/>
+        <Label x:Name="PitchDegreesValue" Content="{Binding VM_PitchDegrees}" Grid.Row="6" Grid.Column="3" Foreground="Black" Width="100" FontWeight="Bold" Background="#BFFFE7CB"  />
 
     </Grid>
 </UserControl>

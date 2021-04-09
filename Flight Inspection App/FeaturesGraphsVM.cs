@@ -22,7 +22,15 @@ namespace Flight_Inspection_App
             
         }
 
+        public string VM_DetectorState
+        {
+            get => _fgm.DetectorState;
+        }
 
+        public int VM_PbValue
+        {
+            get => _fgm.PbValue;
+        }
         public double VM_MostCorreltiveFeatureMaxValue
         {
             get => _fgm.MostCorreltiveFeatureMaxValue;

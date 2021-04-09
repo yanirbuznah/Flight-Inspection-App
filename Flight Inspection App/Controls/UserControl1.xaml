@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:HelixToolkit="clr-namespace:HelixToolkit.Wpf;assembly=HelixToolkit.Wpf"
-             xmlns:local="clr-namespace:Flight_Inspection_App.Controls"
+             xmlns:local="clr-namespace:Flight_Inspection_App.Controls" xmlns:flight_inspection_app="clr-namespace:Flight_Inspection_App" d:DataContext="{d:DesignInstance Type=flight_inspection_app:FGVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -16,7 +16,20 @@
 
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
-            <RotateTransform3D>
+<!--
+                            
+                                                        <MatrixTransform3D>
+                                <MatrixTransform3D.Matrix>
+                                    <Matrix3D  M11="{Binding VM_XxAxis}" M12="{Binding VM_XyAxis}" M13="{Binding VM_XzAxis}" M21="{Binding VM_YxAxis}" M22="{Binding VM_YyAxis}" M23="{Binding VM_YzAxis}"
+                                              M31="{Binding VM_ZxAxis}" M32="{Binding VM_ZyAxis}" M33="{Binding VM_ZzAxis}"/>
+                                </MatrixTransform3D.Matrix>
+
+                            </MatrixTransform3D>
+                            -->
+
+
+
+                            <RotateTransform3D>
                 <RotateTransform3D.Rotation>
                                     <AxisAngleRotation3D Axis="1,0,0" Angle="{Binding  VM_RollDegrees}"/>
                 </RotateTransform3D.Rotation>

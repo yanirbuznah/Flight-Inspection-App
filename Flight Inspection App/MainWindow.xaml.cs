@@ -19,6 +19,7 @@ namespace Flight_Inspection_App
             DataContext = _vm;
             _home = new HomePage(_vm);
             Navigate(_home);
+
         }
 
 

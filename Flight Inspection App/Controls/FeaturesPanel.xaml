@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="170">
     <Grid>
-        <ListBox Name="lbFeaturesNames" HorizontalContentAlignment="Stretch" SelectedItem="{Binding Path=VM_IntresingFeature}" ItemsSource="{Binding VM_FeaturesNames}" Background="#54E0741A" Foreground="White" BorderBrush="#FFFB7403">
+        <ListBox Name="lbFeaturesNames" HorizontalContentAlignment="Stretch" SelectedItem="{Binding Path=VM_IntresingFeature}" ItemsSource="{Binding VM_FeaturesNames}" Foreground="Black" Background="#BFFFE7CB" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">

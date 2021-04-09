@@ -19,7 +19,7 @@
                 </LinearGradientBrush>
             </Label.Background>
         </Label>
-        <ListBox  Name="lbCsvFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_FileCsv}" Background="#54E0741A" BorderBrush="#FFFF8000" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Foreground="White" Height="102" Width="137" Margin="-120,-210,0,0">
+        <ListBox  Name="lbCsvFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_FileCsv}" Foreground="Black" Background="#BFFFE7CB" FontWeight="Bold" FontFamily="Calibri" FontSize="14"  Height="102" Width="137" Margin="-120,-210,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Value}" />
@@ -37,7 +37,7 @@
                 </LinearGradientBrush>
             </Label.Background>
         </Label>
-        <ListBox  Name="lbDllFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_FileDll}" Background="#54E0741A" BorderBrush="#FFFF8000" FontWeight="Bold" FontFamily="Calibri" FontSize="14" Foreground="White" Height="102" Width="143" Margin="-165,140,0,0">
+        <ListBox  Name="lbDllFiles" SelectionChanged="lbFiles_SelectionChanged" SelectedItem="{Binding Path=VM_FileDll}" Foreground="Black" Background="#BFFFE7CB" FontWeight="Bold" FontFamily="Calibri" FontSize="14"  Height="102" Width="143" Margin="-165,140,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Value}" />

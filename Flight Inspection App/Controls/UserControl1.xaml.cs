@@ -11,6 +11,7 @@ namespace Flight_Inspection_App.Controls
     {
         public UserControl1()
         {
+           
             InitializeComponent();
             Create3DViewPort();
 
@@ -19,7 +20,7 @@ namespace Flight_Inspection_App.Controls
         {
         
             ObjReader CurrentHelixObjReader = new ObjReader();
-            Model3DGroup MyView = CurrentHelixObjReader.Read(@"..\..\..\3D planes\Black Hawk uh-60\Black Hawk uh-60.obj");
+            Model3DGroup MyView = CurrentHelixObjReader.Read(@"..\..\..\3D planes\Black Hawk uh-60.obj");
             //Model3DGroup MyView = CurrentHelixObjReader.Read(@"..\..\..\Images\Heli_bell.obj");
 
             model.Content = MyView;

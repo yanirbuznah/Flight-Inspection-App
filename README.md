@@ -36,6 +36,7 @@ After clicking connect, press the "Start Now" button and wait for the next scree
 - Customize your dll file in a way that the main class there implements the IDetector interface.
 
 ### Project Structure
-- Following the MVVM architectural pattern, there's one main View-Model and sub View-Models- one for each user story.
-- The Model is created in the MainWindow, and then passed to the main View-Model's constructor. Later on, the Model is passed to the rest of the sub View-Models.
-- Our MainWindow initialize the main View-Model, and the Simulator screen initialize each user-story on its constructor.
+- Following the MVVM architectural pattern, there's one main View-Model and sub View-Models, one for each user story.
+  As shown in the UML diagram above, the main View-Model (called "FGVM") implements the IViewModel interface, and the sub View-Models (e.g. "ControlBarVM", "JoyStickVM",..) are inheriting from him (as required in our project instructions).
+- The Model is created in the MainWindow, and then passed as an argument to the main View-Model's constructor. Later on, the Model is passed to the rest of the sub View-Models.
+- Our MainWindow initializes the main View-Model, and the Simulator screen initializes each sub View-Model in his constructor.

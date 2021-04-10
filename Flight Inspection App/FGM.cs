@@ -30,7 +30,7 @@ namespace Flight_Inspection_App
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
-        MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomalies;
+        MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomaliesPoints ,GetAnomaliesDescreption;
         object Detector;
 
 
@@ -111,8 +111,8 @@ namespace Flight_Inspection_App
                         Detect = myType.GetMethod("Detect");
                         LearnNormal = myType.GetMethod("LearnNormal");
                         GetAnnotation = myType.GetMethod("GetAnnotation");
-                        GetAnomalies = myType.GetMethod("GetAnomalies");
-
+                        GetAnomaliesPoints = myType.GetMethod("GetAnomaliesPoints");
+                        GetAnomaliesDescreption = myType.GetMethod("GetAnomaliesDescreption");
 
                         // Execute the method.
 
@@ -126,6 +126,7 @@ namespace Flight_Inspection_App
                             DetectorState = "Detecting..";
                             PbValue = 70;
                             Detect.Invoke(Detector, new object[] { _csvFile.Key });
+                            OnPropertyChanged("AnomaliesDescriptions");
                             PbValue = 100;
                             DetectorState = "Finish";
                         }
@@ -301,11 +302,20 @@ namespace Flight_Inspection_App
             {
                 if (IntresingFeature == null || Detector == null)
                     return new List<DataPoint>();
-                return (List<DataPoint>)GetAnomalies.Invoke(Detector, new object[] { IntresingFeature.Index });
+                return (List<DataPoint>)GetAnomaliesPoints.Invoke(Detector, new object[] { IntresingFeature.Index });
             }
 
         }
+        public List<KeyValuePair<int,string>> AnomaliesDescriptions
+        {
+            get
+            {
+                if (Detector == null)
+                    return new List<KeyValuePair<int, string>>();
+                return (List < KeyValuePair<int, string> >)GetAnomaliesDescreption.Invoke(Detector, new object[] { });
+            }
 
+        }
 
         public Annotation Annotation
         {

@@ -30,26 +30,57 @@ namespace Flight_Inspection_App
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
+        int _aileronIndex, _elevatorIndex, _rudderIndex, _throttleIndex, _altitudeIndex, _rollIndex, _pitchIndex, _yawIndex, _airspeedIndex, _flightDirectionIndex;
         MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomaliesPoints, GetAnomaliesDescriptions;
         object Detector;
 
-
-        private UserControl _graph;
         public FGM(Client client)
         {
             _telnetClient = client;
             var xmlPlaybackFilepath = Path.Combine("../../../", "playback_small.xml");
             XElement playbackXml = XElement.Load(xmlPlaybackFilepath);
             IEnumerable<string> chunkNames = playbackXml.Descendants("output").Descendants("name").Select(name => (string)name);
-            List<string> featursNames = chunkNames.ToList();
+            List<string> featursNames = GetUnique(chunkNames).ToList();
             int i = 0;
             _features = featursNames.Select(s => new Feature() { Name = s, Index = i++ }).ToList();
             _numOfCols = _features.Capacity;
+            GetIndexes();
             DetectorState = "Please Load Detector";
             PbValue = 0;
-            //IntresingFeature = _features[0];
         }
 
+        void GetIndexes()
+        {
+            _aileronIndex = _features.Find(f => f.Name == "aileron").Index;
+            _elevatorIndex = _features.Find(f => f.Name == "elevator").Index;
+            _rudderIndex = _features.Find(f => f.Name == "rudder").Index;
+            _throttleIndex = _features.Find(f => f.Name == "throttle").Index;
+            _altitudeIndex = _features.Find(f => f.Name == "altitude-ft").Index;
+            _rollIndex = _features.Find(f => f.Name == "roll-deg").Index;
+            _pitchIndex = _features.Find(f => f.Name == "pitch-deg").Index;
+            _yawIndex = _features.Find(f => f.Name == "side-slip-deg").Index;
+            _airspeedIndex = _features.Find(f => f.Name == "airspeed-kt").Index;
+            _flightDirectionIndex = _features.Find(f => f.Name == "magnetic-compass_indicated-heading-deg").Index;
+
+
+        }
+
+        IEnumerable<String> GetUnique(IEnumerable<String> list)
+        {
+            HashSet<String> itms = new HashSet<String>();
+            foreach (string itm in list)
+            {
+                string itr = itm;
+                int i = 2;
+                while (itms.Contains(itr))
+                {
+                    itr = itr +" "+ i.ToString();
+                    ++i;
+                }
+                itms.Add(itr);
+                yield return itr;
+            }
+        }
 
         public void Connect()
         {
@@ -192,16 +223,16 @@ namespace Flight_Inspection_App
 
         private void UpdateFeaturesValues()
         {
-            Aileron = 100 * _features[0].Values[_currentLineIndex];
-            Elevator = 100 * _features[1].Values[_currentLineIndex];
-            Rudder = _features[2].Values[_currentLineIndex];
-            Throttle = _features[6].Values[_currentLineIndex];
-            Altitude = _features[16].Values[_currentLineIndex];
-            RollDegrees = _features[17].Values[_currentLineIndex];
-            PitchDegrees = _features[18].Values[_currentLineIndex];
-            HeadingDegrees = _features[20].Values[_currentLineIndex];
-            AirSpeed = _features[21].Values[_currentLineIndex];
-            FlightDirection = _features[37].Values[_currentLineIndex];
+            Aileron = 100 * _features[_aileronIndex].Values[_currentLineIndex];
+            Elevator = 100 * _features[_elevatorIndex].Values[_currentLineIndex];
+            Rudder = _features[_rudderIndex].Values[_currentLineIndex];
+            Throttle = _features[_throttleIndex].Values[_currentLineIndex];
+            Altitude = _features[_altitudeIndex].Values[_currentLineIndex];
+            RollDegrees = _features[_rollIndex].Values[_currentLineIndex];
+            PitchDegrees = _features[_pitchIndex].Values[_currentLineIndex];
+            YawDegrees = _features[_yawIndex].Values[_currentLineIndex];
+            AirSpeed = _features[_airspeedIndex].Values[_currentLineIndex];
+            FlightDirection = _features[_flightDirectionIndex].Values[_currentLineIndex];
         }
 
         public void Start()
@@ -508,13 +539,13 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-        double _headingDegrees = 0;
-        public double HeadingDegrees
+        double _yawDegrees = 0;
+        public double YawDegrees
         {
-            get => _headingDegrees;
+            get => _yawDegrees;
             private set
             {
-                _headingDegrees = value;
+                _yawDegrees = value;
                 OnPropertyChanged();
             }
         }
@@ -667,11 +698,11 @@ namespace Flight_Inspection_App
 
         public double XxAxis
         {
-            get => Math.Cos(HeadingDegrees) * Math.Cos(PitchDegrees);
+            get => Math.Cos(YawDegrees) * Math.Cos(PitchDegrees);
         }
         public double YxAxis
         {
-            get => Math.Sin(HeadingDegrees) * Math.Cos(PitchDegrees);
+            get => Math.Sin(YawDegrees) * Math.Cos(PitchDegrees);
         }
         public double ZxAxis
         {
@@ -679,11 +710,11 @@ namespace Flight_Inspection_App
         }
         public double XyAxis
         {
-            get => ((-Math.Cos(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) - (Math.Sin(HeadingDegrees) * Math.Cos(RollDegrees));
+            get => ((-Math.Cos(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) - (Math.Sin(YawDegrees) * Math.Cos(RollDegrees));
         }
         public double YyAxis
         {
-            get => ((-Math.Sin(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) + (Math.Cos(HeadingDegrees) * Math.Cos(RollDegrees));
+            get => ((-Math.Sin(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) + (Math.Cos(YawDegrees) * Math.Cos(RollDegrees));
 
         }
         public double ZyAxis
@@ -692,11 +723,11 @@ namespace Flight_Inspection_App
         }
         public double XzAxis
         {
-            get => ((-Math.Cos(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) + (Math.Sin(HeadingDegrees) * Math.Sin(RollDegrees));
+            get => ((-Math.Cos(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) + (Math.Sin(YawDegrees) * Math.Sin(RollDegrees));
         }
         public double YzAxis
         {
-            get => ((-Math.Sin(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) - (Math.Cos(HeadingDegrees) * Math.Sin(RollDegrees));
+            get => ((-Math.Sin(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) - (Math.Cos(YawDegrees) * Math.Sin(RollDegrees));
 
 
         }

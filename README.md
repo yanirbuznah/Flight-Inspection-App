@@ -34,3 +34,8 @@ After clicking connect, press the "Start now" button and wait for the next scree
 #### Implementing your own dll 
 - Make sure your dll file is inside the Plugin folder.
 - Customize your dll file in a way that the main class there implements the IDetector interface.
+
+### Project Structure
+- Following the MVVM architectural pattern, there's one main View-Model and sub View-Models- one for each user story.
+- The Model is created in the MainWindow, and then passed to the main View-Model's constructor. Later on, the Model is passed to the rest of the sub View-Models.
+- Our MainWindow initialize the main View-Model, and the Simulator screen initialize each user-story on its constructor.

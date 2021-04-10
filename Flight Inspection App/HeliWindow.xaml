@@ -9,7 +9,7 @@
         Title="HeliWindow" Height="450" Width="800">
     <Grid>
         <Viewbox>
-            <Controls:UserControl1/>
+            <Controls:MultiDimensionalModel/>
         </Viewbox>
     </Grid>
 </Window>

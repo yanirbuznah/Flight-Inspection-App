@@ -11,6 +11,7 @@ namespace Flight_Inspection_App.Controls
     {
         public UserControl1()
         {
+
            
             InitializeComponent();
             Create3DViewPort();

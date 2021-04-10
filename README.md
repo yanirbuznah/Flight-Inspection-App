@@ -11,6 +11,11 @@ These instructions will get the flight simulator up and running along with the f
 * WPF
 * C#
 * C++
+
+### Dependencies
+* [OxyPlot](https://oxyplot.readthedocs.io/en/latest/getting-started/hello-wpf-xaml.html)
+* [HelixToolKit](https://www.nuget.org/packages/HelixToolkit.Wpf/)
+* [CsvHelper](https://joshclose.github.io/CsvHelper/)
 ### Installing
 Download the zip for this repository or use git on the termianl. The terminal command is :
 ```
@@ -36,7 +41,9 @@ After clicking connect, press the "Start Now" button and wait for the next scree
 - Customize your dll file in a way that the main class there implements the IDetector interface.
 
 ### Project Structure
+<img src="https://user-images.githubusercontent.com/56928005/114267766-44390180-9a06-11eb-8362-ff63283b49d6.jpeg" width="650" height="300">
+
 - Following the MVVM architectural pattern, there's one main View-Model and sub View-Models, one for each user story.
-  As shown in the UML diagram above, the main View-Model (called "FGVM") implements the IViewModel interface, and the sub View-Models (e.g. "ControlBarVM", "JoyStickVM",..) are inheriting from him (as required in our project instructions).
+  As shown in the UML diagram above, the main View-Model (called `FGVM`) implements the IViewModel interface, and the sub View-Models (such as `ControlBarVM`, `JoyStickVM`,...) are inheriting from him (as required in our project instructions).
 - The Model is created in the MainWindow, and then passed as an argument to the main View-Model's constructor. Later on, the Model is passed to the rest of the sub View-Models.
 - Our MainWindow initializes the main View-Model, and the Simulator screen initializes each sub View-Model in his constructor.

@@ -306,17 +306,13 @@ namespace Flight_Inspection_App
             }
 
         }
-        public List<KeyValuePair<int, string>> AnomaliesDescriptions
+        public List<KeyValuePair<int,string>> AnomaliesDescriptions
         {
             get
             {
-                //if (Detector == null)
-                //return new List<KeyValuePair<string, string>>();
-                //return (List<KeyValuePair<string, string>>)GetAnomaliesDescreption.Invoke(Detector, new object[] { });
-                List<KeyValuePair<int, string>> l = new List<KeyValuePair<int, string>>();
-                l.Add(new KeyValuePair<int, string>(1000, "val1"));
-                l.Add(new KeyValuePair<int, string>(1500, "val2"));
-                return l;
+                if (Detector == null)
+                    return new List<KeyValuePair<int, string>>();
+                return (List < KeyValuePair<int, string> >)GetAnomaliesDescreption.Invoke(Detector, new object[] { });
             }
 
         }

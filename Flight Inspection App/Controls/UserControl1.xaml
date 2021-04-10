@@ -24,7 +24,7 @@
                                               M31="{Binding VM_ZxAxis}" M32="{Binding VM_ZyAxis}" M33="{Binding VM_ZzAxis}"/>
                                 </MatrixTransform3D.Matrix>
 
-                            </MatrixTransform3D>
+                            </MatrixTransform3D>    
                             -->
 
 

@@ -36,8 +36,6 @@ namespace Flight_Inspection_App
                     OnIntrestingPropertyChanged();
                     
                     OnPropertyChanged();
-                    
-
                 }
             }
         }

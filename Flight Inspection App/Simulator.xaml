@@ -16,10 +16,13 @@
             <Controls:FilesComponent x:Name="fileselector" Margin="-450,10,750,250" Width="192" Height="421"/>
         </Viewbox>
         <Viewbox>
-            <Controls:FeaturesPanel x:Name="features" Margin="-215,20,400,120" Width="169" Height="413"/>
+            <Controls:FeaturesPanel x:Name="features" Margin="75,-20,400,120" Width="123" Height="76"/>
         </Viewbox>
         <Viewbox>
-            <Controls:ControlBar x:Name="controlbar" Margin="0,345,0,-200" />
+            <Controls:AnomaliesList x:Name="anomalies" Margin="0,230,450,120" Width="173" Height="76"/>
+        </Viewbox>
+        <Viewbox>
+            <Controls:ControlBar x:Name="controlbar" Margin="-3,555,0,0"/>
         </Viewbox>
         <Viewbox Margin="-46,0,0,0">
             <Controls:FeaturesGraphs x:Name="featuregraphs" Margin="299,10,310,43" Width="474" Height="478"/>
@@ -28,7 +31,7 @@
             <Controls:FlightInstruments x:Name="flightinstruments"  Width="260" Height="215"/>
         </Viewbox>
         <Viewbox>
-            <Controls:Joystick x:Name="joystick" Height="925" Width="990" Margin="1550,-300,-250,450"/>
+            <Controls:Joystick x:Name="joystick" Height="919" Width="1311" Margin="2000,-500,-450,450"/>
         </Viewbox>
         <Viewbox>
             <Button Content="3D Model" Click="HeliWindow" Margin="-85,160,400,90" FontWeight="Bold" FontSize="14" Height="24" Width="70" Background="#54E0741A">

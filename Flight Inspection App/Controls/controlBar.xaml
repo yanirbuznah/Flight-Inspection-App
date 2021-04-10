@@ -32,6 +32,6 @@
                 </Button>
             </ToolBar>
         </DockPanel>
-        
+
     </Grid>
 </UserControl>

@@ -30,7 +30,7 @@ namespace Flight_Inspection_App
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
-        MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomalies;
+        MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomaliesPoints, GetAnomaliesDescriptions;
         object Detector;
 
 
@@ -43,7 +43,7 @@ namespace Flight_Inspection_App
             IEnumerable<string> chunkNames = playbackXml.Descendants("output").Descendants("name").Select(name => (string)name);
             List<string> featursNames = chunkNames.ToList();
             int i = 0;
-            _features = featursNames.Select(s => new Feature() { Name = s,Index = i++ }).ToList();
+            _features = featursNames.Select(s => new Feature() { Name = s, Index = i++ }).ToList();
             _numOfCols = _features.Capacity;
             DetectorState = "Please Load Detector";
             PbValue = 0;
@@ -111,8 +111,8 @@ namespace Flight_Inspection_App
                         Detect = myType.GetMethod("Detect");
                         LearnNormal = myType.GetMethod("LearnNormal");
                         GetAnnotation = myType.GetMethod("GetAnnotation");
-                        GetAnomalies = myType.GetMethod("GetAnomalies");
-
+                        GetAnomaliesPoints = myType.GetMethod("GetAnomaliesPoints");
+                        GetAnomaliesDescriptions = myType.GetMethod("GetAnomaliesDescriptions");
 
                         // Execute the method.
 
@@ -126,6 +126,7 @@ namespace Flight_Inspection_App
                             DetectorState = "Detecting..";
                             PbValue = 70;
                             Detect.Invoke(Detector, new object[] { _csvFile.Key });
+                            OnPropertyChanged("AnomaliesDescriptions");
                             PbValue = 100;
                             DetectorState = "Finish";
                         }
@@ -137,7 +138,7 @@ namespace Flight_Inspection_App
                     }
 
                 }).Start();
-                   
+
 
 
                 OnPropertyChanged();
@@ -160,10 +161,10 @@ namespace Flight_Inspection_App
                     if (i != j)
                     {
                         double newCorrlation = Math.Abs(
-                                AnomalyDetectionUtil.Pearson(_features[i].Values, _features[j].Values,NumOfRows ));
+                                AnomalyDetectionUtil.Pearson(_features[i].Values, _features[j].Values, NumOfRows));
                         if (corrlation <= newCorrlation)
                         {
-                             corrlation = newCorrlation;
+                            corrlation = newCorrlation;
                             _features[i].MostCorrelativeFeature = _features[j];
                         }
                     }
@@ -185,7 +186,7 @@ namespace Flight_Inspection_App
                 }
             }
             UpdateCorrelationFeatures();
-            
+
         }
 
 
@@ -213,7 +214,7 @@ namespace Flight_Inspection_App
             CalcFeaturesValues(arrCsv);
 
 
-           new Thread(() =>
+            new Thread(() =>
             {
                 _isStopped = false;
                 string line;
@@ -221,22 +222,22 @@ namespace Flight_Inspection_App
                 for (; CurrentLineIndex < arrCsv.Length && !_isStopped; ++CurrentLineIndex)
                 {
 
-                        UpdateFeaturesValues();
-                        line = arrCsv[_currentLineIndex] +"\r\n";
-                        CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
-                        wh.WaitOne(Timeout.Infinite);
-                        Console.WriteLine(line);
-                        if (_telnetClient.IsConnected)
-                        {
-                            _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
-                            _telnetClient.GetNs().Flush();
-                        }
-                        OnPropertyChanged("FeaturePoints");
-                        OnPropertyChanged("MostCorreltiveFeaturePoints");
-                        OnPropertyChanged("lastCorrelationPoints");
-
-                         Thread.Sleep((int)_sleepTime);
+                    UpdateFeaturesValues();
+                    line = arrCsv[_currentLineIndex] + "\r\n";
+                    CurrentFlightTime = TimeSpan.FromSeconds(((arrCsv.Length - CurrentLineIndex) / 10)).ToString(@"hh\:mm\:ss");
+                    wh.WaitOne(Timeout.Infinite);
+                    Console.WriteLine(line);
+                    if (_telnetClient.IsConnected)
+                    {
+                        _telnetClient.GetNs().Write(System.Text.Encoding.ASCII.GetBytes(line));
+                        _telnetClient.GetNs().Flush();
                     }
+                    OnPropertyChanged("FeaturePoints");
+                    OnPropertyChanged("MostCorreltiveFeaturePoints");
+                    OnPropertyChanged("lastCorrelationPoints");
+
+                    Thread.Sleep((int)_sleepTime);
+                }
 
             }).Start();
 
@@ -283,7 +284,7 @@ namespace Flight_Inspection_App
             if (newSpeed > 0)
                 VideoSpeed = newSpeed.ToString("F");
         }
-        
+
         public string FeatureTitle
         {
             get
@@ -301,11 +302,20 @@ namespace Flight_Inspection_App
             {
                 if (IntresingFeature == null || Detector == null)
                     return new List<DataPoint>();
-                return (List<DataPoint>)GetAnomalies.Invoke(Detector, new object[] { IntresingFeature.Index });
+                return (List<DataPoint>)GetAnomaliesPoints.Invoke(Detector, new object[] { IntresingFeature.Index });
             }
 
         }
+        public List<KeyValuePair<int,string>> AnomaliesDescriptions
+        {
+            get
+            {
+                if (Detector == null)
+                    return new List<KeyValuePair<int, string>>();
+                return  (List < KeyValuePair<int, string> >)GetAnomaliesDescriptions.Invoke(Detector, new object[] { });
+            }
 
+        }
 
         public Annotation Annotation
         {
@@ -382,7 +392,7 @@ namespace Flight_Inspection_App
         {
             get
             {
-                if (IntresingFeature== null )
+                if (IntresingFeature == null)
                     return 0;
                 return IntresingFeature.Slope;
 
@@ -392,7 +402,7 @@ namespace Flight_Inspection_App
         {
             get
             {
-                if (IntresingFeature == null )
+                if (IntresingFeature == null)
                     return 0;
                 return IntresingFeature.Intercept;
 
@@ -423,7 +433,7 @@ namespace Flight_Inspection_App
             {
                 if (IntresingFeature == null || IntresingFeature.CorrelationPoints == null)
                     return new List<DataPoint>();
-                return new List<DataPoint>(IntresingFeature.CorrelationPoints.Skip(CurrentLineIndex-300).Take(CurrentLineIndex));
+                return new List<DataPoint>(IntresingFeature.CorrelationPoints.Skip(CurrentLineIndex - 300).Take(CurrentLineIndex));
             }
         }
 
@@ -558,7 +568,7 @@ namespace Flight_Inspection_App
                 OnPropertyChanged();
             }
         }
-       double _rudder = 0;
+        double _rudder = 0;
         public double Rudder
         {
             get => _rudder;
@@ -637,7 +647,7 @@ namespace Flight_Inspection_App
                     _detectorState = value;
                     OnPropertyChanged();
                 }
-                    
+
             }
         }
         private int _pbValue;
@@ -645,19 +655,19 @@ namespace Flight_Inspection_App
         {
             get => _pbValue;
             private set
-            { 
-            if(_pbValue != value)
+            {
+                if (_pbValue != value)
                 {
                     _pbValue = value;
                     OnPropertyChanged();
                 }
-             } 
+            }
         }
 
 
         public double XxAxis
         {
-            get => Math.Cos(HeadingDegrees)* Math.Cos(PitchDegrees);
+            get => Math.Cos(HeadingDegrees) * Math.Cos(PitchDegrees);
         }
         public double YxAxis
         {
@@ -670,7 +680,7 @@ namespace Flight_Inspection_App
         public double XyAxis
         {
             get => ((-Math.Cos(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) - (Math.Sin(HeadingDegrees) * Math.Cos(RollDegrees));
-        }  
+        }
         public double YyAxis
         {
             get => ((-Math.Sin(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) + (Math.Cos(HeadingDegrees) * Math.Cos(RollDegrees));
@@ -682,7 +692,7 @@ namespace Flight_Inspection_App
         }
         public double XzAxis
         {
-            get => ((-Math.Cos(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) +(Math.Sin(HeadingDegrees) * Math.Sin(RollDegrees));
+            get => ((-Math.Cos(HeadingDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) + (Math.Sin(HeadingDegrees) * Math.Sin(RollDegrees));
         }
         public double YzAxis
         {
@@ -723,6 +733,20 @@ namespace Flight_Inspection_App
         {
             wh.Set();
             _isStopped = true;
+        }
+
+        private KeyValuePair<int, string> _anomaliesDescription;
+
+        public KeyValuePair<int, string> AnomaliesDescription
+        {
+            get => _anomaliesDescription;
+
+            set
+            {
+                _anomaliesDescription = value;
+                _currentLineIndex = value.Key;
+                OnPropertyChanged();
+            }
         }
     }
 }

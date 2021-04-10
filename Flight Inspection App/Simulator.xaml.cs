@@ -19,6 +19,7 @@ namespace Flight_Inspection_App
         FeaturesGraphsVM _fegvm;
         FlightInstrumentsVM _fivm;
         JoystickVM _jvm;
+        AnomaliesListVM alvm;
         Annotation _fixedAnnotation;
         public Simulator(FGVM vm)
         {
@@ -31,6 +32,7 @@ namespace Flight_Inspection_App
             _fegvm = new FeaturesGraphsVM((_vm as FGVM).getModel());
             _fivm = new FlightInstrumentsVM((_vm as FGVM).getModel());
             _jvm = new JoystickVM((_vm as FGVM).getModel());
+            alvm = new AnomaliesListVM((_vm as FGVM).getModel());
             controlbar.DataContext = _cbvm;
             fileselector.DataContext = _fcvm;
             features.DataContext = _fpvm;
@@ -38,10 +40,8 @@ namespace Flight_Inspection_App
             featuregraphs.DataContext = _fegvm;
             flightinstruments.DataContext = _fivm;
             joystick.DataContext = _jvm;
+            anomalies.DataContext = alvm;
             _fixedAnnotation = featuregraphs.MyPlot.Annotations[0];
-            
-
-
         }
         
         public void ChangeAnnoatation(object sender, PropertyChangedEventArgs e)

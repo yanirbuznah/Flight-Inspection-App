@@ -8,21 +8,29 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="1200"
       Title="Simulator">
-    <Grid>
+    <Grid Margin="-18,0,0,0" HorizontalAlignment="Center">
         <Grid.Background>
             <ImageBrush ImageSource="/Images/backgroundImage.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Viewbox>
-            <Controls:FilesComponent x:Name="fileselector" Margin="-450,10,750,250" Width="192" Height="421"/>
+        <Viewbox Margin="15,125,-45,-168" RenderTransformOrigin="0.5,0.5">
+            <Viewbox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.065"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Viewbox.RenderTransform>
+            <Controls:FilesComponent x:Name="fileselector" Margin="-440,10,750,250" Width="192" Height="412"/>
         </Viewbox>
         <Viewbox>
-            <Controls:FeaturesPanel x:Name="features" Margin="75,-20,400,120" Width="123" Height="76"/>
+            <Controls:FeaturesPanel x:Name="features" Margin="0,50,900,300" Height="460" Width="264"/>
         </Viewbox>
         <Viewbox>
-            <Controls:AnomaliesList x:Name="anomalies" Margin="0,230,450,120" Width="173" Height="76"/>
+            <Controls:AnomaliesList x:Name="anomalies" Margin="-32,800,1250,120" Height="236" Width="370"/>
         </Viewbox>
-        <Viewbox>
-            <Controls:ControlBar x:Name="controlbar" Margin="-3,555,0,0"/>
+        <Viewbox Margin="-43,0,-45,0">
+            <Controls:ControlBar x:Name="controlbar" Margin="-3,555,0,0" Width="1200" HorizontalAlignment="Center"/>
         </Viewbox>
         <Viewbox Margin="-46,0,0,0">
             <Controls:FeaturesGraphs x:Name="featuregraphs" Margin="299,10,310,43" Width="474" Height="478"/>
@@ -30,11 +38,11 @@
         <Viewbox Margin="845,184,0,-12">
             <Controls:FlightInstruments x:Name="flightinstruments"  Width="260" Height="215"/>
         </Viewbox>
-        <Viewbox>
-            <Controls:Joystick x:Name="joystick" Height="919" Width="1311" Margin="2000,-500,-450,450"/>
+        <Viewbox OpacityMask="Black" Margin="25,-48,96,-22">
+            <Controls:Joystick x:Name="joystick" Height="812" Width="1143" Margin="1155,-500,-450,55"/>
         </Viewbox>
-        <Viewbox>
-            <Button Content="3D Model" Click="HeliWindow" Margin="-85,160,400,90" FontWeight="Bold" FontSize="14" Height="24" Width="70" Background="#54E0741A">
+        <Viewbox Margin="900,225,-710,-90">
+            <Button Content="3D Model" Click="HeliWindow" Margin="-85,160,400,90" FontWeight="Bold" FontSize="14" Height="24" Width="205" Background="#BFFFE7CB">
                 <Button.BorderBrush>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black"/>

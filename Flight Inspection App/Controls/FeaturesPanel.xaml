@@ -6,11 +6,13 @@
              xmlns:local="clr-namespace:Flight_Inspection_App.Controls"
              mc:Ignorable="d" Width="102" Height="147">
     <Grid Margin="0,0,10,0">
-        <Label Content="Features List" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF231E0D" Height="27" Margin="22,-32,11,0" VerticalAlignment="Top">
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
+        <Label Content="Features List" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF231E0D" Height="30" Margin="-2,-35,-13,0" VerticalAlignment="Top" FontSize="16" Width="105">
             <Label.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#BFFFE7CB" Offset="1"/>
                 </LinearGradientBrush>
             </Label.Background>
         </Label>
@@ -18,7 +20,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
-                        <TextBlock Text="{Binding Name}" FontFamily="Calibri" />
+                        <TextBlock FontWeight="Bold" FontSize="20" Text="{Binding Name}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

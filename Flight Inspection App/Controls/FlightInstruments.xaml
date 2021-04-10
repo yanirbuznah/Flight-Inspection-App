@@ -28,8 +28,8 @@
         <Label x:Name="AirSpeedValue" Content="{Binding VM_AirSpeed}" Grid.Row="2" Grid.Column="3" Foreground="Black"  Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
         <Label x:Name="FlightDirection" Content="Flight Direction: "   Grid.Row="3" Grid.Column="1" Foreground="Black" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Background="#BFFFE7CB"/>
         <Label x:Name="FlightDirectionValue" Content="{Binding VM_FlightDirection}"  Grid.Row="3" Grid.Column="3" Foreground="Black" Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
-        <Label x:Name="HeadingDegrees" Content="Heading Degrees: " Grid.Row="4" Grid.Column="1"  Foreground="Black" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Background="#BFFFE7CB"/>
-        <Label x:Name="HeadingDegreesValue" Content="{Binding VM_HeadingDegrees}" Grid.Row="4" Grid.Column="3"  Foreground="Black" Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="YawDegrees" Content="Yaw Degrees: " Grid.Row="4" Grid.Column="1"  Foreground="Black" FontSize="14" FontFamily="Calibri" FontWeight="Bold" Background="#BFFFE7CB"/>
+        <Label x:Name="YawDegreesValue" Content="{Binding VM_YawDegrees}" Grid.Row="4" Grid.Column="3"  Foreground="Black" Width="100" FontWeight="Bold" Background="#BFFFE7CB"/>
         <Label x:Name="RollDegrees" Content="Roll Degrees: " Grid.Row="5" Grid.Column="1"  Foreground="Black" FontFamily="Calibri" FontSize="14" FontWeight="Bold" Background="#BFFFE7CB"/>
         <Label x:Name="RollDegreesValue" Content="{Binding VM_RollDegrees}" Grid.Row="5" Grid.Column="3" Foreground="Black" Width="100"  FontWeight="Bold" Background="#BFFFE7CB"/>
         <Label x:Name="PitchDegrees" Content="Pitch Degrees: " Grid.Row="6" Grid.Column="1" Foreground="Black" FontFamily="Calibri" FontWeight="Bold" FontSize="14" Background="#BFFFE7CB"/>

@@ -27,9 +27,9 @@ namespace Flight_Inspection_App
             get { return _fgm.FlightDirection; }
         }
 
-        public double VM_HeadingDegrees
+        public double VM_YawDegrees
         {
-            get { return _fgm.HeadingDegrees; }
+            get { return _fgm.YawDegrees; }
         }
         public double VM_RollDegrees
         {

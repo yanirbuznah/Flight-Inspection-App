@@ -8,7 +8,7 @@
              d:DesignHeight="600" d:DesignWidth="1200">
 
     <Grid>
-        <DockPanel>
+        <DockPanel Margin="-10,-23,-15,0">
             <ToolBar Grid.Row="1" Height="40" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
                 <Separator />
                 <Button Command="{Binding PlayTheFlight}" >

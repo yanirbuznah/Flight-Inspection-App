@@ -7,19 +7,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="170">
     <Grid>
-        <Label Content="Anomalies List" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF231E0D" Height="35" Margin="33,-40,33,0" VerticalAlignment="Top" FontSize="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Anomalies List" FontWeight="Bold" BorderBrush="{x:Null}" Foreground="#FF231E0D" Height="44" Margin="-5,-48,-5,0" VerticalAlignment="Top" FontSize="24" Width="180">
             <Label.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#BFFFE7CB" Offset="1"/>
                 </LinearGradientBrush>
             </Label.Background>
         </Label>
-        <ListBox Name="lbAnomalies" HorizontalContentAlignment="Stretch" ItemsSource="{Binding VM_AnomaliesDescriptions}" SelectedItem="{Binding VM_AnomalyDescription}" Foreground="Black" Background="#BFFFE7CB" >
+        <ListBox Name="lbAnomalies" HorizontalContentAlignment="Stretch" ItemsSource="{Binding VM_AnomaliesDescriptions}" SelectedItem="{Binding VM_AnomalyDescription}" Foreground="Black" Background="#BFFFE7CB" Grid.RowSpan="2" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
-                        <TextBlock Text="{Binding Value}" />
+                        <TextBlock FontWeight="Bold" FontSize="20" Text="{Binding Value}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

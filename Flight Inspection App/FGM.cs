@@ -30,7 +30,7 @@ namespace Flight_Inspection_App
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
-        MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomaliesPoints, GetAnomaliesDescreption;
+        MethodInfo Detect, LearnNormal, GetAnnotation, GetAnomaliesPoints, GetAnomaliesDescriptions;
         object Detector;
 
 
@@ -112,7 +112,7 @@ namespace Flight_Inspection_App
                         LearnNormal = myType.GetMethod("LearnNormal");
                         GetAnnotation = myType.GetMethod("GetAnnotation");
                         GetAnomaliesPoints = myType.GetMethod("GetAnomaliesPoints");
-                        GetAnomaliesDescreption = myType.GetMethod("GetAnomaliesDescreption");
+                        GetAnomaliesDescriptions = myType.GetMethod("GetAnomaliesDescriptions");
 
                         // Execute the method.
 
@@ -312,7 +312,7 @@ namespace Flight_Inspection_App
             {
                 if (Detector == null)
                     return new List<KeyValuePair<int, string>>();
-                return (List < KeyValuePair<int, string> >)GetAnomaliesDescreption.Invoke(Detector, new object[] { });
+                return  (List < KeyValuePair<int, string> >)GetAnomaliesDescriptions.Invoke(Detector, new object[] { });
             }
 
         }

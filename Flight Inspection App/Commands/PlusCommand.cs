@@ -6,7 +6,7 @@ namespace Flight_Inspection_App.Commands
     public class PlusCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private Action _execute;
+        private readonly Action _execute;
         public PlusCommand(Action execute)
         {
             _execute = execute;

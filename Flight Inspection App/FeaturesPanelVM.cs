@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Flight_Inspection_App
 {
@@ -34,7 +30,7 @@ namespace Flight_Inspection_App
                 {
                     _fgm.IntresingFeature = value;
                     OnIntrestingPropertyChanged();
-                    
+
                     OnPropertyChanged();
                 }
             }

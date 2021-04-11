@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Flight_Inspection_App.Commands;
 
 namespace Flight_Inspection_App
@@ -29,7 +24,9 @@ namespace Flight_Inspection_App
             get
             {
                 if (_fgm.FlightTime == null)
+                {
                     return 1;
+                }
 
                 return double.Parse(_fgm.FlightTime);
             }

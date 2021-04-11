@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Windows.Controls;
 using System.Xml.Linq;
 
 
@@ -26,7 +25,7 @@ namespace Flight_Inspection_App
         bool _isStopped = false;
         private int _currentLineIndex;
         private string _currentFlightTime, _flightTime;
-        private int _numOfCols = 0;
+        private readonly int _numOfCols = 0;
         private readonly ManualResetEvent wh = new(true);
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly Client _telnetClient;
@@ -313,7 +312,9 @@ namespace Flight_Inspection_App
         {
             float newSpeed = _videoSpeed - (float)0.1;
             if (newSpeed > 0)
+            {
                 VideoSpeed = newSpeed.ToString("F");
+            }
         }
 
         public string FeatureTitle
@@ -321,7 +322,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature != null)
+                {
                     return IntresingFeature.Name;
+                }
+
                 return "";
             }
 
@@ -332,7 +336,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || Detector == null)
+                {
                     return new List<DataPoint>();
+                }
+
                 return (List<DataPoint>)GetAnomaliesPoints.Invoke(Detector, new object[] { IntresingFeature.Index });
             }
 
@@ -342,7 +349,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (Detector == null)
+                {
                     return new List<KeyValuePair<int, string>>();
+                }
+
                 return (List<KeyValuePair<int, string>>)GetAnomaliesDescriptions.Invoke(Detector, new object[] { });
             }
 
@@ -353,7 +363,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || Detector == null)
+                {
                     return null;
+                }
+
                 return (Annotation)GetAnnotation.Invoke(Detector, new object[] { IntresingFeature.Index });
             }
 
@@ -364,7 +377,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null)
+                {
                     return new List<DataPoint>();
+                }
+
                 return new List<DataPoint>(IntresingFeature.Points.Take(CurrentLineIndex));
             }
 
@@ -374,7 +390,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
+                {
                     return "";
+                }
+
                 return IntresingFeature.MostCorrelativeFeature.Name;
             }
 
@@ -386,7 +405,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
+                {
                     return new List<DataPoint>();
+                }
+
                 return new List<DataPoint>(IntresingFeature.MostCorrelativeFeature.Points.Take(CurrentLineIndex));
             }
 
@@ -396,7 +418,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
+                {
                     return 0;
+                }
+
                 return IntresingFeature.MostCorrelativeFeature.MaxValue;
             }
         }
@@ -406,7 +431,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || IntresingFeature.MostCorrelativeFeature == null)
+                {
                     return 0;
+                }
+
                 return IntresingFeature.MostCorrelativeFeature.MinValue;
             }
         }
@@ -415,7 +443,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature != null)
+                {
                     return IntresingFeature.MinValue;
+                }
+
                 return 0;
             }
         }
@@ -424,7 +455,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null)
+                {
                     return 0;
+                }
+
                 return IntresingFeature.Slope;
 
             }
@@ -434,7 +468,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null)
+                {
                     return 0;
+                }
+
                 return IntresingFeature.Intercept;
 
             }
@@ -444,7 +481,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature != null)
+                {
                     return IntresingFeature.MaxValue;
+                }
+
                 return 0;
             }
         }
@@ -453,7 +493,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || IntresingFeature.CorrelationPoints == null)
+                {
                     return new List<DataPoint>();
+                }
+
                 return new List<DataPoint>(IntresingFeature.CorrelationPoints);
             }
         }
@@ -463,7 +506,10 @@ namespace Flight_Inspection_App
             get
             {
                 if (IntresingFeature == null || IntresingFeature.CorrelationPoints == null)
+                {
                     return new List<DataPoint>();
+                }
+
                 return new List<DataPoint>(IntresingFeature.CorrelationPoints.Skip(CurrentLineIndex - 300).Take(CurrentLineIndex));
             }
         }

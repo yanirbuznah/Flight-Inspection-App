@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using Flight_Inspection_App.Commands;
-using OxyPlot;
+﻿using OxyPlot;
 using OxyPlot.Wpf;
+using System.Collections.Generic;
 
 namespace Flight_Inspection_App
 {
@@ -18,8 +12,8 @@ namespace Flight_Inspection_App
 
         public FeaturesGraphsVM(FGM m) : base(m)
         {
-           
-            
+
+
         }
 
         public string VM_DetectorState
@@ -117,6 +111,6 @@ namespace Flight_Inspection_App
                 return _fgm.MostCorreltiveFeaturePoints;
             }
         }
-        
+
     }
 }

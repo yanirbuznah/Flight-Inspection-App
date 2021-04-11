@@ -1,12 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using OxyPlot.Wpf;
-using OxyPlot;
+﻿using System.Windows.Controls;
 
 namespace Flight_Inspection_App.Controls
 {
@@ -19,9 +11,11 @@ namespace Flight_Inspection_App.Controls
 
         public FeaturesGraphs()
         {
-            
+
 
             InitializeComponent();
+
+
 
 
 

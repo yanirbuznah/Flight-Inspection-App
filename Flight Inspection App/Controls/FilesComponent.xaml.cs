@@ -19,11 +19,7 @@ namespace Flight_Inspection_App.Controls
         }
 
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
-        
         private void btnOpenCsvFiles_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -33,7 +29,9 @@ namespace Flight_Inspection_App.Controls
             if (openFileDialog.ShowDialog() == true)
             {
                 foreach (string filePath in openFileDialog.FileNames)
+                {
                     lbCsvFiles.Items.Add(new KeyValuePair<string, string>(filePath, Path.GetFileName(filePath)));
+                }
             }
         }
         private void btnOpenDllFiles_Click(object sender, RoutedEventArgs e)
@@ -45,13 +43,11 @@ namespace Flight_Inspection_App.Controls
             if (openFileDialog.ShowDialog() == true)
             {
                 foreach (string filePath in openFileDialog.FileNames)
+                {
                     lbDllFiles.Items.Add(new KeyValuePair<string, string>(filePath, Path.GetFileName(filePath)));
+                }
             }
         }
 
-        private void lbFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

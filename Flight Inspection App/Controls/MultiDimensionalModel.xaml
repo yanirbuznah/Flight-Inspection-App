@@ -16,25 +16,38 @@
 
                     <ModelVisual3D.Transform>
                         <Transform3DGroup>
-            <RotateTransform3D>
-                <RotateTransform3D.Rotation>
+                            <!--
+                            
+                                                        <MatrixTransform3D>
+                                <MatrixTransform3D.Matrix>
+                                    <Matrix3D  M11="{Binding VM_XxAxis}" M12="{Binding VM_XyAxis}" M13="{Binding VM_XzAxis}" M21="{Binding VM_YxAxis}" M22="{Binding VM_YyAxis}" M23="{Binding VM_YzAxis}"
+                                              M31="{Binding VM_ZxAxis}" M32="{Binding VM_ZyAxis}" M33="{Binding VM_ZzAxis}"/>
+                                </MatrixTransform3D.Matrix>
+
+                            </MatrixTransform3D>    
+                            -->
+
+
+
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
                                     <AxisAngleRotation3D Axis="1,0,0" Angle="{Binding  VM_RollDegrees}"/>
-                </RotateTransform3D.Rotation>
-            </RotateTransform3D>
-            <RotateTransform3D>
-                <RotateTransform3D.Rotation>
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
                                     <AxisAngleRotation3D Axis="0,1,0" Angle="{Binding VM_PitchDegrees}"/>
-                </RotateTransform3D.Rotation>
-            </RotateTransform3D>
-            <RotateTransform3D>
-                <RotateTransform3D.Rotation>
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
                                     <AxisAngleRotation3D Axis="0,0,1" Angle="{Binding VM_HeadingDegrees}"/>
-                </RotateTransform3D.Rotation>
-            </RotateTransform3D>
-        </Transform3DGroup>
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                        </Transform3DGroup>
                     </ModelVisual3D.Transform>
                 </ModelVisual3D>
-                    <!-- You can also add elements here in the xaml -->
+                <!-- You can also add elements here in the xaml -->
                 <!--<HelixToolkit:GridLinesVisual3D Width="8" Length="8" MinorDistance="1" MajorDistance="1" Thickness="0.01"/>-->
             </HelixToolkit:HelixViewport3D>
         </Grid>

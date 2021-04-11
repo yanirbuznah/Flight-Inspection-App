@@ -16,8 +16,6 @@
             <RowDefinition Height="13*"/>
             <RowDefinition Height="12*"/>
         </Grid.RowDefinitions>
-        <!--<oxy:PlotView  Width="122" Height="122" Model="{Binding VM_Model}" Name="feature1Graph" Background="White"
-            VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"/>-->
         <oxy:Plot Title="{Binding VM_FeatureTitle}" TitleFontSize="10"  Width="190" Height="136" Name="feature1Graph" Background="#BFFFE7CB" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,10,0,0" Grid.Row="1">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_FeaturePoints}"/>

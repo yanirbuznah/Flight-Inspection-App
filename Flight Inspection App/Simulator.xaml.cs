@@ -1,5 +1,4 @@
 ﻿using OxyPlot.Wpf;
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,27 +11,27 @@ namespace Flight_Inspection_App
     /// </summary>
     public partial class Simulator : Page
     {
-        FGVM _vm;
-        ControlBarVM _cbvm;
-        FileComponentVM _fcvm;
-        FeaturesPanelVM _fpvm;
-        FeaturesGraphsVM _fegvm;
-        FlightInstrumentsVM _fivm;
-        JoystickVM _jvm;
-        AnomaliesListVM alvm;
-        Annotation _fixedAnnotation;
+        readonly FGVM _vm;
+        readonly ControlBarVM _cbvm;
+        readonly FileComponentVM _fcvm;
+        readonly FeaturesPanelVM _fpvm;
+        readonly FeaturesGraphsVM _fegvm;
+        readonly FlightInstrumentsVM _fivm;
+        readonly JoystickVM _jvm;
+        readonly AnomaliesListVM alvm;
+        readonly Annotation _fixedAnnotation;
         public Simulator(FGVM vm)
         {
             InitializeComponent();
             _vm = vm;
             DataContext = vm;
-            _cbvm = new ControlBarVM((_vm as FGVM).getModel());
-            _fcvm = new FileComponentVM((_vm as FGVM).getModel());
-            _fpvm = new FeaturesPanelVM((_vm as FGVM).getModel());
-            _fegvm = new FeaturesGraphsVM((_vm as FGVM).getModel());
-            _fivm = new FlightInstrumentsVM((_vm as FGVM).getModel());
-            _jvm = new JoystickVM((_vm as FGVM).getModel());
-            alvm = new AnomaliesListVM((_vm as FGVM).getModel());
+            _cbvm = new ControlBarVM(_vm.getModel());
+            _fcvm = new FileComponentVM(_vm.getModel());
+            _fpvm = new FeaturesPanelVM(_vm.getModel());
+            _fegvm = new FeaturesGraphsVM(_vm.getModel());
+            _fivm = new FlightInstrumentsVM(_vm.getModel());
+            _jvm = new JoystickVM(_vm.getModel());
+            alvm = new AnomaliesListVM(_vm.getModel());
             controlbar.DataContext = _cbvm;
             fileselector.DataContext = _fcvm;
             features.DataContext = _fpvm;
@@ -43,24 +42,26 @@ namespace Flight_Inspection_App
             anomalies.DataContext = alvm;
             _fixedAnnotation = featuregraphs.MyPlot.Annotations[0];
         }
-        
+
         public void ChangeAnnoatation(object sender, PropertyChangedEventArgs e)
         {
 
-            if(_fegvm.VM_Annotation!= null)
+            featuregraphs.MyPlot.ResetAllAxes();
+            if (_fegvm.VM_Annotation != null)
             {
+
                 featuregraphs.MyPlot.Annotations.Clear();
                 featuregraphs.MyPlot.Annotations.Add(_fixedAnnotation);
                 featuregraphs.MyPlot.Annotations.Add(_fegvm.VM_Annotation);
             }
-            
+
         }
-     
+
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void Graph_Loaded(object sender, RoutedEventArgs e)

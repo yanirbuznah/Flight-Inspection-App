@@ -7,7 +7,7 @@ namespace Flight_Inspection_App
     /// </summary>
     public partial class HeliWindow : Window
     {
-        IViewModel _vm;
+        readonly IViewModel _vm;
         public HeliWindow(IViewModel vm)
         {
             InitializeComponent();

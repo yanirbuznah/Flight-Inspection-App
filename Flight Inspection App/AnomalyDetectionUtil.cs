@@ -1,9 +1,7 @@
 ﻿using OxyPlot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 
 namespace Flight_Inspection_App
@@ -13,7 +11,11 @@ namespace Flight_Inspection_App
         static double Avg(IList<double> x, int size)
         {
             double sum = 0;
-            for (int i = 0; i < size; sum += x[i], i++) ;
+            for (int i = 0; i < size; sum += x[i], i++)
+            {
+                ;
+            }
+
             return sum / size;
         }
 
@@ -47,8 +49,12 @@ namespace Flight_Inspection_App
         public static double Pearson(IList<double> x, IList<double> y, int size)
         {
             double s = Math.Sqrt(Var(x, size)) * Math.Sqrt(Var(y, size));
-            if (s == 0) return 0;
-            return Cov(x, y, size) /s;
+            if (s == 0)
+            {
+                return 0;
+            }
+
+            return Cov(x, y, size) / s;
         }
 
         // performs a linear regression and returns the line equation
@@ -69,12 +75,12 @@ namespace Flight_Inspection_App
 
     public class Line
     {
-       public  double _a, _b;
+        public double _a, _b;
         public Line()
         {
             _a = 0;
             _b = 0;
-            
+
         }
         public Line(double a, double b)
         {

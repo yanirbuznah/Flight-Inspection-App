@@ -11,7 +11,7 @@ namespace Flight_Inspection_App
     public partial class HomePage : Page, INotifyPropertyChanged
     {
         Simulator s;
-        FGVM _vm;
+        readonly FGVM _vm;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public HomePage(FGVM vm)

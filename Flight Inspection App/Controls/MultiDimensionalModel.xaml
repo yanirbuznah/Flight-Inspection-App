@@ -41,7 +41,7 @@
                             </RotateTransform3D>
                             <RotateTransform3D>
                                 <RotateTransform3D.Rotation>
-                                    <AxisAngleRotation3D Axis="0,0,1" Angle="{Binding VM_HeadingDegrees}"/>
+                                    <AxisAngleRotation3D Axis="0,0,1" Angle="{Binding VM_YawDegrees}"/>
                                 </RotateTransform3D.Rotation>
                             </RotateTransform3D>
                         </Transform3DGroup>

@@ -18,20 +18,22 @@ namespace Flight_Inspection_App
         readonly FeaturesGraphsVM _fegvm;
         readonly FlightInstrumentsVM _fivm;
         readonly JoystickVM _jvm;
-        readonly AnomaliesListVM alvm;
+        readonly AnomaliesListVM _alvm;
         readonly Annotation _fixedAnnotation;
+        readonly MultiDimensionalModelVM _mdvm;
         public Simulator(FGVM vm)
         {
             InitializeComponent();
             _vm = vm;
             DataContext = vm;
-            _cbvm = new ControlBarVM(_vm.getModel());
-            _fcvm = new FileComponentVM(_vm.getModel());
-            _fpvm = new FeaturesPanelVM(_vm.getModel());
-            _fegvm = new FeaturesGraphsVM(_vm.getModel());
-            _fivm = new FlightInstrumentsVM(_vm.getModel());
-            _jvm = new JoystickVM(_vm.getModel());
-            alvm = new AnomaliesListVM(_vm.getModel());
+            _cbvm = new ControlBarVM(_vm.GetModel());
+            _fcvm = new FileComponentVM(_vm.GetModel());
+            _fpvm = new FeaturesPanelVM(_vm.GetModel());
+            _fegvm = new FeaturesGraphsVM(_vm.GetModel());
+            _fivm = new FlightInstrumentsVM(_vm.GetModel());
+            _jvm = new JoystickVM(_vm.GetModel());
+            _alvm = new AnomaliesListVM(_vm.GetModel());
+            _mdvm = new MultiDimensionalModelVM(_vm.GetModel());
             controlbar.DataContext = _cbvm;
             fileselector.DataContext = _fcvm;
             features.DataContext = _fpvm;
@@ -39,7 +41,8 @@ namespace Flight_Inspection_App
             featuregraphs.DataContext = _fegvm;
             flightinstruments.DataContext = _fivm;
             joystick.DataContext = _jvm;
-            anomalies.DataContext = alvm;
+            anomalies.DataContext = _alvm;
+
             _fixedAnnotation = featuregraphs.MyPlot.Annotations[0];
         }
 
@@ -75,7 +78,7 @@ namespace Flight_Inspection_App
 
         private void HeliWindow(object sender, RoutedEventArgs e)
         {
-            HeliWindow hw = new(vm: _vm);
+            HeliWindow hw = new(vm: _mdvm);
             hw.Show();
         }
 

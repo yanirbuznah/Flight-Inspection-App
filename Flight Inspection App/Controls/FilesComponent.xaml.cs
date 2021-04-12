@@ -39,7 +39,9 @@ namespace Flight_Inspection_App.Controls
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
             openFileDialog.Filter = "Dll files (*.dll)|*.dll|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);     
+            
+
             if (openFileDialog.ShowDialog() == true)
             {
                 foreach (string filePath in openFileDialog.FileNames)

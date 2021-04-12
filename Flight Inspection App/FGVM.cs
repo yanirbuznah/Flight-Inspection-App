@@ -25,7 +25,7 @@ namespace Flight_Inspection_App
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public FGM getModel()
+        public FGM GetModel()
         {
             return _fgm;
         }
@@ -94,45 +94,7 @@ namespace Flight_Inspection_App
             _fgm.Start();
             _fgm.SetStatus(true);
         }
-        public double VM_XxAxis
-        {
-            get => _fgm.XxAxis;
-        }
-        public double VM_YxAxis
-        {
-            get => _fgm.YxAxis;
-        }
-        public double VM_ZxAxis
-        {
-            get => _fgm.ZxAxis;
-        }
-        public double VM_XyAxis
-        {
-            get => _fgm.XyAxis;
-        }
-        public double VM_YyAxis
-        {
-            get => _fgm.YyAxis;
 
-        }
-        public double VM_ZyAxis
-        {
-            get => _fgm.ZyAxis;
-        }
-        public double VM_XzAxis
-        {
-            get => _fgm.XzAxis;
-        }
-        public double VM_YzAxis
-        {
-            get => _fgm.YzAxis;
-
-
-        }
-        public double VM_ZzAxis
-        {
-            get => _fgm.ZzAxis;
-        }
 
     }
 }

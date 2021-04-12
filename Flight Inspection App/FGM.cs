@@ -3,6 +3,7 @@ using OxyPlot.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -128,14 +129,15 @@ namespace Flight_Inspection_App
                 _dllFile = value;
                 new Thread(() =>
                 {
-                    PbValue = 10;
-                    DetectorState = "Load Detector..";
-                    try
-                    {
-                        var a = Assembly.LoadFile(_dllFile.Key);
-                        // Get the type to use.
-                        Type myType = a.GetType("DetectorLibary.AnomalyDetector");
-                        Detector = Activator.CreateInstance(myType);
+                PbValue = 10;
+                DetectorState = "Load Detector..";
+                try
+                {
+                    var a = Assembly.LoadFile(_dllFile.Key);
+                    // Get the type to use.
+                    Type myType = a.GetType("DetectorLibary.AnomalyDetector");
+                    Detector = Activator.CreateInstance(myType);
+                    Debug.WriteLine(Directory.GetCurrentDirectory());
                         // Get the method to call.
 
                         Detect = myType.GetMethod("Detect");

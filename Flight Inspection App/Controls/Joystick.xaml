@@ -8,8 +8,8 @@
              d:DesignHeight="420" d:DesignWidth="420">
     <Grid >
         <Canvas  x:Name="Base"  Width="340" Height="340">
-            <Slider Margin="70,344,105,217" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FFFF2E00" Width="205" Height="21" Minimum="-30" Maximum="30" Background="#3FF72510" BorderBrush="#FFD60E0E" HorizontalAlignment="Center"/>
-            <Slider Margin="-75,95,252,321" Value="{Binding VM_Throttle,Mode=OneWay}" Width="21" Height="205" Orientation="Vertical" Maximum="30" Minimum="-30" Background="#3FF72510" Canvas.Left="42" Canvas.Top="-20"/>
+            <Slider Margin="70,344,105,217" Value="{Binding VM_Rudder,Mode=OneWay}" Foreground="#FFFF2E00" Width="205" Height="21" Minimum="-1" Maximum="1" Background="#3FF72510" BorderBrush="#FFD60E0E" HorizontalAlignment="Center"/>
+            <Slider Margin="-75,95,252,321" Value="{Binding VM_Throttle,Mode=OneWay}" Width="21" Height="205" Orientation="Vertical" Maximum="1" Minimum="0" Background="#3FF72510" Canvas.Left="42" Canvas.Top="-20"/>
             <Ellipse HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="340">
                 <Ellipse.Fill>
                     <RadialGradientBrush>

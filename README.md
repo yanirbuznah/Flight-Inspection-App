@@ -29,36 +29,36 @@ Download the zip for this repository or use git on the termianl. The terminal co
 ```
 git clone https://www.github.com/yanirbuznah/Flight-Inspection-App
 ```
-Build the project, afterwards go to the Debug folder. Navigate to net5.0-windows folder and then open the **Flight Inspection app.exe**<br/>
+Build the project, go to the Debug folder, navigate to net5.0-windows folder and open the **Flight Inspection app.exe**<br/>
 ```Path: Flight Inspection App\bin\Debug\net5.0-windows```
 
 
 ### Running The Flight-Inspection-App
 
 <img src = "https://user-images.githubusercontent.com/56928005/114501619-ff45e280-9c32-11eb-9c75-fab44f9576ab.png" width="1050" height="450"></br>
-After running the .exe file, home-page screen will show up (as shown above).
-There are two blanks you need to fill up in order to connect to server: IP & Port.
-After clicking connect, press the "Start Now" button and wait for the next screen to show up.</br>
+After running the .exe file, the home-page screen will show up (as shown above).
+There are two blanks you'll need to fill up in order to connect to the Flight Gear simulator: IP & Port.
+After clicking "Connect", press the "Start Now" and wait for the next screen to show up.</br>
 <img src="https://user-images.githubusercontent.com/56928005/114501645-0bca3b00-9c33-11eb-9c77-f9df4d203f3c.png" width="1050" height="450"></br>
 1. Pick a csv file in order to start your flight. The csv should contain the flight information.
-2. Pick a dll file of the anomaly detector. You have variety of algorithms you can choose, and also you can add by yourself.
+2. Pick a dll anomaly detector. You have variety of algorithms you can choose, and you can also add more by yourself.
 3. **Enter The 3D Model**
 4. By clicking on a specific flight feature, the graphs will show the feature's progress during the flight.
 5. The joystick exemplifies the aircraft movement. The left slider represents the throttle value, and the buttom slider represents the rudder value.
-6. Anomalies that have been detected will be shown in this box. You will see the name and the timestamp when the anomaly happens. If you double click the anomaly, the tick on the slide bar will jump to the specific timestamp.
+6. Anomalies that have been detected will be shown in this box. You will see the name and the timestamp when the anomaly occurred. If you double click the anomaly, the tick on the slide bar will jump to the specific timestamp.
 
 
 #### Features
 
-* Csv selector: As soon as you pick a csv flight-information, that flight will start by reading line by line.
-* Dll selector: Option to choose your/default algorithm that comes with the application, in order to detect anomalies and will be shown upon the main graph.
-* Flight-parameters graphs: You can choose a flight parameter and then the graphs (the buttom ones) will show the progression of its value through the flight.
+* Csv selector: As soon as you pick a csv flight information file, that flight will start reading line by line.
+* Dll selector: Option to choose yours/default algorithm that comes with the application, in order to detect anomalies and will be shown upon the main graph.
+* Flight-parameters graphs: You can choose a flight parameter and then the graphs (the buttom ones) will present the progression of its value through the flight.
 * Joystick: The movement is determined by the `Elevator`(Y-pos) and the `Aileron`(X-pos) values from the CSV column.
 * Media-Player tools:
   - Play button: In-case you pressed the `Pause` or `Stop` button, you will have to press the `Play` button in-order to resume or start the flight again.
-  - Pause button: Freezes the flight. We stop recieving lines from the csv untill the `Play` button is pressed.
+  - Pause button: Freezes the flight. Stop receiving lines from the csv untill the `Play` button is pressed.
   - Stop button: Freezes the flight, but unlike the `Pause` button, by pressing the `Play` button, the flight will start from the beginning.
-  - Flight slider: Represents the line progression. You can hold the **Tick** and move it to any place on the slider, and the flight will jump to the correct csv line according to its location upon the slider.
+  - Flight slider: Represents the line progression. You can hold the **Tick** and move it along the slider, and the flight will jump to the correct csv line according to its location upon the slider.
   - Increase speed button: You can speed-up the flight by pressing the `+` button. Each click adds 0.1 to the current speed.
   - Decrease speed button: You can slow-down the flight by pressing the `-` button. Each click decreases 0.1 to the current speed.
 

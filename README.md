@@ -42,10 +42,9 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
 <img src="https://user-images.githubusercontent.com/56928005/114501645-0bca3b00-9c33-11eb-9c77-f9df4d203f3c.png" width="1050" height="450"></br>
 1. Pick a csv file in order to start your flight. The csv should contain the flight information.
 2. Pick a DLL anomaly detector. You have variety of algorithms you can choose, and you can also add more by yourself.
-3. Enter The 3D Model
-4. By clicking on a specific flight feature, the graphs will show the feature's progress during the flight.
-5. The joystick exemplifies the aircraft movement. The left slider represents the throttle value, and the bottom slider represents the rudder value.
-6. Anomalies that have been detected will be shown in this box. You will see the name and the timestamp when the anomaly occurred. If you double click the anomaly, the tick on the slide bar will jump to the specific timestamp.
+3. By clicking on a specific flight feature, the graphs will show the feature's progress during the flight.
+4. The joystick exemplifies the aircraft movement. The left slider represents the throttle value, and the bottom slider represents the rudder value.
+5. Anomalies that have been detected will be shown in this box. You will see the name and the timestamp when the anomaly occurred. If you double click the anomaly, the tick on the slide bar will jump to the specific timestamp.
 
 
 #### Features
@@ -61,12 +60,13 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
   - Flight slider: Represents the line progression. You can hold the **Tick** and move it along the slider, and the flight will jump to the correct csv line according to its location upon the slider.
   - Increase speed button: You can speed-up the flight by pressing the `+` button. Each click adds 0.1 to the current speed.
   - Decrease speed button: You can slow-down the flight by pressing the `-` button. Each click decreases 0.1 to the current speed.
+ * 3D Model: Shows the state of the plane visually by a three-dimensional model, the model can be replaced by adding a model (obj file) to the 3D planes folder and changing the path in the MultiDimensionalModel.xaml.cs file
 
 
 #### Implementing your own DLL 
 
 - Make sure your DLL file is inside the Plugin folder.
-- Customize your DLL file in a way that the main class there implements the IDetector interface.
+- Customize your DLL file in a way that the main class there implements the IDetector interface 
 
 
 ### Project Structure

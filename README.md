@@ -29,7 +29,7 @@ Download the zip for this repository or use git on the termianl. The terminal co
 ```
 git clone https://www.github.com/yanirbuznah/Flight-Inspection-App
 ```
-Build the project, go to the Debug folder, navigate to `net5.0-windows` folder and open the **Flight Inspection app.exe**<br/>
+Build the project, go to the Debug folder, navigate to `net5.0-windows` folder and open the `FlightInspectionapp.exe`<br/>
 ```Path: Flight Inspection App\bin\Debug\net5.0-windows```
 
 

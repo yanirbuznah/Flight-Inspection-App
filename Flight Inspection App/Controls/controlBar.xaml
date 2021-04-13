@@ -20,7 +20,7 @@
                 <Button Command="{Binding StopTheFlight}">
                     <Image Source="/Controls/ControlImages/Stop-icon.png" Height="20" Width="20"  Margin="5,0,0,0"/>
                 </Button>
-                <Slider x:Name="sliProgress" Maximum="{Binding VM_FlightTime}" Minimum="0" Width="983" Height="20" IsSnapToTickEnabled="True" TickFrequency="1"
+                <Slider x:Name="sliProgress" Maximum="{Binding VM_FlightTime}" Minimum="0" Width="952" Height="20" IsSnapToTickEnabled="True" TickFrequency="1"
                    Value="{Binding VM_CurrentLineIndex}" IsMoveToPointEnabled="True"/>
                 <TextBlock x:Name="SecTimeLeft" Height="18" Text="{Binding VM_CurrentFlightTime,Mode=OneWay}"/>
                 <Button Command="{Binding DecreaseTheSpeed}" Height="26" Width="29" Margin="1,0,0,0">
@@ -28,7 +28,7 @@
                 </Button>
                 <TextBlock x:Name="speed" Height="18"  Text="{Binding VM_VideoSpeed,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Width="22"></TextBlock>
                 <Button Command="{Binding IncreaseTheSpeed}" Height="26" Width="29" Margin="1,0,0,0">
-                    <Image Source="/Controls/ControlImages/math-add-icon.png" Height="20" Width="20" Margin="-20,0,-20,0"/>
+                    <Image Source="/Controls/ControlImages/math-add-icon.png" Height="20" Width="20" Margin="-15,0,-20,0"/>
                 </Button>
             </ToolBar>
         </DockPanel>

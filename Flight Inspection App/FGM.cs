@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 
@@ -102,7 +103,7 @@ namespace Flight_Inspection_App
                 if (_dllFile.Key != null)
                 {
 
-                    new Thread(() =>
+                    new Task(() =>
                     {
                         DetectorState = "Detecting..";
                         PbValue = 70;
@@ -127,7 +128,7 @@ namespace Flight_Inspection_App
             set
             {
                 _dllFile = value;
-                new Thread(() =>
+                new Task(() =>
                 {
                 PbValue = 10;
                 DetectorState = "Load Detector..";
@@ -246,7 +247,7 @@ namespace Flight_Inspection_App
             CalcFeaturesValues(arrCsv);
 
 
-            new Thread(() =>
+            new Task(() =>
             {
                 _isStopped = false;
                 string line;
@@ -273,7 +274,7 @@ namespace Flight_Inspection_App
 
             }).Start();
 
-            new Thread(() =>
+/*            new Task(() =>
             {
                 OnPropertyChanged("XxAxis");
                 OnPropertyChanged("XyAxis");
@@ -285,7 +286,7 @@ namespace Flight_Inspection_App
                 OnPropertyChanged("ZyAxis");
                 OnPropertyChanged("ZzAxis");
 
-            }).Start();
+            }).Start();*/
         }
 
 

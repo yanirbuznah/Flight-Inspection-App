@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using DetectorLibary;
+using OxyPlot;
 using OxyPlot.Wpf;
 using System;
 using System.Collections.Generic;
@@ -274,19 +275,6 @@ namespace Flight_Inspection_App
 
             }).Start();
 
-/*            new Task(() =>
-            {
-                OnPropertyChanged("XxAxis");
-                OnPropertyChanged("XyAxis");
-                OnPropertyChanged("XzAxis");
-                OnPropertyChanged("YxAxis");
-                OnPropertyChanged("YyAxis");
-                OnPropertyChanged("YzAxis");
-                OnPropertyChanged("ZxAxis");
-                OnPropertyChanged("ZyAxis");
-                OnPropertyChanged("ZzAxis");
-
-            }).Start();*/
         }
 
 

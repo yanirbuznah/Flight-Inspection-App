@@ -18,8 +18,6 @@
     <None Remove="Controls\folder-icon.png" />
     <None Remove="Images\backgroundImage.jpg" />
     <None Remove="Images\Heli_bell.obj" />
-    <None Remove="ip.PNG" />
-    <None Remove="ipInput.PNG" />
     <None Remove="playback_small.xml" />
   </ItemGroup>
 
@@ -39,8 +37,6 @@
     <Resource Include="Controls\ControlImages\Play-icon.png" />
     <Resource Include="Controls\ControlImages\Stop-icon.png" />
     <Resource Include="Images\backgroundImage.jpg" />
-    <Resource Include="ip.PNG" />
-    <Resource Include="ipInput.PNG" />
     <Resource Include="playback_small.xml" />
   </ItemGroup>
 </Project>

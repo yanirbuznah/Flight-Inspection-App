@@ -31,7 +31,7 @@
 
                             <RotateTransform3D>
                                 <RotateTransform3D.Rotation>
-                                    <AxisAngleRotation3D Axis="1,0,0" Angle="{Binding  VM_RollDegrees}"/>
+                                    <AxisAngleRotation3D Axis="1,0,0"  Angle="{Binding  VM_RollDegrees}"/>
                                 </RotateTransform3D.Rotation>
                             </RotateTransform3D>
                             <RotateTransform3D>

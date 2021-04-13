@@ -7,7 +7,7 @@ This app shows the user the real-time flight information and inspects the differ
 After downloading the project and the prerequisites, run the application and insert IP and Port in order to connect to the server and then press "Connect". Afterwards, you should pick a csv file (with flight information) and an anomaly detector algorithm (DLL file) to detect the anomalies. As soon as you load the csv file, the flight will begin, and you will see the slider moving according to the csv file lines.
 
 
-### Prerequisites
+### General Prerequisites
 
 * [Download](https://www.flightgear.org) FlightGear Simulator.
 * .NET 5.0
@@ -42,7 +42,7 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
 <img src="https://user-images.githubusercontent.com/56928005/114501645-0bca3b00-9c33-11eb-9c77-f9df4d203f3c.png" width="1050" height="450"></br>
 1. Pick a csv file in order to start your flight. The csv should contain the flight information.
 2. Pick a DLL anomaly detector. You have variety of algorithms you can choose, and you can also add more by yourself.
-3. **Enter The 3D Model**
+3. Enter The 3D Model
 4. By clicking on a specific flight feature, the graphs will show the feature's progress during the flight.
 5. The joystick exemplifies the aircraft movement. The left slider represents the throttle value, and the bottom slider represents the rudder value.
 6. Anomalies that have been detected will be shown in this box. You will see the name and the timestamp when the anomaly occurred. If you double click the anomaly, the tick on the slide bar will jump to the specific timestamp.

@@ -71,7 +71,7 @@ After clicking connect, press the "Start Now" button and wait for the next scree
 
 ### Project Structure
 
-<img src="https://user-images.githubusercontent.com/58342591/114557193-1952e580-9c72-11eb-9706-7fed160a2bc8.png" width="650" height="300">
+<img src="https://user-images.githubusercontent.com/58342591/114557530-7058ba80-9c72-11eb-8214-bac6688bfb92.jpg" width="650" height="300">
 
 
 - Following the MVVM architectural pattern, there's one main View-Model and sub View-Models, one for each user story.

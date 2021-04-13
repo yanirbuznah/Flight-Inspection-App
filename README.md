@@ -20,8 +20,8 @@ After downloading the project and the prerequisites, run the application and ins
 ### Dependencies
 
 * [OxyPlot](https://oxyplot.readthedocs.io/en/latest/getting-started/hello-wpf-xaml.html)
-* [HelixToolKit](https://www.nuget.org/packages/HelixToolkit.Wpf/)
-* [CsvHelper](https://joshclose.github.io/CsvHelper/)
+* [HelixToolKit.Wpf](https://www.nuget.org/packages/HelixToolkit.Wpf/)
+* [HelixToolKit](https://www.nuget.org/packages/HelixToolkit/)
 
 
 ### Installing

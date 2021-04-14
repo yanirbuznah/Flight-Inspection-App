@@ -78,3 +78,4 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
   As shown in the UML diagram above, the main View-Model (called `FGVM`) implements the IViewModel interface, and the sub View-Models (such as `ControlBarVM`, `JoyStickVM`,...) are inheriting from him (as required in our project instructions).
 - The Model is created in the MainWindow, and then passed as an argument to the main View-Model's constructor. Later on, the Model is passed to the rest of the sub View-Models.
 - Our MainWindow initializes the main View-Model, and the Simulator screen initializes each sub View-Model in his constructor.
+### [Explanation video](https://youtu.be/7ZFw2OHoFSc)

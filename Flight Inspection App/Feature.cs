@@ -9,7 +9,7 @@ namespace Flight_Inspection_App
     {
         public string Name { get; set; }
         private readonly List<double> _Values = new();
-        private readonly List<DataPoint> _Points = new();// List<DataPoint>();
+        private readonly List<DataPoint> _Points = new();
         private readonly List<DataPoint> _CorrelationPoints = new();
 
 

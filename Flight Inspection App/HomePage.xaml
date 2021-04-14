@@ -15,12 +15,12 @@
 
         <Button Content="Start Now" HorizontalAlignment="Left" Margin="634,473,0,0" VerticalAlignment="Top" Height="41" Width="125" Click="Start_Click" FontWeight="Bold" FontFamily="Calibri" FontSize="20" FontStyle="Italic">
             <Button.Background>
-                <ImageBrush ImageSource="/Capture.PNG"/>
+                <ImageBrush ImageSource="/Images/Capture.PNG"/>
             </Button.Background>
         </Button>
         <Button Content="Connect" HorizontalAlignment="Left" Margin="456,473,0,0" VerticalAlignment="Top" Height="41" Width="126" Click="Connect_Click" FontSize="20" FontFamily="Calibri" FontWeight="Bold">
             <Button.Background>
-                <ImageBrush ImageSource="/Capture.PNG"/>
+                <ImageBrush ImageSource="/Images/Capture.PNG"/>
             </Button.Background>
         </Button>
 
@@ -28,12 +28,12 @@
         <TextBox x:Name="PORT" Margin="571,404,441,0" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" VerticalAlignment="Top" FontSize="25" FontFamily="Segoe UI" Text="{Binding Path=VM_Port ,Mode=TwoWay}" Background="#91E29C57" Foreground="Black" />
         <Label HorizontalAlignment="Left" Margin="456,347,0,0" Content="   IP" VerticalAlignment="Top" Width="76" FontWeight="Bold" FontSize="24" BorderBrush="{x:Null}" Foreground="#FF231E0D" FontStretch="Normal" Visibility="Visible" Height="37">
             <Label.Background>
-                <ImageBrush ImageSource="/Capture.PNG"/>
+                <ImageBrush ImageSource="/Images/Capture.PNG"/>
             </Label.Background>
         </Label>
         <Label HorizontalAlignment="Left" Margin="456,401,0,0" Content=" Port" VerticalAlignment="Top" Width="76" FontWeight="Bold" FontSize="24" BorderBrush="{x:Null}" Foreground="#FF231E0D" Height="38">
             <Label.Background>
-                <ImageBrush ImageSource="/Capture.PNG"/>
+                <ImageBrush ImageSource="/Images/Capture.PNG"/>
             </Label.Background>
         </Label>
 

@@ -36,7 +36,6 @@
             <oxy:Plot.Annotations >
 
                 <oxy:LineAnnotation x:Name="fixedAnnotation" Slope="{Binding VM_Slope}" Intercept="{Binding VM_Intercept}" Color="Gray"/>
-                <!--<oxy:EllipseAnnotation X="50" Y=" 50" Width="100" Height="100" Stroke="Black" StrokeThickness="1" Fill="Transparent"/>-->
             </oxy:Plot.Annotations>
             <oxy:Plot.Series>
                 <oxy:LineSeries x:Name="points" ItemsSource="{Binding VM_CorrelationPoints}" LineStyle="None"  Color="Orange" MarkerFill="Orange" MarkerType="Circle" MarkerSize="1"  Title="Correlation Points"/>

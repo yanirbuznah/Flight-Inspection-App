@@ -3,7 +3,6 @@ using OxyPlot.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -138,17 +137,14 @@ namespace Flight_Inspection_App
                         // Get the type to use.
                         Type myType = a.GetType("DetectorLibary.AnomalyDetector");
                         Detector = Activator.CreateInstance(myType);
-                        Debug.WriteLine(Directory.GetCurrentDirectory());
                         // Get the method to call.
-
                         Detect = myType.GetMethod("Detect");
                         LearnNormal = myType.GetMethod("LearnNormal");
                         GetAnnotation = myType.GetMethod("GetAnnotation");
                         GetAnomaliesPoints = myType.GetMethod("GetAnomaliesPoints");
                         GetAnomaliesDescriptions = myType.GetMethod("GetAnomaliesDescriptions");
 
-                        // Execute the method.
-
+                        // Execute the method
                         DetectorState = "Learning..";
                         PbValue = 30;
                         LearnNormal.Invoke(Detector, new object[] { @"..\..\..\Normal flight\reg_flight - Copy.csv" });
@@ -729,47 +725,6 @@ namespace Flight_Inspection_App
                     OnPropertyChanged();
                 }
             }
-        }
-
-
-        public double XxAxis
-        {
-            get => Math.Cos(YawDegrees) * Math.Cos(PitchDegrees);
-        }
-        public double YxAxis
-        {
-            get => Math.Sin(YawDegrees) * Math.Cos(PitchDegrees);
-        }
-        public double ZxAxis
-        {
-            get => Math.Sin(PitchDegrees);
-        }
-        public double XyAxis
-        {
-            get => ((-Math.Cos(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) - (Math.Sin(YawDegrees) * Math.Cos(RollDegrees));
-        }
-        public double YyAxis
-        {
-            get => ((-Math.Sin(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Sin(RollDegrees)) + (Math.Cos(YawDegrees) * Math.Cos(RollDegrees));
-
-        }
-        public double ZyAxis
-        {
-            get => Math.Cos(PitchDegrees) * Math.Sin(RollDegrees);
-        }
-        public double XzAxis
-        {
-            get => ((-Math.Cos(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) + (Math.Sin(YawDegrees) * Math.Sin(RollDegrees));
-        }
-        public double YzAxis
-        {
-            get => ((-Math.Sin(YawDegrees)) * Math.Sin(PitchDegrees) * Math.Cos(RollDegrees)) - (Math.Cos(YawDegrees) * Math.Sin(RollDegrees));
-
-
-        }
-        public double ZzAxis
-        {
-            get => Math.Cos(PitchDegrees) * Math.Sin(RollDegrees);
         }
 
         public bool GetStatus()

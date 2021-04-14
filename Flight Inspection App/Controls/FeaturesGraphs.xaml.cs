@@ -12,12 +12,7 @@ namespace Flight_Inspection_App.Controls
         public FeaturesGraphs()
         {
 
-
             InitializeComponent();
-
-
-
-
 
         }
 

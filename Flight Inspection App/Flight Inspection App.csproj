@@ -28,8 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="button2.PNG" />
-    <Resource Include="Capture.PNG" />
+    <Resource Include="Images\Capture.PNG" />
     <Resource Include="Controls\ControlImages\folder-icon.png" />
     <Resource Include="Controls\ControlImages\math-add-icon.png" />
     <Resource Include="Controls\ControlImages\math-minus-icon.png" />

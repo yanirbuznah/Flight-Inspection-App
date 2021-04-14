@@ -35,7 +35,7 @@ Build the project, go to the Debug folder, navigate to `net5.0-windows` folder a
 
 ### Running The Flight-Inspection-App
 
-<img src = "https://user-images.githubusercontent.com/56928005/114501619-ff45e280-9c32-11eb-9c75-fab44f9576ab.png" width="1050" height="450"></br>
+<img src = "https://user-images.githubusercontent.com/56928005/114715226-854d5080-9d3b-11eb-8e7a-cde5626cf4f4.png" width="1050" height="450"></br>
 After running the .exe file, the home-page screen will show up (as shown above).
 There are two blanks you'll need to fill up to connect to the Flight Gear simulator: IP & Port.
 After clicking "Connect", press the "Start Now" and wait for the next screen to show up.</br>

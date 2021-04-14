@@ -65,8 +65,10 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
 
 #### Implementing your own DLL 
 
-- Make sure your DLL file is inside the Plugin folder.
-- Customize your DLL file in a way that the main class there implements the IDetector interface 
+In order to implement a compatible dll file make sure your dll file comply these 3 conditions:
+1.  make sure the main class using the namespace *"DetectorLibary"* (Libary, not Library)
+2.  make sure the main class name is "AnomalyDetector" (DetectorLibary.AnomalyDetector)
+3.  Customize your DLL file in a way that the main class there implements the [IDetector interface](https://github.com/yanirbuznah/Flight-Inspection-App/blob/master/Flight%20Inspection%20App/IDetector.cs) 
 
 
 ### Project Structure

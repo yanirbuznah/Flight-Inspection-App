@@ -70,13 +70,13 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
 
 
 ### Project Structure
-
+<p align="center">
 <img src="https://github.com/yanirbuznah/Flight-Inspection-App/blob/master/UML%20photos/MVVM.jpg?raw=true">
-
+</p>
 
 - Following the MVVM architectural pattern, there's one main View-Model and sub View-Models, one for each user story.
   As shown in the UML diagram above, the main View-Model (called `FGVM`) implements the IViewModel interface, and the sub View-Models (such as `ControlBarVM`, `JoyStickVM`,...) are inheriting from him (as required in our project instructions).
 - The Model is created in the MainWindow, and then passed as an argument to the main View-Model's constructor. Later on, the Model is passed to the rest of the sub View-Models.
 - Our MainWindow initializes the main View-Model, and the Simulator screen initializes each sub View-Model in his constructor.
-- For more UML diagrams and .cd file (supported by visual studio) [Click Here](https://github.com/yanirbuznah/Flight-Inspection-App/tree/master/UML%20photos)
+- For more UML diagrams and .cd file (supported by Visual Studio) [Click Here](https://github.com/yanirbuznah/Flight-Inspection-App/tree/master/UML%20photos)
 ### [Explanation video](https://youtu.be/7ZFw2OHoFSc)

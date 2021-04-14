@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Flight_Inspection_App
+﻿namespace Flight_Inspection_App
 {
-    class MultiDimensionalModelVM :FGVM
+    class MultiDimensionalModelVM : FGVM
     {
         public MultiDimensionalModelVM(FGM m) : base(m) { }
         public double VM_YawDegrees

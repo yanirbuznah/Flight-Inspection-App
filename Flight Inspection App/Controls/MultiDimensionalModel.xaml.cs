@@ -22,7 +22,7 @@ namespace Flight_Inspection_App.Controls
             Model3DGroup MyView = CurrentHelixObjReader.Read(@"..\..\..\3D planes\Black Hawk uh-60.obj");
             myView.Camera.LookDirection = new Vector3D(0, -1, 0);
             model.Content = MyView;
-            
+
 
 
         }

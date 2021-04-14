@@ -71,7 +71,7 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
 
 ### Project Structure
 
-<img src="https://user-images.githubusercontent.com/58342591/114557530-7058ba80-9c72-11eb-8214-bac6688bfb92.jpg" width="1050" height="450">
+<img src="https://github.com/yanirbuznah/Flight-Inspection-App/blob/master/UML%20photos/MVVM.jpg?raw=true">
 
 
 - Following the MVVM architectural pattern, there's one main View-Model and sub View-Models, one for each user story.

@@ -80,3 +80,8 @@ After clicking "Connect", press the "Start Now" and wait for the next screen to 
 - Our MainWindow initializes the main View-Model, and the Simulator screen initializes each sub View-Model in his constructor.
 - For more UML diagrams and .cd files (supported by Visual Studio) [Click Here](https://github.com/yanirbuznah/Flight-Inspection-App/tree/master/UML%20photos)
 ### [Explanation video](https://youtu.be/7ZFw2OHoFSc)
+
+
+### Final Result
+<img width="950" alt="Untitled" src="https://user-images.githubusercontent.com/65356872/115159871-012dfc80-a09e-11eb-947e-002cd49eaf6d.PNG">
+
